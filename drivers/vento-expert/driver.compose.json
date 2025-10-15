@@ -1,8 +1,5 @@
 {
-  "name": {
-    "en": "Vento Expert"
-  },
-  "class": "fan",
+  "$extends": "fan",
   "capabilities": [
     "alarm_boost",
     "alarm_filter",
@@ -18,34 +15,7 @@
     "timerMode",
     "timerMode_timer"
   ],
-  "platforms": [
-    "local"
-  ],
-  "connectivity": [
-    "lan"
-  ],
-  "images": {
-    "small": "{{driverAssetsPath}}/images/small.png",
-    "large": "{{driverAssetsPath}}/images/large.png",
-    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
-  },
-  "pair": [
-    {
-      "id": "list_devices",
-      "template": "list_devices",
-      "options": {
-        "singular": true
-      },
-      "navigation": {
-        "next": "device_settings"
-      }
-    },
-    {
-      "id": "device_settings"
-    },
-    {
-      "id": "add_devices",
-      "template": "add_devices"
-    }
-  ]
+  "name": {
+    "en": "Vento Expert"
+  }
 }
