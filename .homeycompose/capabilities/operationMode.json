@@ -7,8 +7,8 @@
   "setable": true,
   "uiComponent": "picker",
   "values": [
-    { "id": "0", "title": { "en": "Ventilation" }},
-    { "id": "1", "title": { "en": "Regeneration" }},
-    { "id": "2", "title": { "en": "Supply" }}
+    { "id": "0", "title": { "en": "Ventilation" } },
+    { "id": "1", "title": { "en": "Regeneration" } },
+    { "id": "2", "title": { "en": "Supply" } }
   ]
 }

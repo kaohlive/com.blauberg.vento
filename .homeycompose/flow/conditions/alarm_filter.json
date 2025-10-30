@@ -1,0 +1,20 @@
+{
+  "$filter": "capabilities=alarm_filter",
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "capabilities=alarm_filter",
+      "title": {
+        "en": "Device"
+      }
+    }
+  ],
+  "id": "alarm_filter",
+  "title": {
+    "en": "The filter alarm is !{{on|off}}"
+  },
+  "titleFormatted": {
+    "en": "The filter alarm is !{{on|off}} for [[device]]"
+  }
+}

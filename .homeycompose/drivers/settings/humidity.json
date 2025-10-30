@@ -1,0 +1,21 @@
+{
+  "type": "group",
+  "label": { "en": "Humidity sensor" },
+  "children": [
+    {
+      "id": "humidity_sensor",
+      "type": "checkbox",
+      "value": true,
+      "label": { "en": "Activate on humidity" }
+    },
+    {
+      "id": "humidity_threshold",
+      "type": "number",
+      "label": { "en": "Threshold" },
+      "value": 70,
+      "min": 40,
+      "max": 80,
+      "units": { "en": "%" }
+    }
+  ]
+}

@@ -1,8 +1,5 @@
 {
-  "name": {
-    "en": "Smart Wi-Fi"
-  },
-  "class": "fan",
+  "$extends": "fan",
   "capabilities": [
     "onoff",
     "dim",
@@ -12,38 +9,9 @@
     "measure_RPM"
   ],
   "energy": {
-    "batteries": [
-      "INTERNAL"
-    ]
+    "batteries": ["INTERNAL"]
   },
-  "platforms": [
-    "local"
-  ],
-  "connectivity": [
-    "lan"
-  ],
-  "images": {
-    "small": "{{driverAssetsPath}}/images/small.png",
-    "large": "{{driverAssetsPath}}/images/large.png",
-    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
-  },
-  "pair": [
-    {
-      "id": "list_devices",
-      "template": "list_devices",
-      "options": {
-        "singular": true
-      },
-      "navigation": {
-        "next": "device_settings"
-      }
-    },
-    {
-      "id": "device_settings"
-    },
-    {
-      "id": "add_devices",
-      "template": "add_devices"
-    }
-  ]
+  "name": {
+    "en": "Smart Wi-Fi"
+  }
 }

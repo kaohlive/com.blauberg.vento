@@ -1,28 +1,18 @@
 {
-  "extends": "athom/homey-app",
+  "extends": ["athom/homey-app", "plugin:prettier/recommended"],
   "overrides": [
     {
       "settings": {
-        "import/extensions": [
-          ".ts",
-          ".js"
-        ],
+        "import/extensions": [".ts", ".js"],
         "import/parsers": {
-          "@typescript-eslint/parser": [
-            ".ts",
-            ".cts",
-            ".mts"
-          ]
+          "@typescript-eslint/parser": [".ts", ".cts", ".mts"]
         },
         "import/resolver": {
           "node": true,
           "typescript": true
         }
       },
-      "files": [
-        "**/*.ts",
-        "**/*.js"
-      ],
+      "files": ["**/*.ts", "**/*.js"],
       "rules": {
         "node/no-missing-import": "off",
         "import/no-unresolved": "error",

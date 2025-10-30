@@ -1,11 +1,11 @@
 {
-"type": "boolean",
-"title": {
+  "type": "boolean",
+  "title": {
     "en": "Boost",
     "nl": "Boost"
-},
-"getable": true,
-"setable": true,
-"uiComponent": "sensor",
-"icon": "/assets/boost.svg"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "sensor",
+  "icon": "/assets/boost.svg"
 }

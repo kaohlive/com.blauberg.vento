@@ -1,0 +1,12 @@
+{
+  "type": "group",
+  "label": { "en": "Network" },
+  "children": [
+    {
+      "id": "last_known_ip",
+      "type": "text",
+      "label": { "en": "IP address" },
+      "value": "0.0.0.0"
+    }
+  ]
+}

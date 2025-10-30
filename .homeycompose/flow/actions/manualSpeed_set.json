@@ -1,0 +1,32 @@
+{
+  "$filter": "capabilities=manualSpeed",
+  "args": [
+    {
+      "type": "range",
+      "name": "speed",
+      "title": {
+        "en": "Speed"
+      },
+      "placeholder": {
+        "en": "Speed"
+      },
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "%",
+      "labelMultiplier": 1,
+      "labelDecimals": 0
+    }
+  ],
+  "deprecated": true,
+  "hint": {
+    "en": "Use the slider to set the manual speed mode to a certain speed"
+  },
+  "id": "manualSpeed_set",
+  "title": {
+    "en": "Set the manual speed"
+  },
+  "titleFormatted": {
+    "en": "Sets the manual speed of the device to [[speed]] "
+  }
+}

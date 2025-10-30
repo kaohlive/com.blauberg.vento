@@ -27,5 +27,46 @@
     "email": "vincent@vdboer.nl"
   },
   "homeyCommunityTopicId": 111339,
-  "source": "https://github.com/kaohlive/com.blauberg.vento"
+  "source": "https://github.com/kaohlive/com.blauberg.vento",
+  "support": "https://github.com/kaohlive/com.blauberg.vento/issues",
+  "contributors": {
+    "developers": [
+      {
+        "name": "Vincent Boer"
+      },
+      {
+        "name": "Fredrik Oterholt"
+      }
+    ]
+  },
+  "tags": {
+    "en": [
+      "flexit",
+      "fan",
+      "hvac",
+      "climate",
+      "ecovent",
+      "roomie",
+      "duo",
+      "oxxify",
+      "twinfresh",
+      "duka",
+      "blauberg",
+      "vento"
+    ],
+    "no": [
+      "flexit",
+      "vifte",
+      "ventilasjon",
+      "klima",
+      "ecovent",
+      "roomie",
+      "duo",
+      "oxxify",
+      "twinfresh",
+      "duka",
+      "blauberg",
+      "vento"
+    ]
+  }
 }

@@ -1,0 +1,20 @@
+{
+  "$filter": "capabilities=alarm_battery",
+  "args": [
+    {
+      "filter": "capabilities=alarm_battery",
+      "name": "device",
+      "type": "device",
+      "title": {
+        "en": "Device"
+      }
+    }
+  ],
+  "id": "alarm_battery_true",
+  "title": {
+    "en": "Battery alarm turned on"
+  },
+  "titleFormatted": {
+    "en": "Battery alarm turned on for [[device]]"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$filter": "driver_id=smart-wifi",
+  "args": [
+    {
+      "name": "silent",
+      "title": {
+        "en": "Silent mode"
+      },
+      "type": "checkbox"
+    }
+  ],
+  "id": "smartwifi_set_silent_mode",
+  "title": {
+    "en": "Set silent mode"
+  },
+  "titleFormatted": {
+    "en": "Set silent mode to [[silent]]"
+  }
+}

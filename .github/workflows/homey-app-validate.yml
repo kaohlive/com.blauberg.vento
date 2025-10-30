@@ -1,0 +1,25 @@
+name: Validate Homey App
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+jobs:
+  main:
+    name: Validate Homey App
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24.x
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - uses: athombv/github-action-homey-app-validate@master
+        with:
+          level: verified

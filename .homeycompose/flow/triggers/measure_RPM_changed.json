@@ -1,0 +1,32 @@
+{
+  "$filter": "capabilities=manualSpeed",
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "capabilities=manualSpeed",
+      "title": {
+        "en": "Device"
+      }
+    }
+  ],
+  "id": "measure_RPM_changed",
+  "title": {
+    "en": "FAN RPM changed"
+  },
+  "titleFormatted": {
+    "en": "FAN RPM changed for [[device]]"
+  },
+  "tokens": [
+    {
+      "example": {
+        "en": "Fan speed in RPM"
+      },
+      "name": "manualSpeemeasure_RPM",
+      "title": {
+        "en": "Fan RPM"
+      },
+      "type": "number"
+    }
+  ]
+}

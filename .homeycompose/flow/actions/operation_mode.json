@@ -1,0 +1,42 @@
+{
+  "$filter": "capabilities=operationMode",
+  "args": [
+    {
+      "type": "dropdown",
+      "name": "operationMode",
+      "title": {
+        "en": "The desired operation mode"
+      },
+      "values": [
+        {
+          "id": "0",
+          "title": {
+            "en": "Ventilation"
+          }
+        },
+        {
+          "id": "1",
+          "title": {
+            "en": "Regeneration"
+          }
+        },
+        {
+          "id": "2",
+          "title": {
+            "en": "Supply"
+          }
+        }
+      ]
+    }
+  ],
+  "hint": {
+    "en": "Sets the device to the desired operation mode"
+  },
+  "id": "operation_mode",
+  "title": {
+    "en": "Set the operation mode"
+  },
+  "titleFormatted": {
+    "en": "Sets the operation mode of the device to [[operationMode]] "
+  }
+}

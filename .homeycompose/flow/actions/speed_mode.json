@@ -1,0 +1,54 @@
+{
+  "$filter": "capabilities=speedMode",
+  "args": [
+    {
+      "type": "dropdown",
+      "name": "speedMode",
+      "title": {
+        "en": "The desired speed mode"
+      },
+      "values": [
+        {
+          "id": "0",
+          "title": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "1",
+          "title": {
+            "en": "Low"
+          }
+        },
+        {
+          "id": "2",
+          "title": {
+            "en": "Medium"
+          }
+        },
+        {
+          "id": "3",
+          "title": {
+            "en": "High"
+          }
+        },
+        {
+          "id": "255",
+          "title": {
+            "en": "Manual"
+          }
+        }
+      ]
+    }
+  ],
+  "hint": {
+    "en": "Sets the device to the desired speed mode"
+  },
+  "id": "speed_mode",
+  "title": {
+    "en": "Set the speed mode"
+  },
+  "titleFormatted": {
+    "en": "Sets the speed mode of the device to [[speedMode]] "
+  }
+}

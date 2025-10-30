@@ -1,0 +1,19 @@
+{
+  "$filter": "driver_id=smart-wifi",
+  "args": [
+    {
+      "name": "boost",
+      "title": {
+        "en": "Boost"
+      },
+      "type": "checkbox"
+    }
+  ],
+  "id": "smartwifi_set_boost",
+  "title": {
+    "en": "Set boost mode"
+  },
+  "titleFormatted": {
+    "en": "Set boost mode to [[boost]]"
+  }
+}

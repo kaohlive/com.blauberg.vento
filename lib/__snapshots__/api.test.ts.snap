@@ -1,0 +1,784 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Api set functions setBoostDelay sends value 0 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 102,
+            "value": Uint8Array [
+              0,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setBoostDelay sends value 1 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 102,
+            "value": Uint8Array [
+              1,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setBoostDelay sends value 2 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 102,
+            "value": Uint8Array [
+              2,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setHumiditySensor sends value 0 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 15,
+            "value": Uint8Array [
+              0,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setHumiditySensor sends value 1 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 15,
+            "value": Uint8Array [
+              1,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setHumiditySensor sends value 2 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 15,
+            "value": Uint8Array [
+              2,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setHumiditySensorThreshold sends value 0 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 25,
+            "value": Uint8Array [
+              0,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setHumiditySensorThreshold sends value 1 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 25,
+            "value": Uint8Array [
+              1,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setHumiditySensorThreshold sends value 2 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 25,
+            "value": Uint8Array [
+              2,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setManualSpeed sends value 0 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 68,
+            "value": Uint8Array [
+              0,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setManualSpeed sends value 1 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 68,
+            "value": Uint8Array [
+              1,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setManualSpeed sends value 2 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 68,
+            "value": Uint8Array [
+              2,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setOnOffStatus sends value 0 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 1,
+            "value": Uint8Array [
+              0,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setOnOffStatus sends value 1 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 1,
+            "value": Uint8Array [
+              1,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setOnOffStatus sends value 2 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 1,
+            "value": Uint8Array [
+              2,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setOperationMode sends value 0 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 183,
+            "value": Uint8Array [
+              0,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setOperationMode sends value 1 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 183,
+            "value": Uint8Array [
+              1,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setOperationMode sends value 2 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 183,
+            "value": Uint8Array [
+              2,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setSpeedMode sends value 0 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 2,
+            "value": Uint8Array [
+              0,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setSpeedMode sends value 1 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 2,
+            "value": Uint8Array [
+              1,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setSpeedMode sends value 2 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 2,
+            "value": Uint8Array [
+              2,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setTimerMode sends value 0 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 7,
+            "value": Uint8Array [
+              0,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setTimerMode sends value 1 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 7,
+            "value": Uint8Array [
+              1,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions setTimerMode sends value 2 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 7,
+            "value": Uint8Array [
+              2,
+            ],
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 2,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {},
+}
+`;
+
+exports[`Api set functions update gets response 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 1,
+            "value": undefined,
+          },
+          {
+            "parameter": 2,
+            "value": undefined,
+          },
+          {
+            "parameter": 68,
+            "value": undefined,
+          },
+          {
+            "parameter": 6,
+            "value": undefined,
+          },
+          {
+            "parameter": 102,
+            "value": undefined,
+          },
+          {
+            "parameter": 183,
+            "value": undefined,
+          },
+          {
+            "parameter": 136,
+            "value": undefined,
+          },
+          {
+            "parameter": 100,
+            "value": undefined,
+          },
+          {
+            "parameter": 37,
+            "value": undefined,
+          },
+          {
+            "parameter": 15,
+            "value": undefined,
+          },
+          {
+            "parameter": 25,
+            "value": undefined,
+          },
+          {
+            "parameter": 185,
+            "value": undefined,
+          },
+          {
+            "parameter": 74,
+            "value": undefined,
+          },
+          {
+            "parameter": 7,
+            "value": undefined,
+          },
+          {
+            "parameter": 131,
+            "value": undefined,
+          },
+          {
+            "parameter": 11,
+            "value": undefined,
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 1,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {
+    "alarm": 0,
+    "boost": {
+      "deactivationtimer": 30,
+      "mode": 0,
+    },
+    "fan": {
+      "rpm": 236,
+    },
+    "filter": {
+      "alarm": 0,
+      "timer": {
+        "days": 31,
+        "hour": 20,
+        "min": 34,
+      },
+    },
+    "humidity": {
+      "activated": 0,
+      "current": 45,
+      "sensoractivation": 1,
+      "threshold": 70,
+    },
+    "onoff": 1,
+    "operationmode": 2,
+    "speed": {
+      "manualspeed": 179,
+      "mode": 1,
+    },
+    "timers": {
+      "countdown": {
+        "hour": 0,
+        "min": 0,
+        "sec": 0,
+      },
+      "mode": 0,
+    },
+    "unittype": "Vento Expert Duo A30-1 W V.2",
+  },
+}
+`;
+
+exports[`Api set functions update sends correct data 1`] = `
+{
+  "calls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 1,
+            "value": undefined,
+          },
+          {
+            "parameter": 2,
+            "value": undefined,
+          },
+          {
+            "parameter": 68,
+            "value": undefined,
+          },
+          {
+            "parameter": 6,
+            "value": undefined,
+          },
+          {
+            "parameter": 102,
+            "value": undefined,
+          },
+          {
+            "parameter": 183,
+            "value": undefined,
+          },
+          {
+            "parameter": 136,
+            "value": undefined,
+          },
+          {
+            "parameter": 100,
+            "value": undefined,
+          },
+          {
+            "parameter": 37,
+            "value": undefined,
+          },
+          {
+            "parameter": 15,
+            "value": undefined,
+          },
+          {
+            "parameter": 25,
+            "value": undefined,
+          },
+          {
+            "parameter": 185,
+            "value": undefined,
+          },
+          {
+            "parameter": 74,
+            "value": undefined,
+          },
+          {
+            "parameter": 7,
+            "value": undefined,
+          },
+          {
+            "parameter": 131,
+            "value": undefined,
+          },
+          {
+            "parameter": 11,
+            "value": undefined,
+          },
+        ],
+        "_deviceId": "fanId",
+        "_functionType": 1,
+        "_password": "password",
+      },
+      "127.0.0.1",
+    ],
+  ],
+  "response": {
+    "humidity": {
+      "activated": 0,
+    },
+    "unittype": "Vento Expert",
+  },
+}
+`;

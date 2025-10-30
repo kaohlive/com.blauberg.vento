@@ -1,0 +1,15 @@
+{
+  "type": "group",
+  "label": { "en": "Timers" },
+  "children": [
+    {
+      "id": "boost_delay",
+      "type": "number",
+      "label": { "en": "Boost turn off delay" },
+      "value": 30,
+      "min": 1,
+      "max": 60,
+      "units": { "en": "minutes" }
+    }
+  ]
+}

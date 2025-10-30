@@ -1,0 +1,33 @@
+{
+  "$filter": "capabilities=manualSpeed",
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "capabilities=manualSpeed",
+      "title": {
+        "en": "Device"
+      }
+    }
+  ],
+  "deprecated": true,
+  "id": "manualSpeed_changed",
+  "title": {
+    "en": "The manual speed changed"
+  },
+  "titleFormatted": {
+    "en": "The manual speed changed for [[device]]"
+  },
+  "tokens": [
+    {
+      "example": {
+        "en": "Speed"
+      },
+      "name": "manualSpeed",
+      "title": {
+        "en": "Speed"
+      },
+      "type": "number"
+    }
+  ]
+}

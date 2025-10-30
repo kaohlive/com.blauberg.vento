@@ -1,0 +1,42 @@
+{
+  "$filter": "capabilities=alarm_generic",
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "capabilities=alarm_generic",
+      "title": {
+        "en": "Device"
+      }
+    }
+  ],
+  "id": "alarm_generic",
+  "title": {
+    "da": "Den generiske alarm er !{{tændt|slukket}}",
+    "de": "Der allgemeine Alarm ist !{{an|aus}}",
+    "en": "The generic alarm is !{{on|off}}",
+    "es": "La alarma general está !{{activada|desactivada}}",
+    "fr": "L'alarme générique est !{{en marche|arrêtée}}",
+    "it": "L'allarme generico è !{{acceso|spento}}",
+    "ko": "일반 알람 !{{켬|끔}}",
+    "nl": "Het algemene alarm is !{{aan|uit}}",
+    "no": "Den generelle alarmen er !{{på|av}}",
+    "pl": "Alarm ogólny !{{włączony|wyłączony}}",
+    "ru": "Общий сигнал !{{вкл.|выкл.}}",
+    "sv": "Det generiska larmet är !{{på|av}}"
+  },
+  "titleFormatted": {
+    "da": "Den generiske alarm er !{{tændt|slukket}} for [[device]]",
+    "de": "Der allgemeine Alarm ist !{{an|aus}} für [[device]]",
+    "en": "The generic alarm is !{{on|off}} for [[device]]",
+    "es": "La alarma general está !{{activada|desactivada}} para [[device]]",
+    "fr": "L'alarme générique est !{{en marche|arrêtée}} pour [[device]]",
+    "it": "L'allarme generico è !{{acceso|spento}} per [[device]]",
+    "ko": "[[device]]에 대한 일반 알람 !{{켬|끔}}",
+    "nl": "Het algemene alarm is !{{aan|uit}} voor [[device]]",
+    "no": "Den generelle alarmen er !{{på|av}} for [[device]]",
+    "pl": "Alarm ogólny !{{włączony|wyłączony}} dla [[device]]",
+    "ru": "Общий сигнал !{{вкл.|выкл.}} для [[device]]",
+    "sv": "Det generiska larmet är !{{på|av}} för [[device]]"
+  }
+}

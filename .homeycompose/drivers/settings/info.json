@@ -1,0 +1,19 @@
+{
+  "type": "group",
+  "label": { "en": "Device info" },
+  "children": [
+    {
+      "id": "devicemodel",
+      "type": "label",
+      "label": { "en": "Model" },
+      "value": "Expert"
+    },
+    {
+      "id": "devicepwd",
+      "type": "password",
+      "label": { "en": "Device password" },
+      "value": "1111",
+      "hint": { "en": "The device password setup in the Blauberg Home app." }
+    }
+  ]
+}

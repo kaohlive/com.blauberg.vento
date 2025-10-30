@@ -1,68 +1,14 @@
 [
   {
-    "type": "group",
-    "label": { "en": "Device info" },
-    "children": [
-      {
-        "id": "devicemodel",
-        "type": "label",
-        "label": { "en": "Model" },
-        "value": "Expert"
-      },
-      {
-        "id": "devicepwd",
-        "type": "password",
-        "label": { "en": "Device password" },
-        "value": "1111",
-        "hint": { "en": "The device password setup in the Blauberg Home app." }
-      }
-    ]
+    "$extends": "info"
   },
   {
-    "type": "group",
-    "label": { "en": "Humidity sensor" },
-    "children": [
-      {
-        "id": "humidity_sensor",
-        "type": "checkbox",
-        "value": true,
-        "label": { "en": "Activate on humidity" }
-      },
-      {
-        "id": "humidity_threshold",
-        "type": "number",
-        "label": { "en": "Threshold" },
-        "value": 70,
-        "min": 40,
-        "max": 80,
-        "units": { "en": "%" }
-      }
-    ]
+    "$extends": "humidity"
   },
   {
-    "type": "group",
-    "label": { "en": "Timers" },
-    "children": [
-      {
-        "id": "boost_delay",
-        "type": "number",
-        "label": { "en": "Boost turn off delay" },
-        "value": 30,
-        "min": 1,
-        "max": 60,
-        "units": { "en": "minutes" }
-      }
-    ]
+    "$extends": "timers"
   },
   {
-    "type": "group",
-    "label": { "en": "Network" },
-    "children": [
-      {
-        "id": "last_known_ip",
-        "type": "text",
-        "label": { "en": "IP address" },
-        "value": "0.0.0.0"      }
-    ]
+    "$extends": "network"
   }
 ]

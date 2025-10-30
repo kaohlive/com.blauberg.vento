@@ -1,0 +1,42 @@
+{
+  "$filter": "capabilities=alarm_generic",
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "capabilities=alarm_generic",
+      "title": {
+        "en": "Device"
+      }
+    }
+  ],
+  "id": "alarm_generic_false",
+  "title": {
+    "da": "Den generiske alarm blev deaktiveret",
+    "de": "Der allgemeine Alarm ist ausgegangen",
+    "en": "The generic alarm turned off",
+    "es": "La alarma general se ha desactivado",
+    "fr": "L'alarme générique s'est désactivée",
+    "it": "L'allarme generico è stato disattivato",
+    "ko": "일반 알람 꺼짐",
+    "nl": "Het algemene alarm ging uit",
+    "no": "Den generelle alarmen er deaktivert",
+    "pl": "Alarm ogólny wyłączony",
+    "ru": "Общий сигнал выключен",
+    "sv": "Det generiska larmet är inaktiverat"
+  },
+  "titleFormatted": {
+    "da": "Den generiske alarm blev deaktiveret for [[device]]",
+    "de": "Der allgemeine Alarm ist ausgegangen für [[device]]",
+    "en": "The generic alarm turned off for [[device]]",
+    "es": "La alarma general se ha desactivado para [[device]]",
+    "fr": "L'alarme générique s'est désactivée pour [[device]]",
+    "it": "L'allarme generico è stato disattivato per [[device]]",
+    "ko": "[[device]]에 대한 일반 알람 꺼짐",
+    "nl": "Het algemene alarm gaat uit voor [[device]]",
+    "no": "Den generelle alarmen er deaktivert for [[device]]",
+    "pl": "Alarm ogólny wyłączony dla [[device]]",
+    "ru": "Общий сигнал выключен для [[device]]",
+    "sv": "Det generiska larmet är inaktiverat för [[device]]"
+  }
+}
