@@ -7,8 +7,8 @@
   "setable": true,
   "uiComponent": "picker",
   "values": [
-    { "id": "0", "title": { "en": "Off" }},
-    { "id": "1", "title": { "en": "Night mode" }},
-    { "id": "2", "title": { "en": "Party mode" }}
+    { "id": "0", "title": { "en": "Off" } },
+    { "id": "1", "title": { "en": "Night mode" } },
+    { "id": "2", "title": { "en": "Party mode" } }
   ]
 }

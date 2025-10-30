@@ -2,12 +2,14 @@
 
 const { Driver } = require('homey');
 const {
-  BlaubergVentoClient, Packet, FunctionType, DataEntry,
+  BlaubergVentoClient,
+  Packet,
+  FunctionType,
+  DataEntry,
 } = require('blaubergventojs');
 const { SmartWiFiParameter } = require('../../lib/smart-wifi-parameters');
 
 class SmartWiFiDriver extends Driver {
-
   /**
    * onInit is called when the driver is initialized.
    */
@@ -16,8 +18,8 @@ class SmartWiFiDriver extends Driver {
     this.modbusClient = new BlaubergVentoClient();
     this.modbusClient.timeout = 1500;
     this.log('Smart Wi-Fi driver has been initialized');
-    setTimeout(() => {
-      this.locateDevices();
+    this.homey.setTimeout(async () => {
+      await this.locateDevices();
       this.start_discover_loop();
     }, 5000);
   }
@@ -39,27 +41,57 @@ class SmartWiFiDriver extends Driver {
   }
 
   async setOnoffStatus(device, devicepass, value) {
-    return this.setDeviceValue(device, devicepass, SmartWiFiParameter.FAN_ONOFF, value);
+    return this.setDeviceValue(
+      device,
+      devicepass,
+      SmartWiFiParameter.FAN_ONOFF,
+      value
+    );
   }
 
   async setBoostMode(device, devicepass, value) {
-    return this.setDeviceValue(device, devicepass, SmartWiFiParameter.BOOST_MODE, value);
+    return this.setDeviceValue(
+      device,
+      devicepass,
+      SmartWiFiParameter.BOOST_MODE,
+      value
+    );
   }
 
   async setMaxSpeed(device, devicepass, value) {
-    return this.setDeviceValue(device, devicepass, SmartWiFiParameter.MAX_SPEED_SETPOINT, value);
+    return this.setDeviceValue(
+      device,
+      devicepass,
+      SmartWiFiParameter.MAX_SPEED_SETPOINT,
+      value
+    );
   }
 
   async setSilentSpeed(device, devicepass, value) {
-    return this.setDeviceValue(device, devicepass, SmartWiFiParameter.SILENT_SPEED_SETPOINT, value);
+    return this.setDeviceValue(
+      device,
+      devicepass,
+      SmartWiFiParameter.SILENT_SPEED_SETPOINT,
+      value
+    );
   }
 
   async setSilentMode(device, devicepass, value) {
-    return this.setDeviceValue(device, devicepass, SmartWiFiParameter.SILENT_MODE_ACTIVATION, value);
+    return this.setDeviceValue(
+      device,
+      devicepass,
+      SmartWiFiParameter.SILENT_MODE_ACTIVATION,
+      value
+    );
   }
 
   async setIntervalMode(device, devicepass, value) {
-    return this.setDeviceValue(device, devicepass, SmartWiFiParameter.INTERVAL_MODE_ACTIVATION, value);
+    return this.setDeviceValue(
+      device,
+      devicepass,
+      SmartWiFiParameter.INTERVAL_MODE_ACTIVATION,
+      value
+    );
   }
 
   async getDeviceState(device, devicepass) {
@@ -95,7 +127,9 @@ class SmartWiFiDriver extends Driver {
           onoff: result.packet._dataEntries[0].value['0'],
           battery: result.packet._dataEntries[1].value['0'],
           fan: {
-            rpm: (result.packet._dataEntries[2].value['1'] << 8) | result.packet._dataEntries[2].value['0'],
+            rpm:
+              (result.packet._dataEntries[2].value['1'] << 8) |
+              result.packet._dataEntries[2].value['0'],
           },
           boost: {
             mode: result.packet._dataEntries[3].value['0'],
@@ -128,25 +162,35 @@ class SmartWiFiDriver extends Driver {
             temperature: result.packet._dataEntries[18].value['0'],
             motion: result.packet._dataEntries[19].value['0'],
           },
-          unittype: (result.packet._dataEntries[20].value['1'] << 8) | result.packet._dataEntries[20].value['0'],
+          unittype:
+            (result.packet._dataEntries[20].value['1'] << 8) |
+            result.packet._dataEntries[20].value['0'],
         };
       }
-      throw new Error('device not responding, is your device password correct?');
+      throw new Error(
+        'device not responding, is your device password correct?'
+      );
     });
   }
 
   async locateDevices() {
     const locatedDevices = await this.modbusClient.findDevices();
     const oldamount = this.deviceList.length;
-    this.log(`Currently located ${oldamount} devices, found ${locatedDevices.length} devices`);
+    this.log(
+      `Currently located ${oldamount} devices, found ${locatedDevices.length} devices`
+    );
     const homeydevices = this.getDevices();
 
     locatedDevices.forEach((locatedDevice) => {
-      const knowndevice = this.deviceList.find((device) => device.id === locatedDevice.id);
+      const knowndevice = this.deviceList.find(
+        (device) => device.id === locatedDevice.id
+      );
       if (!knowndevice) {
         this.log(`Located new device with id ${locatedDevice.id}`);
         this.deviceList.push(locatedDevice);
-        const homeydevice = homeydevices.find((device) => device.getData().id === locatedDevice.id);
+        const homeydevice = homeydevices.find(
+          (device) => device.getData().id === locatedDevice.id
+        );
         if (homeydevice) {
           homeydevice.discovery(locatedDevice.id);
         } else {
@@ -175,27 +219,34 @@ class SmartWiFiDriver extends Driver {
       DataEntry.of(SmartWiFiParameter.UNIT_TYPE),
     ]);
 
-    return this.modbusClient.send(packet, device.ip).then((result) => {
-      if (result != null) {
-        const unitType = (result.packet._dataEntries[0].value['1'] << 8) | result.packet._dataEntries[0].value['0'];
-        this.log(`Device ${device.id} reports unit type: ${unitType}`);
-        return unitType;
-      }
-      throw new Error('Unable to determine device type');
-    }).catch((error) => {
-      this.log(`Error getting device type: ${error.message}`);
-      return null;
-    });
+    return this.modbusClient
+      .send(packet, device.ip)
+      .then((result) => {
+        if (result != null) {
+          const unitType =
+            (result.packet._dataEntries[0].value['1'] << 8) |
+            result.packet._dataEntries[0].value['0'];
+          this.log(`Device ${device.id} reports unit type: ${unitType}`);
+          return unitType;
+        }
+        throw new Error('Unable to determine device type');
+      })
+      .catch((error) => {
+        this.log(`Error getting device type: ${error.message}`);
+        return null;
+      });
   }
 
   isSmartWiFiDevice(unitType) {
     // Smart Wi-Fi devices return values other than 3, 4, or 5
     // Vento Expert uses 3, 4, 5, so anything else is Smart Wi-Fi
-    return unitType !== null && unitType !== 3 && unitType !== 4 && unitType !== 5;
+    return (
+      unitType !== null && unitType !== 3 && unitType !== 4 && unitType !== 5
+    );
   }
 
   async onPair(session) {
-    let devicePassword = '1111'; // Default password
+    const devicePassword = '1111'; // Default password
 
     session.setHandler('list_devices', async (data) => {
       this.log('Provide user list of discovered Smart Wi-Fi fans');
@@ -208,10 +259,14 @@ class SmartWiFiDriver extends Driver {
       for (const device of this.deviceList) {
         const unitType = await this.getDeviceType(device, devicePassword);
         if (this.isSmartWiFiDevice(unitType)) {
-          this.log(`Device ${device.id} is a Smart Wi-Fi device (type ${unitType})`);
+          this.log(
+            `Device ${device.id} is a Smart Wi-Fi device (type ${unitType})`
+          );
           smartWiFiDevices.push(device);
         } else {
-          this.log(`Device ${device.id} is not a Smart Wi-Fi device (type ${unitType}), skipping`);
+          this.log(
+            `Device ${device.id} is not a Smart Wi-Fi device (type ${unitType}), skipping`
+          );
         }
       }
 
@@ -240,7 +295,6 @@ class SmartWiFiDriver extends Driver {
       }
     });
   }
-
 }
 
 module.exports = SmartWiFiDriver;

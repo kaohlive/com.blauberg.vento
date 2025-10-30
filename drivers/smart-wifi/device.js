@@ -3,7 +3,6 @@
 const { Device } = require('homey');
 
 class SmartWiFiDevice extends Device {
-
   /**
    * onInit is called when the device is initialized.
    */
@@ -27,10 +26,16 @@ class SmartWiFiDevice extends Device {
 
   async setupCapabilities() {
     if (this.hasCapability('onoff')) {
-      this.registerCapabilityListener('onoff', this.onCapabilityOnoff.bind(this));
+      this.registerCapabilityListener(
+        'onoff',
+        this.onCapabilityOnoff.bind(this)
+      );
     }
     if (this.hasCapability('alarm_boost')) {
-      this.registerCapabilityListener('alarm_boost', this.onCapabilityBoost.bind(this));
+      this.registerCapabilityListener(
+        'alarm_boost',
+        this.onCapabilityBoost.bind(this)
+      );
       await this.setupFlowBoost();
     }
     if (this.hasCapability('alarm_battery')) {
@@ -49,7 +54,9 @@ class SmartWiFiDevice extends Device {
       // Try to use last known IP if discovery failed
       const lastKnownIP = this.getStoreValue('lastKnownIP');
       if (lastKnownIP && lastKnownIP !== '0.0.0.0') {
-        this.log(`Discovery failed, attempting to use last known IP: ${lastKnownIP}`);
+        this.log(
+          `Discovery failed, attempting to use last known IP: ${lastKnownIP}`
+        );
         this.deviceObject = {
           id,
           ip: lastKnownIP,
@@ -57,10 +64,15 @@ class SmartWiFiDevice extends Device {
         // Test if device responds at this IP
         try {
           this.devicepwd = await this.getSetting('devicepwd');
-          const state = await this.driver.getDeviceState(this.deviceObject, this.devicepwd);
+          const state = await this.driver.getDeviceState(
+            this.deviceObject,
+            this.devicepwd
+          );
           if (state) {
             await this.setAvailable();
-            this.log(`Smart Wi-Fi device reconnected using last known IP: [${lastKnownIP}]`);
+            this.log(
+              `Smart Wi-Fi device reconnected using last known IP: [${lastKnownIP}]`
+            );
             return;
           }
         } catch (error) {
@@ -81,10 +93,12 @@ class SmartWiFiDevice extends Device {
 
   async updateDeviceState() {
     this.log('Requesting current device state');
-    const state = await this.driver.getDeviceState(this.deviceObject, this.devicepwd).catch(async (error) => {
-      this.log(`Error getting device state: ${error.message}`);
-      await this.setCapabilityValue('alarm_connectivity', true);
-    });
+    const state = await this.driver
+      .getDeviceState(this.deviceObject, this.devicepwd)
+      .catch(async (error) => {
+        this.log(`Error getting device state: ${error.message}`);
+        await this.setCapabilityValue('alarm_connectivity', true);
+      });
 
     if (state === undefined) {
       return;
@@ -94,8 +108,14 @@ class SmartWiFiDevice extends Device {
 
     // Update stored IP if it changed (device might have gotten new DHCP address)
     const currentStoredIP = this.getStoreValue('lastKnownIP');
-    if (this.deviceObject && this.deviceObject.ip && currentStoredIP !== this.deviceObject.ip) {
-      this.log(`Device IP changed from ${currentStoredIP} to ${this.deviceObject.ip}`);
+    if (
+      this.deviceObject &&
+      this.deviceObject.ip &&
+      currentStoredIP !== this.deviceObject.ip
+    ) {
+      this.log(
+        `Device IP changed from ${currentStoredIP} to ${this.deviceObject.ip}`
+      );
       await this.setStoreValue('lastKnownIP', this.deviceObject.ip);
       await this.setSettings({ last_known_ip: this.deviceObject.ip });
     }
@@ -107,15 +127,15 @@ class SmartWiFiDevice extends Device {
     const oldBoost = this.getCapabilityValue('alarm_boost');
 
     // Update capabilities
-    await this.setCapabilityValue('onoff', (state.onoff === 1));
+    await this.setCapabilityValue('onoff', state.onoff === 1);
 
-    const newBattery = (state.battery === 0);
+    const newBattery = state.battery === 0;
     await this.setCapabilityValue('alarm_battery', newBattery);
     if (oldBattery !== null && oldBattery !== newBattery) {
       await this.triggerBatteryAlarm(newBattery);
     }
 
-    const newBoost = (state.boost.mode === 1);
+    const newBoost = state.boost.mode === 1;
     await this.setCapabilityValue('alarm_boost', newBoost);
     if (oldBoost !== null && oldBoost !== newBoost) {
       await this.triggerBoostAlarm(newBoost);
@@ -131,11 +151,11 @@ class SmartWiFiDevice extends Device {
       max_speed: state.speed.max,
       silent_speed: state.speed.silent,
       interval_speed: state.speed.interval,
-      silent_mode: (state.modes.silent === 1),
-      interval_mode: (state.modes.interval === 1),
-      humidity_sensor: (state.sensors.humidity === 1),
-      temp_sensor: (state.sensors.temperature === 1),
-      motion_sensor: (state.sensors.motion === 1),
+      silent_mode: state.modes.silent === 1,
+      interval_mode: state.modes.interval === 1,
+      humidity_sensor: state.sensors.humidity === 1,
+      temp_sensor: state.sensors.temperature === 1,
+      motion_sensor: state.sensors.motion === 1,
     });
   }
 
@@ -152,19 +172,35 @@ class SmartWiFiDevice extends Device {
       await this.updateDeviceState();
     }
     if (changedKeys.includes('last_known_ip')) {
-      this.setStoreValue('lastKnownIP', newSettings.last_known_ip);
+      await this.setStoreValue('lastKnownIP', newSettings.last_known_ip);
     }
     if (changedKeys.includes('max_speed')) {
-      await this.driver.setMaxSpeed(this.deviceObject, this.devicepwd, newSettings.max_speed);
+      await this.driver.setMaxSpeed(
+        this.deviceObject,
+        this.devicepwd,
+        newSettings.max_speed
+      );
     }
     if (changedKeys.includes('silent_speed')) {
-      await this.driver.setSilentSpeed(this.deviceObject, this.devicepwd, newSettings.silent_speed);
+      await this.driver.setSilentSpeed(
+        this.deviceObject,
+        this.devicepwd,
+        newSettings.silent_speed
+      );
     }
     if (changedKeys.includes('silent_mode')) {
-      await this.driver.setSilentMode(this.deviceObject, this.devicepwd, newSettings.silent_mode ? 1 : 0);
+      await this.driver.setSilentMode(
+        this.deviceObject,
+        this.devicepwd,
+        newSettings.silent_mode ? 1 : 0
+      );
     }
     if (changedKeys.includes('interval_mode')) {
-      await this.driver.setIntervalMode(this.deviceObject, this.devicepwd, newSettings.interval_mode ? 1 : 0);
+      await this.driver.setIntervalMode(
+        this.deviceObject,
+        this.devicepwd,
+        newSettings.interval_mode ? 1 : 0
+      );
     }
   }
 
@@ -186,23 +222,35 @@ class SmartWiFiDevice extends Device {
 
   async onCapabilityDim(value, opts) {
     // Convert 0-1 to 30-100% (device min is 30%)
-    const speedPercent = Math.round(30 + (value * 70));
-    await this.driver.setMaxSpeed(this.deviceObject, this.devicepwd, speedPercent);
+    const speedPercent = Math.round(30 + value * 70);
+    await this.driver.setMaxSpeed(
+      this.deviceObject,
+      this.devicepwd,
+      speedPercent
+    );
   }
 
   async setupFlowBoost() {
     this.log('Setting up boost flow cards');
     // Register condition card
-    this.homey.flow.getConditionCard('smartwifi_alarm_boost').registerRunListener((args, state) => {
-      return args.device.getCapabilityValue('alarm_boost');
-    });
+    this.homey.flow
+      .getConditionCard('smartwifi_alarm_boost')
+      .registerRunListener((args, state) => {
+        return args.device.getCapabilityValue('alarm_boost');
+      });
 
     // Register action card
-    this._flowBoostAction = await this.homey.flow.getActionCard('smartwifi_set_boost');
+    this._flowBoostAction = await this.homey.flow.getActionCard(
+      'smartwifi_set_boost'
+    );
     this._flowBoostAction.registerRunListener(async (args, state) => {
       this.log(`Setting boost mode to: ${args.boost}`);
       await this.setCapabilityValue('alarm_boost', args.boost);
-      await this.driver.setBoostMode(args.device.deviceObject, args.device.devicepwd, args.boost ? 1 : 0);
+      await this.driver.setBoostMode(
+        args.device.deviceObject,
+        args.device.devicepwd,
+        args.boost ? 1 : 0
+      );
     });
   }
 
@@ -212,26 +260,39 @@ class SmartWiFiDevice extends Device {
   }
 
   async triggerBoostAlarm(isOn) {
-    const triggerCard = isOn ? 'smartwifi_alarm_boost_true' : 'smartwifi_alarm_boost_false';
+    const triggerCard = isOn
+      ? 'smartwifi_alarm_boost_true'
+      : 'smartwifi_alarm_boost_false';
     this.log(`Triggering ${triggerCard}`);
-    await this.homey.flow.getDeviceTriggerCard(triggerCard).trigger(this, {}, {});
+    await this.homey.flow
+      .getDeviceTriggerCard(triggerCard)
+      .trigger(this, {}, {});
   }
 
   async triggerBatteryAlarm(isOn) {
-    const triggerCard = isOn ? 'smartwifi_alarm_battery_true' : 'smartwifi_alarm_battery_false';
+    const triggerCard = isOn
+      ? 'smartwifi_alarm_battery_true'
+      : 'smartwifi_alarm_battery_false';
     this.log(`Triggering ${triggerCard}`);
-    await this.homey.flow.getDeviceTriggerCard(triggerCard).trigger(this, {}, {});
+    await this.homey.flow
+      .getDeviceTriggerCard(triggerCard)
+      .trigger(this, {}, {});
   }
 
   async setupFlowSilentMode() {
     this.log('Setting up silent mode flow card');
-    this._flowSilentAction = await this.homey.flow.getActionCard('smartwifi_set_silent_mode');
+    this._flowSilentAction = await this.homey.flow.getActionCard(
+      'smartwifi_set_silent_mode'
+    );
     this._flowSilentAction.registerRunListener(async (args, state) => {
       this.log(`Setting silent mode to: ${args.silent}`);
-      await this.driver.setSilentMode(args.device.deviceObject, args.device.devicepwd, args.silent ? 1 : 0);
+      await this.driver.setSilentMode(
+        args.device.deviceObject,
+        args.device.devicepwd,
+        args.silent ? 1 : 0
+      );
     });
   }
-
 }
 
 module.exports = SmartWiFiDevice;

@@ -1,0 +1,1837 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`ventoDevice should be able to get status from modbus on init 1`] = `
+{
+  "apiCalls": {
+    "capabilities": {
+      "alarm_boost": [Function],
+      "alarm_filter": [Function],
+      "alarm_generic": [Function],
+      "fan_speed": [Function],
+      "manualSpeed": [Function],
+      "manualSpeed_set": [Function],
+      "onoff": [Function],
+      "operationMode": [Function],
+      "operation_mode": [Function],
+      "speedMode": [Function],
+      "speed_mode": [Function],
+      "timerMode": [Function],
+      "timer_mode": [Function],
+    },
+    "getCapabilityValue": {
+      "alarm_boost": 2,
+      "alarm_filter": 2,
+      "alarm_generic": 2,
+    },
+    "hasCapability": {
+      "alarm_boost": 1,
+      "alarm_connectivity": 1,
+      "alarm_filter": 1,
+      "alarm_generic": 1,
+      "fan_speed": 2,
+      "manualSpeed": 1,
+      "onoff": 1,
+      "operationMode": 1,
+      "speedMode": 1,
+      "timerMode": 1,
+    },
+    "log": [
+      [
+        "log",
+        "Vento driver has been initialized",
+      ],
+      [
+        "log",
+        "Locating device with id TEST1234",
+      ],
+      [
+        "setAvailable",
+        undefined,
+      ],
+      [
+        "log",
+        "Vento device has been initialized: [127.0.0.2]",
+      ],
+      [
+        "log",
+        "Create the flow for the speed mode capability",
+      ],
+      [
+        "log",
+        "Create the flow for the manual speed capability",
+      ],
+      [
+        "log",
+        "Create the flow for the operation mode capability",
+      ],
+      [
+        "log",
+        "Create the flow for the timer mode capability",
+      ],
+      [
+        "log",
+        "Requesting the current device state",
+      ],
+      [
+        "log",
+        "Device IP changed from [object Promise] to 127.0.0.2",
+      ],
+      [
+        "log",
+        "{"onoff":1,"speed":{"mode":1,"manualspeed":179},"boost":{"mode":0,"deactivationtimer":30},"operationmode":2,"filter":{"alarm":0,"timer":{"min":34,"hour":20,"days":31}},"humidity":{"current":45,"sensoractivation":1,"threshold":70,"activated":0},"unittype":"Vento Expert Duo A30-1 W V.2","fan":{"rpm":236},"timers":{"mode":0,"countdown":{"sec":0,"min":0,"hour":0}},"alarm":0}",
+      ],
+      [
+        "log",
+        "{"packet":{"_deviceId":"devId","_password":"1234","_functionType":6,"dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}],"_dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}]},"ip":"127.0.0.1"}",
+      ],
+      [
+        "log",
+        "Triggering alarm_boost_false",
+      ],
+      [
+        "triggered",
+        "alarm_boost_false",
+        [
+          VentoDevice {
+            "_flowManualSpeed": FlowCard {
+              "capability": "manualSpeed_set",
+              "device": [Circular],
+              "registerRunListener": [Function],
+              "trigger": [Function],
+            },
+            "_flowOperationMode": FlowCard {
+              "capability": "operation_mode",
+              "device": [Circular],
+              "registerRunListener": [Function],
+              "trigger": [Function],
+            },
+            "_flowSpeedMode": FlowCard {
+              "capability": "speed_mode",
+              "device": [Circular],
+              "registerRunListener": [Function],
+              "trigger": [Function],
+            },
+            "_flowTimerMode": FlowCard {
+              "capability": "timer_mode",
+              "device": [Circular],
+              "registerRunListener": [Function],
+              "trigger": [Function],
+            },
+            "deviceObject": {
+              "id": "TEST1234",
+              "ip": "127.0.0.2",
+            },
+            "devicepwd": "password",
+            "driver": VentoDriver {
+              "deviceList": [
+                {
+                  "id": "TEST1234",
+                  "ip": "127.0.0.2",
+                },
+              ],
+              "error": [Function],
+              "getDevices": [Function],
+              "homey": {
+                "flow": {
+                  "getActionCard": [Function],
+                  "getConditionCard": [Function],
+                  "getDeviceTriggerCard": [Function],
+                },
+                "setInterval": [MockFunction],
+                "setTimeout": [MockFunction] {
+                  "calls": [
+                    [
+                      [Function],
+                      5000,
+                    ],
+                  ],
+                  "results": [
+                    {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                  ],
+                },
+              },
+              "log": [Function],
+              "modbusClient": BlaubergVentoClient {
+                "findDevices": [MockFunction],
+                "send": [MockFunction] {
+                  "calls": [
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 1,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 2,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 68,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 6,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 102,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 183,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 136,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 100,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 37,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 15,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 25,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 185,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 74,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 7,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 131,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 11,
+                            "value": undefined,
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 1,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 1,
+                            "value": Uint8Array [
+                              1,
+                            ],
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 2,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 2,
+                            "value": Uint8Array [
+                              0,
+                            ],
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 2,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 68,
+                            "value": Uint8Array [
+                              0,
+                            ],
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 2,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 68,
+                            "value": Uint8Array [
+                              0,
+                            ],
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 2,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 183,
+                            "value": Uint8Array [
+                              0,
+                            ],
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 2,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 7,
+                            "value": Uint8Array [
+                              0,
+                            ],
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 2,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                  ],
+                  "results": [
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                  ],
+                },
+                "timeout": 1500,
+              },
+            },
+            "error": [Function],
+            "getMockCalls": [Function],
+            "homey": {
+              "flow": {
+                "getActionCard": [Function],
+                "getConditionCard": [Function],
+                "getDeviceTriggerCard": [Function],
+              },
+              "setInterval": [MockFunction],
+              "setTimeout": [MockFunction],
+            },
+            "log": [Function],
+            "settings": {
+              "boost_delay": 30,
+              "devicemodel": "Vento Expert Duo A30-1 W V.2",
+              "devicepwd": "password",
+              "humidity_sensor": true,
+              "humidity_threshold": 70,
+              "last_known_ip": "127.0.0.2",
+            },
+            "store": {
+              "lastKnownIP": "127.0.0.2",
+            },
+          },
+          {},
+          {},
+        ],
+      ],
+      [
+        "log",
+        "Triggering alarm_filter_false",
+      ],
+      [
+        "triggered",
+        "alarm_filter_false",
+        [
+          VentoDevice {
+            "_flowManualSpeed": FlowCard {
+              "capability": "manualSpeed_set",
+              "device": [Circular],
+              "registerRunListener": [Function],
+              "trigger": [Function],
+            },
+            "_flowOperationMode": FlowCard {
+              "capability": "operation_mode",
+              "device": [Circular],
+              "registerRunListener": [Function],
+              "trigger": [Function],
+            },
+            "_flowSpeedMode": FlowCard {
+              "capability": "speed_mode",
+              "device": [Circular],
+              "registerRunListener": [Function],
+              "trigger": [Function],
+            },
+            "_flowTimerMode": FlowCard {
+              "capability": "timer_mode",
+              "device": [Circular],
+              "registerRunListener": [Function],
+              "trigger": [Function],
+            },
+            "deviceObject": {
+              "id": "TEST1234",
+              "ip": "127.0.0.2",
+            },
+            "devicepwd": "password",
+            "driver": VentoDriver {
+              "deviceList": [
+                {
+                  "id": "TEST1234",
+                  "ip": "127.0.0.2",
+                },
+              ],
+              "error": [Function],
+              "getDevices": [Function],
+              "homey": {
+                "flow": {
+                  "getActionCard": [Function],
+                  "getConditionCard": [Function],
+                  "getDeviceTriggerCard": [Function],
+                },
+                "setInterval": [MockFunction],
+                "setTimeout": [MockFunction] {
+                  "calls": [
+                    [
+                      [Function],
+                      5000,
+                    ],
+                  ],
+                  "results": [
+                    {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                  ],
+                },
+              },
+              "log": [Function],
+              "modbusClient": BlaubergVentoClient {
+                "findDevices": [MockFunction],
+                "send": [MockFunction] {
+                  "calls": [
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 1,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 2,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 68,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 6,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 102,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 183,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 136,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 100,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 37,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 15,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 25,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 185,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 74,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 7,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 131,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 11,
+                            "value": undefined,
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 1,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 1,
+                            "value": Uint8Array [
+                              1,
+                            ],
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 2,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 2,
+                            "value": Uint8Array [
+                              0,
+                            ],
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 2,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 68,
+                            "value": Uint8Array [
+                              0,
+                            ],
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 2,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 68,
+                            "value": Uint8Array [
+                              0,
+                            ],
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 2,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 183,
+                            "value": Uint8Array [
+                              0,
+                            ],
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 2,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 7,
+                            "value": Uint8Array [
+                              0,
+                            ],
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 2,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                  ],
+                  "results": [
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                  ],
+                },
+                "timeout": 1500,
+              },
+            },
+            "error": [Function],
+            "getMockCalls": [Function],
+            "homey": {
+              "flow": {
+                "getActionCard": [Function],
+                "getConditionCard": [Function],
+                "getDeviceTriggerCard": [Function],
+              },
+              "setInterval": [MockFunction],
+              "setTimeout": [MockFunction],
+            },
+            "log": [Function],
+            "settings": {
+              "boost_delay": 30,
+              "devicemodel": "Vento Expert Duo A30-1 W V.2",
+              "devicepwd": "password",
+              "humidity_sensor": true,
+              "humidity_threshold": 70,
+              "last_known_ip": "127.0.0.2",
+            },
+            "store": {
+              "lastKnownIP": "127.0.0.2",
+            },
+          },
+          {},
+          {},
+        ],
+      ],
+      [
+        "log",
+        "Triggering alarm_generic_false",
+      ],
+      [
+        "triggered",
+        "alarm_generic_false",
+        [
+          VentoDevice {
+            "_flowManualSpeed": FlowCard {
+              "capability": "manualSpeed_set",
+              "device": [Circular],
+              "registerRunListener": [Function],
+              "trigger": [Function],
+            },
+            "_flowOperationMode": FlowCard {
+              "capability": "operation_mode",
+              "device": [Circular],
+              "registerRunListener": [Function],
+              "trigger": [Function],
+            },
+            "_flowSpeedMode": FlowCard {
+              "capability": "speed_mode",
+              "device": [Circular],
+              "registerRunListener": [Function],
+              "trigger": [Function],
+            },
+            "_flowTimerMode": FlowCard {
+              "capability": "timer_mode",
+              "device": [Circular],
+              "registerRunListener": [Function],
+              "trigger": [Function],
+            },
+            "deviceObject": {
+              "id": "TEST1234",
+              "ip": "127.0.0.2",
+            },
+            "devicepwd": "password",
+            "driver": VentoDriver {
+              "deviceList": [
+                {
+                  "id": "TEST1234",
+                  "ip": "127.0.0.2",
+                },
+              ],
+              "error": [Function],
+              "getDevices": [Function],
+              "homey": {
+                "flow": {
+                  "getActionCard": [Function],
+                  "getConditionCard": [Function],
+                  "getDeviceTriggerCard": [Function],
+                },
+                "setInterval": [MockFunction],
+                "setTimeout": [MockFunction] {
+                  "calls": [
+                    [
+                      [Function],
+                      5000,
+                    ],
+                  ],
+                  "results": [
+                    {
+                      "type": "return",
+                      "value": undefined,
+                    },
+                  ],
+                },
+              },
+              "log": [Function],
+              "modbusClient": BlaubergVentoClient {
+                "findDevices": [MockFunction],
+                "send": [MockFunction] {
+                  "calls": [
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 1,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 2,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 68,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 6,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 102,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 183,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 136,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 100,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 37,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 15,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 25,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 185,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 74,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 7,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 131,
+                            "value": undefined,
+                          },
+                          {
+                            "parameter": 11,
+                            "value": undefined,
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 1,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 1,
+                            "value": Uint8Array [
+                              1,
+                            ],
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 2,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 2,
+                            "value": Uint8Array [
+                              0,
+                            ],
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 2,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 68,
+                            "value": Uint8Array [
+                              0,
+                            ],
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 2,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 68,
+                            "value": Uint8Array [
+                              0,
+                            ],
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 2,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 183,
+                            "value": Uint8Array [
+                              0,
+                            ],
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 2,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                    [
+                      E {
+                        "_dataEntries": [
+                          {
+                            "parameter": 7,
+                            "value": Uint8Array [
+                              0,
+                            ],
+                          },
+                        ],
+                        "_deviceId": "TEST1234",
+                        "_functionType": 2,
+                        "_password": "password",
+                      },
+                      "127.0.0.2",
+                    ],
+                  ],
+                  "results": [
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                    {
+                      "type": "return",
+                      "value": Promise {},
+                    },
+                  ],
+                },
+                "timeout": 1500,
+              },
+            },
+            "error": [Function],
+            "getMockCalls": [Function],
+            "homey": {
+              "flow": {
+                "getActionCard": [Function],
+                "getConditionCard": [Function],
+                "getDeviceTriggerCard": [Function],
+              },
+              "setInterval": [MockFunction],
+              "setTimeout": [MockFunction],
+            },
+            "log": [Function],
+            "settings": {
+              "boost_delay": 30,
+              "devicemodel": "Vento Expert Duo A30-1 W V.2",
+              "devicepwd": "password",
+              "humidity_sensor": true,
+              "humidity_threshold": 70,
+              "last_known_ip": "127.0.0.2",
+            },
+            "store": {
+              "lastKnownIP": "127.0.0.2",
+            },
+          },
+          {},
+          {},
+        ],
+      ],
+      [
+        "log",
+        "{"packet":{"_deviceId":"devId","_password":"1234","_functionType":6,"dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}],"_dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}]},"ip":"127.0.0.1"}",
+      ],
+      [
+        "log",
+        "{"packet":{"_deviceId":"devId","_password":"1234","_functionType":6,"dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}],"_dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}]},"ip":"127.0.0.1"}",
+      ],
+      [
+        "log",
+        "{"packet":{"_deviceId":"devId","_password":"1234","_functionType":6,"dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}],"_dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}]},"ip":"127.0.0.1"}",
+      ],
+      [
+        "log",
+        "{"packet":{"_deviceId":"devId","_password":"1234","_functionType":6,"dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}],"_dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}]},"ip":"127.0.0.1"}",
+      ],
+      [
+        "log",
+        "{"packet":{"_deviceId":"devId","_password":"1234","_functionType":6,"dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}],"_dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}]},"ip":"127.0.0.1"}",
+      ],
+    ],
+    "registerCapabilityListener": {
+      "fan_speed": 1,
+      "manualSpeed": 1,
+      "onoff": 1,
+      "operationMode": 1,
+      "speedMode": 1,
+      "timerMode": 1,
+    },
+    "registerRunListener": {
+      "alarm_boost": [
+        [
+          [Function],
+        ],
+      ],
+      "alarm_filter": [
+        [
+          [Function],
+        ],
+      ],
+      "alarm_generic": [
+        [
+          [Function],
+        ],
+      ],
+      "manualSpeed_set": [
+        [
+          [Function],
+        ],
+      ],
+      "operation_mode": [
+        [
+          [Function],
+        ],
+      ],
+      "speed_mode": [
+        [
+          [Function],
+        ],
+      ],
+      "timer_mode": [
+        [
+          [Function],
+        ],
+      ],
+    },
+    "setCapabilityValue": {
+      "alarm_boost": [
+        [
+          false,
+          {
+            "result": false,
+          },
+        ],
+      ],
+      "alarm_connectivity": [
+        [
+          false,
+          "calling unregistered capability",
+        ],
+      ],
+      "alarm_filter": [
+        [
+          false,
+          {
+            "result": false,
+          },
+        ],
+      ],
+      "alarm_generic": [
+        [
+          false,
+          {
+            "result": false,
+          },
+        ],
+      ],
+      "fan_speed": [
+        [
+          0.7019607843137254,
+          {
+            "result": undefined,
+          },
+        ],
+      ],
+      "filter_timer": [
+        [
+          "31:20:34",
+          "calling unregistered capability",
+        ],
+      ],
+      "manualSpeed": [
+        [
+          70.19607843137254,
+          {
+            "result": undefined,
+          },
+        ],
+      ],
+      "measure_RPM": [
+        [
+          236,
+          "calling unregistered capability",
+        ],
+      ],
+      "measure_humidity": [
+        [
+          45,
+          "calling unregistered capability",
+        ],
+      ],
+      "onoff": [
+        [
+          true,
+          {
+            "result": undefined,
+          },
+        ],
+      ],
+      "operationMode": [
+        [
+          "2",
+          {
+            "result": undefined,
+          },
+        ],
+      ],
+      "speedMode": [
+        [
+          "1",
+          {
+            "result": undefined,
+          },
+        ],
+      ],
+      "timerMode": [
+        [
+          "0",
+          {
+            "result": undefined,
+          },
+        ],
+      ],
+      "timerMode_timer": [
+        [
+          "0:0:0",
+          "calling unregistered capability",
+        ],
+      ],
+    },
+    "settings": {
+      "boost_delay": 30,
+      "devicemodel": "Vento Expert Duo A30-1 W V.2",
+      "devicepwd": "password",
+      "humidity_sensor": true,
+      "humidity_threshold": 70,
+      "last_known_ip": "127.0.0.2",
+    },
+  },
+}
+`;
+
+exports[`ventoDevice should be able to get status when device is marked as off 1`] = `
+{
+  "apiCalls": {
+    "capabilities": {
+      "alarm_boost": [Function],
+      "alarm_filter": [Function],
+      "alarm_generic": [Function],
+      "fan_speed": [Function],
+      "manualSpeed": [Function],
+      "manualSpeed_set": [Function],
+      "onoff": [Function],
+      "operationMode": [Function],
+      "operation_mode": [Function],
+      "speedMode": [Function],
+      "speed_mode": [Function],
+      "timerMode": [Function],
+      "timer_mode": [Function],
+    },
+    "getCapabilityValue": {
+      "alarm_boost": 2,
+      "alarm_filter": 2,
+      "alarm_generic": 2,
+    },
+    "hasCapability": {
+      "alarm_boost": 1,
+      "alarm_connectivity": 1,
+      "alarm_filter": 1,
+      "alarm_generic": 1,
+      "fan_speed": 2,
+      "manualSpeed": 1,
+      "onoff": 1,
+      "operationMode": 1,
+      "speedMode": 1,
+      "timerMode": 1,
+    },
+    "log": [
+      [
+        "log",
+        "Vento driver has been initialized",
+      ],
+      [
+        "log",
+        "Locating device with id TEST1234",
+      ],
+      [
+        "setAvailable",
+        undefined,
+      ],
+      [
+        "log",
+        "Vento device has been initialized: [127.0.0.2]",
+      ],
+      [
+        "log",
+        "Create the flow for the speed mode capability",
+      ],
+      [
+        "log",
+        "Create the flow for the manual speed capability",
+      ],
+      [
+        "log",
+        "Create the flow for the operation mode capability",
+      ],
+      [
+        "log",
+        "Create the flow for the timer mode capability",
+      ],
+      [
+        "log",
+        "Requesting the current device state",
+      ],
+      [
+        "log",
+        "Device IP changed from [object Promise] to 127.0.0.2",
+      ],
+      [
+        "log",
+        "{"onoff":0,"speed":{"mode":1,"manualspeed":179},"boost":{"mode":0,"deactivationtimer":30},"operationmode":2,"filter":{"alarm":0,"timer":{"min":34,"hour":20,"days":31}},"humidity":{"current":45,"sensoractivation":1,"threshold":70,"activated":0},"unittype":"Vento Expert Duo A30-1 W V.2","fan":{"rpm":236},"timers":{"mode":0,"countdown":{"sec":0,"min":0,"hour":0}},"alarm":0}",
+      ],
+      [
+        "log",
+        "{"packet":{"_deviceId":"devId","_password":"1234","_functionType":6,"dataEntries":[{"parameter":1,"value":{"0":0}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}],"_dataEntries":[{"parameter":1,"value":{"0":0}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}]},"ip":"127.0.0.1"}",
+      ],
+      [
+        "log",
+        "{"packet":{"_deviceId":"devId","_password":"1234","_functionType":6,"dataEntries":[{"parameter":1,"value":{"0":0}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}],"_dataEntries":[{"parameter":1,"value":{"0":0}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}]},"ip":"127.0.0.1"}",
+      ],
+      [
+        "log",
+        "{"packet":{"_deviceId":"devId","_password":"1234","_functionType":6,"dataEntries":[{"parameter":1,"value":{"0":0}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}],"_dataEntries":[{"parameter":1,"value":{"0":0}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}]},"ip":"127.0.0.1"}",
+      ],
+      [
+        "log",
+        "{"packet":{"_deviceId":"devId","_password":"1234","_functionType":6,"dataEntries":[{"parameter":1,"value":{"0":0}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}],"_dataEntries":[{"parameter":1,"value":{"0":0}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}]},"ip":"127.0.0.1"}",
+      ],
+      [
+        "log",
+        "{"packet":{"_deviceId":"devId","_password":"1234","_functionType":6,"dataEntries":[{"parameter":1,"value":{"0":0}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}],"_dataEntries":[{"parameter":1,"value":{"0":0}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}]},"ip":"127.0.0.1"}",
+      ],
+      [
+        "log",
+        "{"packet":{"_deviceId":"devId","_password":"1234","_functionType":6,"dataEntries":[{"parameter":1,"value":{"0":0}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}],"_dataEntries":[{"parameter":1,"value":{"0":0}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}]},"ip":"127.0.0.1"}",
+      ],
+    ],
+    "registerCapabilityListener": {
+      "fan_speed": 1,
+      "manualSpeed": 1,
+      "onoff": 1,
+      "operationMode": 1,
+      "speedMode": 1,
+      "timerMode": 1,
+    },
+    "registerRunListener": {
+      "alarm_boost": [
+        [
+          [Function],
+        ],
+      ],
+      "alarm_filter": [
+        [
+          [Function],
+        ],
+      ],
+      "alarm_generic": [
+        [
+          [Function],
+        ],
+      ],
+      "manualSpeed_set": [
+        [
+          [Function],
+        ],
+      ],
+      "operation_mode": [
+        [
+          [Function],
+        ],
+      ],
+      "speed_mode": [
+        [
+          [Function],
+        ],
+      ],
+      "timer_mode": [
+        [
+          [Function],
+        ],
+      ],
+    },
+    "setCapabilityValue": {
+      "alarm_boost": [
+        [
+          false,
+          {
+            "result": false,
+          },
+        ],
+      ],
+      "alarm_connectivity": [
+        [
+          false,
+          "calling unregistered capability",
+        ],
+      ],
+      "alarm_filter": [
+        [
+          false,
+          {
+            "result": false,
+          },
+        ],
+      ],
+      "alarm_generic": [
+        [
+          false,
+          {
+            "result": false,
+          },
+        ],
+      ],
+      "fan_speed": [
+        [
+          0.7019607843137254,
+          {
+            "result": undefined,
+          },
+        ],
+      ],
+      "filter_timer": [
+        [
+          "31:20:34",
+          "calling unregistered capability",
+        ],
+      ],
+      "manualSpeed": [
+        [
+          70.19607843137254,
+          {
+            "result": undefined,
+          },
+        ],
+      ],
+      "measure_RPM": [
+        [
+          236,
+          "calling unregistered capability",
+        ],
+      ],
+      "measure_humidity": [
+        [
+          45,
+          "calling unregistered capability",
+        ],
+      ],
+      "onoff": [
+        [
+          false,
+          {
+            "result": undefined,
+          },
+        ],
+      ],
+      "operationMode": [
+        [
+          "2",
+          {
+            "result": undefined,
+          },
+        ],
+      ],
+      "speedMode": [
+        [
+          "1",
+          {
+            "result": undefined,
+          },
+        ],
+      ],
+      "timerMode": [
+        [
+          "0",
+          {
+            "result": undefined,
+          },
+        ],
+      ],
+      "timerMode_timer": [
+        [
+          "0:0:0",
+          "calling unregistered capability",
+        ],
+      ],
+    },
+    "settings": {
+      "boost_delay": 30,
+      "devicemodel": "Vento Expert Duo A30-1 W V.2",
+      "devicepwd": "password",
+      "humidity_sensor": true,
+      "humidity_threshold": 70,
+      "last_known_ip": "127.0.0.2",
+    },
+  },
+}
+`;
+
+exports[`ventoDevice should be able to handle errors 1`] = `
+{
+  "apiCalls": {
+    "capabilities": {
+      "alarm_boost": [Function],
+      "alarm_filter": [Function],
+      "alarm_generic": [Function],
+      "fan_speed": [Function],
+      "manualSpeed": [Function],
+      "manualSpeed_set": [Function],
+      "onoff": [Function],
+      "operationMode": [Function],
+      "operation_mode": [Function],
+      "speedMode": [Function],
+      "speed_mode": [Function],
+      "timerMode": [Function],
+      "timer_mode": [Function],
+    },
+    "getCapabilityValue": {},
+    "hasCapability": {
+      "alarm_boost": 1,
+      "alarm_connectivity": 1,
+      "alarm_filter": 1,
+      "alarm_generic": 1,
+      "fan_speed": 2,
+      "manualSpeed": 1,
+      "onoff": 1,
+      "operationMode": 1,
+      "speedMode": 1,
+      "timerMode": 1,
+    },
+    "log": [
+      [
+        "log",
+        "Vento driver has been initialized",
+      ],
+      [
+        "log",
+        "Locating device with id TEST1234",
+      ],
+      [
+        "setAvailable",
+        undefined,
+      ],
+      [
+        "log",
+        "Vento device has been initialized: [127.0.0.2]",
+      ],
+      [
+        "log",
+        "Create the flow for the speed mode capability",
+      ],
+      [
+        "log",
+        "Create the flow for the manual speed capability",
+      ],
+      [
+        "log",
+        "Create the flow for the operation mode capability",
+      ],
+      [
+        "log",
+        "Create the flow for the timer mode capability",
+      ],
+      [
+        "log",
+        "Requesting the current device state",
+      ],
+    ],
+    "registerCapabilityListener": {
+      "fan_speed": 1,
+      "manualSpeed": 1,
+      "onoff": 1,
+      "operationMode": 1,
+      "speedMode": 1,
+      "timerMode": 1,
+    },
+    "registerRunListener": {
+      "alarm_boost": [
+        [
+          [Function],
+        ],
+      ],
+      "alarm_filter": [
+        [
+          [Function],
+        ],
+      ],
+      "alarm_generic": [
+        [
+          [Function],
+        ],
+      ],
+      "manualSpeed_set": [
+        [
+          [Function],
+        ],
+      ],
+      "operation_mode": [
+        [
+          [Function],
+        ],
+      ],
+      "speed_mode": [
+        [
+          [Function],
+        ],
+      ],
+      "timer_mode": [
+        [
+          [Function],
+        ],
+      ],
+    },
+    "setCapabilityValue": {
+      "alarm_connectivity": [
+        [
+          true,
+          "calling unregistered capability",
+        ],
+      ],
+    },
+    "settings": {
+      "devicepwd": "password",
+      "last_known_ip": "127.0.0.2",
+    },
+  },
+}
+`;
+
+exports[`ventoDevice should be able to setup all capabilities 1`] = `
+{
+  "calls": {
+    "capabilities": {
+      "alarm_boost": [Function],
+      "alarm_filter": [Function],
+      "alarm_generic": [Function],
+      "fan_speed": [Function],
+      "manualSpeed": [Function],
+      "manualSpeed_set": [Function],
+      "onoff": [Function],
+      "operationMode": [Function],
+      "operation_mode": [Function],
+      "speedMode": [Function],
+      "speed_mode": [Function],
+      "timerMode": [Function],
+      "timer_mode": [Function],
+    },
+    "getCapabilityValue": {},
+    "hasCapability": {
+      "alarm_boost": 1,
+      "alarm_filter": 1,
+      "alarm_generic": 1,
+      "fan_speed": 1,
+      "manualSpeed": 1,
+      "onoff": 1,
+      "operationMode": 1,
+      "speedMode": 1,
+      "timerMode": 1,
+    },
+    "log": [
+      [
+        "log",
+        "{"packet":{"_deviceId":"devId","_password":"1234","_functionType":6,"dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}],"_dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}]},"ip":"127.0.0.1"}",
+      ],
+      [
+        "log",
+        "{"packet":{"_deviceId":"devId","_password":"1234","_functionType":6,"dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}],"_dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}]},"ip":"127.0.0.1"}",
+      ],
+      [
+        "log",
+        "{"packet":{"_deviceId":"devId","_password":"1234","_functionType":6,"dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}],"_dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}]},"ip":"127.0.0.1"}",
+      ],
+      [
+        "log",
+        "{"packet":{"_deviceId":"devId","_password":"1234","_functionType":6,"dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}],"_dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}]},"ip":"127.0.0.1"}",
+      ],
+      [
+        "log",
+        "{"packet":{"_deviceId":"devId","_password":"1234","_functionType":6,"dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}],"_dataEntries":[{"parameter":1,"value":{"0":1}},{"parameter":2,"value":{"0":1}},{"parameter":68,"value":{"0":179}},{"parameter":6,"value":{"0":0}},{"parameter":102,"value":{"0":30}},{"parameter":183,"value":{"0":2}},{"parameter":136,"value":{"0":0}},{"parameter":100,"value":{"0":34,"1":20,"2":31,"3":0}},{"parameter":37,"value":{"0":45}},{"parameter":15,"value":{"0":1}},{"parameter":25,"value":{"0":70}},{"parameter":185,"value":{"0":4,"1":0}},{"parameter":74,"value":{"0":236,"1":4}},{"parameter":7,"value":{"0":0}},{"parameter":131,"value":{"0":0}},{"parameter":11,"value":{"0":0,"1":0,"2":0}}]},"ip":"127.0.0.1"}",
+      ],
+      [
+        "log",
+        "Vento driver has been initialized",
+      ],
+      [
+        "log",
+        "Create the flow for the speed mode capability",
+      ],
+      [
+        "log",
+        "Create the flow for the manual speed capability",
+      ],
+      [
+        "log",
+        "Create the flow for the operation mode capability",
+      ],
+      [
+        "log",
+        "Create the flow for the timer mode capability",
+      ],
+    ],
+    "registerCapabilityListener": {
+      "fan_speed": 1,
+      "manualSpeed": 1,
+      "onoff": 1,
+      "operationMode": 1,
+      "speedMode": 1,
+      "timerMode": 1,
+    },
+    "registerRunListener": {
+      "alarm_boost": [
+        [
+          [Function],
+        ],
+      ],
+      "alarm_filter": [
+        [
+          [Function],
+        ],
+      ],
+      "alarm_generic": [
+        [
+          [Function],
+        ],
+      ],
+      "manualSpeed_set": [
+        [
+          [Function],
+        ],
+      ],
+      "operation_mode": [
+        [
+          [Function],
+        ],
+      ],
+      "speed_mode": [
+        [
+          [Function],
+        ],
+      ],
+      "timer_mode": [
+        [
+          [Function],
+        ],
+      ],
+    },
+    "setCapabilityValue": {
+      "fan_speed": [
+        [
+          0.7019607843137254,
+          {
+            "result": undefined,
+          },
+        ],
+      ],
+      "manualSpeed": [
+        [
+          70.19607843137254,
+          {
+            "result": undefined,
+          },
+        ],
+      ],
+      "operationMode": [
+        [
+          "2",
+          {
+            "result": undefined,
+          },
+        ],
+      ],
+      "speedMode": [
+        [
+          "1",
+          {
+            "result": undefined,
+          },
+        ],
+      ],
+      "timerMode": [
+        [
+          "0",
+          {
+            "result": undefined,
+          },
+        ],
+      ],
+      "timerMode_timer": [
+        [
+          "0:0:0",
+          "calling unregistered capability",
+        ],
+      ],
+    },
+    "settings": {
+      "devicepwd": "password",
+    },
+  },
+}
+`;
+
+exports[`ventoDevice should get and set values trough the api and modbus 1`] = `
+{
+  "modbusCalls": [
+    [
+      E {
+        "_dataEntries": [
+          {
+            "parameter": 1,
+            "value": undefined,
+          },
+          {
+            "parameter": 2,
+            "value": undefined,
+          },
+          {
+            "parameter": 68,
+            "value": undefined,
+          },
+          {
+            "parameter": 6,
+            "value": undefined,
+          },
+          {
+            "parameter": 102,
+            "value": undefined,
+          },
+          {
+            "parameter": 183,
+            "value": undefined,
+          },
+          {
+            "parameter": 136,
+            "value": undefined,
+          },
+          {
+            "parameter": 100,
+            "value": undefined,
+          },
+          {
+            "parameter": 37,
+            "value": undefined,
+          },
+          {
+            "parameter": 15,
+            "value": undefined,
+          },
+          {
+            "parameter": 25,
+            "value": undefined,
+          },
+          {
+            "parameter": 185,
+            "value": undefined,
+          },
+          {
+            "parameter": 74,
+            "value": undefined,
+          },
+          {
+            "parameter": 7,
+            "value": undefined,
+          },
+          {
+            "parameter": 131,
+            "value": undefined,
+          },
+          {
+            "parameter": 11,
+            "value": undefined,
+          },
+        ],
+        "_deviceId": "TEST1234",
+        "_functionType": 1,
+        "_password": "password",
+      },
+      "127.0.0.2",
+    ],
+  ],
+}
+`;

@@ -1,10 +1,10 @@
 {
-"type": "boolean",
-"title": {
+  "type": "boolean",
+  "title": {
     "en": "Device alarm",
     "nl": "Device alarm"
-},
-"getable": true,
-"setable": false,
-"icon": "/assets/alarm_generic.svg"
+  },
+  "getable": true,
+  "setable": false,
+  "icon": "/assets/alarm_generic.svg"
 }

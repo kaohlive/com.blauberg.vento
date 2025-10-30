@@ -1,217 +1,217 @@
 {
-    "triggers": [
-        {
-            "id":"alarm_filter_false",
-            "title": { "en": "The Filter alarm turned off" }
-        },
-        {
-            "id":"alarm_filter_true",
-            "title": { "en": "The Filter alarm truned on" }
-        },
-        {
-            "id":"alarm_boost_false",
-            "title": { "en": "The Boost mode turned off" }
-        },
-        {
-            "id":"alarm_boost_true",
-            "title": { "en": "The boost mode truned on" }
-        },
-        {
-            "id": "alarm_generic_true",
-            "title": {
-                "en": "The generic alarm turned on",
-                "nl": "Het algemene alarm gaat aan",
-                "de": "Der allgemeine Alarm ist angegangen",
-                "fr": "L'alarme générique s'est activée",
-                "it": "L'allarme generico è stato attivato",
-                "sv": "Det generiska larmet är aktiverat",
-                "no": "Den generelle alarmen er aktivert",
-                "es": "La alarma general se ha activado",
-                "da": "Den generiske alarm blev aktiveret",
-                "ru": "Общий сигнал включен",
-                "pl": "Alarm ogólny włączony",
-                "ko": "일반 알람 켜짐"
-            }
-        },
-        {
-            "id": "alarm_generic_false",
-            "title": {
-                "en": "The generic alarm turned off",
-                "nl": "Het algemene alarm ging uit",
-                "de": "Der allgemeine Alarm ist ausgegangen",
-                "fr": "L'alarme générique s'est désactivée",
-                "it": "L'allarme generico è stato disattivato",
-                "sv": "Det generiska larmet är inaktiverat",
-                "no": "Den generelle alarmen er deaktivert",
-                "es": "La alarma general se ha desactivado",
-                "da": "Den generiske alarm blev deaktiveret",
-                "ru": "Общий сигнал выключен",
-                "pl": "Alarm ogólny wyłączony",
-                "ko": "일반 알람 꺼짐"
-            }
-        },
-        {
-          "deprecated": true,
-            "id":"manualSpeed_changed",
-            "title": { "en": "The manual speed changed" },
-            "tokens": [
-                    {
-                    "name": "manualSpeed",
-                    "type": "number",
-                    "title": { "en": "Speed" },
-                    "example": { "en": "Speed" }
-                    }
-            ]
-        },
-        {
-            "id":"measure_RPM_changed",
-            "title": { "en": "FAN RPM changed" },
-            "tokens": [
-                {
-                    "name": "manualSpeemeasure_RPM",
-                    "type": "number",
-                    "title": { "en": "Fan RPM" },
-                    "example": { "en": "Fan speed in RPM" }
-                }
-            ]
-        }
-    ],
-    "conditions": [
-        {
-            "id": "alarm_generic",
-            "title": {
-                "en": "The generic alarm is !{{on|off}}",
-                "nl": "Het algemene alarm is !{{aan|uit}}",
-                "de": "Der allgemeine Alarm ist !{{an|aus}}",
-                "fr": "L'alarme générique est !{{en marche|arrêtée}}",
-                "it": "L'allarme generico è !{{acceso|spento}}",
-                "sv": "Det generiska larmet är !{{på|av}}",
-                "no": "Den generelle alarmen er !{{på|av}}",
-                "es": "La alarma general está !{{activada|desactivada}}",
-                "da": "Den generiske alarm er !{{tændt|slukket}}",
-                "ru": "Общий сигнал !{{вкл.|выкл.}}",
-                "pl": "Alarm ogólny !{{włączony|wyłączony}}",
-                "ko": "일반 알람 !{{켬|끔}}"
-            }
-        },
-        {
-          "id": "alarm_filter",
-          "title": {
-              "en": "The filter alarm is !{{on|off}}"
-          }
-        },
-        {
-          "id": "alarm_boost",
-          "title": {
-              "en": "The boost alarm is !{{on|off}}"
-          }
-        }
-    ],
-    "actions": [
-      {
-        "deprecated": true,
-        "id":"manualSpeed_set",
-        "title": {
-          "en": "Set the manual speed"
-        },
-        "titleFormatted": {
-          "en": "Sets the manualspeed of the device to [[speed]] "
-        },      
-        "hint": {
-          "en": "Use the slider to set the manual speed mode to a certain speed"
-        },
-        "args": [
-          {
-            "type": "range",
-            "name": "speed",
-            "title": {
-              "en": "Speed"
-            },
-            "placeholder": {
-              "en": "Speed"
-            },
-            "min": 0,
-            "max": 100,
-            "step": 1,
-            "label": "%",
-            "labelMultiplier": 1,
-            "labelDecimals": 0
-          }
-        ]
-      },
-      {
-        "id":"timer_mode",
-        "title": {
-          "en": "Set the timer mode"
-        },
-        "titleFormatted": {
-          "en": "Sets the timer mode of the device to [[timerMode]] "
-        },      
-        "hint": {
-          "en": "Sets the device to the desired timer mode"
-        },
-        "args": [
-            {
-                "type": "dropdown",
-                "name": "timerMode",
-                "title": { "en": "The desired timer mode" },
-                "values": [
-                    { "id": "0", "title": { "en": "Off" }},
-                    { "id": "1", "title": { "en": "Night mode" }},
-                    { "id": "2", "title": { "en": "Party mode" }}
-                ]
-            }
-        ]
-      },
-      {
-        "id":"speed_mode",
-        "title": {
-          "en": "Set the speed mode"
-        },
-        "titleFormatted": {
-          "en": "Sets the speed mode of the device to [[speedMode]] "
-        },      
-        "hint": {
-          "en": "Sets the device to the desired speed mode"
-        },
-        "args": [
-            {
-                "type": "dropdown",
-                "name": "speedMode",
-                "title": { "en": "The desired speed mode" },
-                "values": [
-                    { "id": "0", "title": { "en": "Off" }},
-                    { "id": "1", "title": { "en": "Low" }},
-                    { "id": "2", "title": { "en": "Medium" }},
-                    { "id": "3", "title": { "en": "High" }},
-                    { "id": "255", "title": { "en": "Manual" }}
-                ]
-            }
-        ]
-      },
-      {
-        "id":"operation_mode",
-        "title": {
-          "en": "Set the operation mode"
-        },
-        "titleFormatted": {
-          "en": "Sets the operation mode of the device to [[operationMode]] "
-        },      
-        "hint": {
-          "en": "Sets the device to the desired operation mode"
-        },
-        "args": [
-            {
-                "type": "dropdown",
-                "name": "operationMode",
-                "title": { "en": "The desired operation mode" },
-                "values": [
-                    { "id": "0", "title": { "en": "Ventilation" }},
-                    { "id": "1", "title": { "en": "Regeneration" }},
-                    { "id": "2", "title": { "en": "Supply" }}
-                ]
-            }
-        ]
+  "triggers": [
+    {
+      "id": "alarm_filter_false",
+      "title": { "en": "The Filter alarm turned off" }
+    },
+    {
+      "id": "alarm_filter_true",
+      "title": { "en": "The Filter alarm truned on" }
+    },
+    {
+      "id": "alarm_boost_false",
+      "title": { "en": "The Boost mode turned off" }
+    },
+    {
+      "id": "alarm_boost_true",
+      "title": { "en": "The boost mode truned on" }
+    },
+    {
+      "id": "alarm_generic_true",
+      "title": {
+        "en": "The generic alarm turned on",
+        "nl": "Het algemene alarm gaat aan",
+        "de": "Der allgemeine Alarm ist angegangen",
+        "fr": "L'alarme générique s'est activée",
+        "it": "L'allarme generico è stato attivato",
+        "sv": "Det generiska larmet är aktiverat",
+        "no": "Den generelle alarmen er aktivert",
+        "es": "La alarma general se ha activado",
+        "da": "Den generiske alarm blev aktiveret",
+        "ru": "Общий сигнал включен",
+        "pl": "Alarm ogólny włączony",
+        "ko": "일반 알람 켜짐"
       }
-    ]
+    },
+    {
+      "id": "alarm_generic_false",
+      "title": {
+        "en": "The generic alarm turned off",
+        "nl": "Het algemene alarm ging uit",
+        "de": "Der allgemeine Alarm ist ausgegangen",
+        "fr": "L'alarme générique s'est désactivée",
+        "it": "L'allarme generico è stato disattivato",
+        "sv": "Det generiska larmet är inaktiverat",
+        "no": "Den generelle alarmen er deaktivert",
+        "es": "La alarma general se ha desactivado",
+        "da": "Den generiske alarm blev deaktiveret",
+        "ru": "Общий сигнал выключен",
+        "pl": "Alarm ogólny wyłączony",
+        "ko": "일반 알람 꺼짐"
+      }
+    },
+    {
+      "deprecated": true,
+      "id": "manualSpeed_changed",
+      "title": { "en": "The manual speed changed" },
+      "tokens": [
+        {
+          "name": "manualSpeed",
+          "type": "number",
+          "title": { "en": "Speed" },
+          "example": { "en": "Speed" }
+        }
+      ]
+    },
+    {
+      "id": "measure_RPM_changed",
+      "title": { "en": "FAN RPM changed" },
+      "tokens": [
+        {
+          "name": "manualSpeemeasure_RPM",
+          "type": "number",
+          "title": { "en": "Fan RPM" },
+          "example": { "en": "Fan speed in RPM" }
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "id": "alarm_generic",
+      "title": {
+        "en": "The generic alarm is !{{on|off}}",
+        "nl": "Het algemene alarm is !{{aan|uit}}",
+        "de": "Der allgemeine Alarm ist !{{an|aus}}",
+        "fr": "L'alarme générique est !{{en marche|arrêtée}}",
+        "it": "L'allarme generico è !{{acceso|spento}}",
+        "sv": "Det generiska larmet är !{{på|av}}",
+        "no": "Den generelle alarmen er !{{på|av}}",
+        "es": "La alarma general está !{{activada|desactivada}}",
+        "da": "Den generiske alarm er !{{tændt|slukket}}",
+        "ru": "Общий сигнал !{{вкл.|выкл.}}",
+        "pl": "Alarm ogólny !{{włączony|wyłączony}}",
+        "ko": "일반 알람 !{{켬|끔}}"
+      }
+    },
+    {
+      "id": "alarm_filter",
+      "title": {
+        "en": "The filter alarm is !{{on|off}}"
+      }
+    },
+    {
+      "id": "alarm_boost",
+      "title": {
+        "en": "The boost alarm is !{{on|off}}"
+      }
+    }
+  ],
+  "actions": [
+    {
+      "deprecated": true,
+      "id": "manualSpeed_set",
+      "title": {
+        "en": "Set the manual speed"
+      },
+      "titleFormatted": {
+        "en": "Sets the manualspeed of the device to [[speed]] "
+      },
+      "hint": {
+        "en": "Use the slider to set the manual speed mode to a certain speed"
+      },
+      "args": [
+        {
+          "type": "range",
+          "name": "speed",
+          "title": {
+            "en": "Speed"
+          },
+          "placeholder": {
+            "en": "Speed"
+          },
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "label": "%",
+          "labelMultiplier": 1,
+          "labelDecimals": 0
+        }
+      ]
+    },
+    {
+      "id": "timer_mode",
+      "title": {
+        "en": "Set the timer mode"
+      },
+      "titleFormatted": {
+        "en": "Sets the timer mode of the device to [[timerMode]] "
+      },
+      "hint": {
+        "en": "Sets the device to the desired timer mode"
+      },
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "timerMode",
+          "title": { "en": "The desired timer mode" },
+          "values": [
+            { "id": "0", "title": { "en": "Off" } },
+            { "id": "1", "title": { "en": "Night mode" } },
+            { "id": "2", "title": { "en": "Party mode" } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "speed_mode",
+      "title": {
+        "en": "Set the speed mode"
+      },
+      "titleFormatted": {
+        "en": "Sets the speed mode of the device to [[speedMode]] "
+      },
+      "hint": {
+        "en": "Sets the device to the desired speed mode"
+      },
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "speedMode",
+          "title": { "en": "The desired speed mode" },
+          "values": [
+            { "id": "0", "title": { "en": "Off" } },
+            { "id": "1", "title": { "en": "Low" } },
+            { "id": "2", "title": { "en": "Medium" } },
+            { "id": "3", "title": { "en": "High" } },
+            { "id": "255", "title": { "en": "Manual" } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "operation_mode",
+      "title": {
+        "en": "Set the operation mode"
+      },
+      "titleFormatted": {
+        "en": "Sets the operation mode of the device to [[operationMode]] "
+      },
+      "hint": {
+        "en": "Sets the device to the desired operation mode"
+      },
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "operationMode",
+          "title": { "en": "The desired operation mode" },
+          "values": [
+            { "id": "0", "title": { "en": "Ventilation" } },
+            { "id": "1", "title": { "en": "Regeneration" } },
+            { "id": "2", "title": { "en": "Supply" } }
+          ]
+        }
+      ]
+    }
+  ]
 }

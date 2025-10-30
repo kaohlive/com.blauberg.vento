@@ -1,10 +1,10 @@
 {
-"type": "boolean",
-"title": {
+  "type": "boolean",
+  "title": {
     "en": "Filter",
     "nl": "Filter"
-},
-"getable": true,
-"setable": false,
-"icon": "/assets/air-filter.svg"
+  },
+  "getable": true,
+  "setable": false,
+  "icon": "/assets/air-filter.svg"
 }

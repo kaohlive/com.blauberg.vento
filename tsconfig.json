@@ -3,6 +3,7 @@
   "compilerOptions": {
     "allowJs": true,
     "outDir": ".homeybuild/",
-    "strict": true
+    "strict": true,
+    "isolatedModules": true
   }
 }

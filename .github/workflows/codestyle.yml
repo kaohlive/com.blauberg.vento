@@ -1,0 +1,52 @@
+name: Validate codestyle
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  tests:
+    name: tests
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: '--max_old_space_size=4096 --experimental-vm-modules'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24.x
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Test
+        timeout-minutes: 5
+        run: |
+          npm run test
+
+  lint:
+    name: linting
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: '--max_old_space_size=4096 --experimental-vm-modules'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24.x
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Check diff for eslint
+        run: |
+          npm run lint -- --max-warnings=0
+
+      - name: Check prettier
+        run: |
+          npm run prettier -- --check

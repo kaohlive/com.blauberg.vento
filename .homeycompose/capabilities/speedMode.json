@@ -7,10 +7,10 @@
   "setable": true,
   "uiComponent": "picker",
   "values": [
-    { "id": "0", "title": { "en": "Off" }},
-    { "id": "1", "title": { "en": "Low" }},
-    { "id": "2", "title": { "en": "Medium" }},
-    { "id": "3", "title": { "en": "High" }},
-    { "id": "255", "title": { "en": "Manual" }}
+    { "id": "0", "title": { "en": "Off" } },
+    { "id": "1", "title": { "en": "Low" } },
+    { "id": "2", "title": { "en": "Medium" } },
+    { "id": "3", "title": { "en": "High" } },
+    { "id": "255", "title": { "en": "Manual" } }
   ]
 }
