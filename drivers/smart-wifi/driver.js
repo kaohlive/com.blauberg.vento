@@ -138,13 +138,12 @@ class SmartWiFiDriver extends Driver {
   async locateDevices() {
     const locatedDevices = await this.modbusClient.findDevices();
     const oldamount = this.deviceList.length;
-    this.log(`Currently located ${oldamount} devices, found ${locatedDevices.length} devices`);
+    this.log(`Current we located ${oldamount} devices, lets see if we found more: amount located ${locatedDevices.length}`);
     const homeydevices = this.getDevices();
-
     locatedDevices.forEach((locatedDevice) => {
       const knowndevice = this.deviceList.find((device) => device.id === locatedDevice.id);
       if (!knowndevice) {
-        this.log(`Located new device with id ${locatedDevice.id}`);
+        this.log(`Located new device with id ${locatedDevice.id} remember it and initialize it`);
         this.deviceList.push(locatedDevice);
         const homeydevice = homeydevices.find((device) => device.getData().id === locatedDevice.id);
         if (homeydevice) {
@@ -154,13 +153,13 @@ class SmartWiFiDriver extends Driver {
         }
       }
     });
-
+    // Now lets ask all our homey enabled devices to update their state
     homeydevices.forEach((homeydevice) => {
       if (homeydevice.getAvailable()) {
-        this.log(`Refreshing state for device [${homeydevice.getData().id}]`);
+        this.log(`We know this device [${homeydevice.getData().id}] already, lets refresh its state`);
         homeydevice.updateDeviceState();
       } else {
-        this.log('Device not available yet');
+        this.log('Not getting the state since device is not available yet');
       }
     });
   }
@@ -195,7 +194,7 @@ class SmartWiFiDriver extends Driver {
   }
 
   async onPair(session) {
-    let devicePassword = '1111'; // Default password
+    const devicePassword = '1111'; // Default password
 
     session.setHandler('list_devices', async (data) => {
       this.log('Provide user list of discovered Smart Wi-Fi fans');
@@ -218,17 +217,11 @@ class SmartWiFiDriver extends Driver {
       this.log(`Filtered to [${smartWiFiDevices.length}] Smart Wi-Fi devices`);
 
       // Return the mapped list of Smart Wi-Fi devices only
-      return smartWiFiDevices.map((device) => {
-        const smartwifidevice = {
-          id: device.id,
-          name: `Smart Wi-Fi ${device.id}`,
-          data: {
-            id: device.id,
-          },
-        };
-        this.log(`Located: ${JSON.stringify(smartwifidevice)}`);
-        return smartwifidevice;
-      });
+      return smartWiFiDevices.map((device) => ({
+        id: device.id,
+        name: `Smart Wi-Fi ${device.id}`,
+        data: { id: device.id },
+      }));
     });
 
     session.setHandler('add_devices', async (data) => {

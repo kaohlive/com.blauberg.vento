@@ -56,7 +56,7 @@ class SmartWiFiDevice extends Device {
         };
         // Test if device responds at this IP
         try {
-          this.devicepwd = await this.getSetting('devicepwd');
+          this.devicepwd = this.getSetting('devicepwd') || '1111';
           const state = await this.driver.getDeviceState(this.deviceObject, this.devicepwd);
           if (state) {
             await this.setAvailable();
@@ -72,7 +72,7 @@ class SmartWiFiDevice extends Device {
     } else {
       await this.setAvailable();
       this.log(`Smart Wi-Fi device initialized: [${this.deviceObject.ip}]`);
-      this.devicepwd = await this.getSetting('devicepwd');
+      this.devicepwd = this.getSetting('devicepwd') || '1111';
       // Store IP address for future fallback
       await this.setStoreValue('lastKnownIP', this.deviceObject.ip);
       await this.setSettings({ last_known_ip: this.deviceObject.ip });
@@ -91,6 +91,8 @@ class SmartWiFiDevice extends Device {
     }
 
     await this.setCapabilityValue('alarm_connectivity', false);
+    // Track successful connection time
+    await this.setStoreValue('lastSuccessfulConnection', Date.now());
 
     // Update stored IP if it changed (device might have gotten new DHCP address)
     const currentStoredIP = this.getStoreValue('lastKnownIP');

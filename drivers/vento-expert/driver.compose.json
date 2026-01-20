@@ -8,6 +8,7 @@
     "alarm_filter",
     "alarm_generic",
     "filter_timer",
+    "button_reset_filter",
     "manualSpeed",
     "fan_speed",
     "measure_humidity",

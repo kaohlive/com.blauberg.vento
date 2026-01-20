@@ -1,0 +1,15 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Reset filter",
+    "nl": "Filter resetten"
+  },
+  "desc": {
+    "en": "Reset the filter timer and clear the filter alarm",
+    "nl": "Reset de filtertimer en wis het filteralarm"
+  },
+  "getable": false,
+  "setable": true,
+  "uiComponent": "button",
+  "icon": "/assets/air-filter.svg"
+}

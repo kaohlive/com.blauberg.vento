@@ -18,8 +18,7 @@ class VentoDriver extends Driver {
     setTimeout(() => {
       this.locateDevices();
       this.start_discover_loop();
-  }, 5000); 
-    
+    }, 5000);
   }
 
   // eslint-disable-next-line camelcase
@@ -69,6 +68,11 @@ class VentoDriver extends Driver {
 
   async setBoostDelay(device, devicepass, value) {
     return this.setDeviceValue(device, devicepass, Parameter.BOOST_MODE_DEACTIVATION_DELAY, value);
+  }
+
+  async resetFilterTimer(device, devicepass) {
+    // Parameter 0x0065 (101) - RESET_FILTER_TIMER - Write any byte to reset
+    return this.setDeviceValue(device, devicepass, Parameter.RESET_FILTER_TIMER, 1);
   }
 
   async getDeviceState(device, devicepass) {
@@ -159,7 +163,9 @@ class VentoDriver extends Driver {
         const homeydevice = homeydevices.find((device) => device.getData().id === locatedDevice.id);
         if (homeydevice) {
           homeydevice.discovery(locatedDevice.id);
-        } else this.log('Located device is not added to Homey yet');
+        } else {
+          this.log('Located device is not added to Homey yet');
+        }
       }
     });
     // Now lets ask all our homey enabled devices to update their state
@@ -207,7 +213,7 @@ class VentoDriver extends Driver {
   }
 
   async onPair(session) {
-    let devicePassword = '1111'; // Default password
+    const devicePassword = '1111'; // Default password
 
     session.setHandler('list_devices', async (data) => {
       this.log('Provide user list of discovered Vento fans to choose from.');
@@ -249,7 +255,9 @@ class VentoDriver extends Driver {
       await session.showView('add_devices');
       if (data.length > 0) {
         this.log(`Vento fan [${data[0].name}] added`);
-      } else this.log('no Vento fan added');
+      } else {
+        this.log('no Vento fan added');
+      }
     });
   }
 

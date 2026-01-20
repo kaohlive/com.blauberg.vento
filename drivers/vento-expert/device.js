@@ -22,6 +22,9 @@ class VentoDevice extends Device {
     if (!this.hasCapability('alarm_connectivity')) {
       await this.addCapability('alarm_connectivity');
     }
+    if (!this.hasCapability('button_reset_filter')) {
+      await this.addCapability('button_reset_filter');
+    }
   }
 
   async setupCapabilities() {
@@ -62,6 +65,10 @@ class VentoDevice extends Device {
       this.registerCapabilityListener('timerMode', this.onCapabilityTimerMode.bind(this));
       await this.setupFlowTimerMode();
     }
+    if (this.hasCapability('button_reset_filter')) {
+      this.registerCapabilityListener('button_reset_filter', this.onCapabilityResetFilter.bind(this));
+      await this.setupFlowResetFilter();
+    }
   }
 
   async discovery(id) {
@@ -77,7 +84,7 @@ class VentoDevice extends Device {
         };
         // Test if device responds at this IP
         try {
-          this.devicepwd = await this.getSetting('devicepwd');
+          this.devicepwd = this.getSetting('devicepwd') || '1111';
           const state = await this.driver.getDeviceState(this.deviceObject, this.devicepwd);
           if (state) {
             await this.setAvailable();
@@ -93,7 +100,7 @@ class VentoDevice extends Device {
     } else {
       await this.setAvailable();
       this.log(`Vento device has been initialized: [${this.deviceObject.ip}]`);
-      this.devicepwd = await this.getSetting('devicepwd');
+      this.devicepwd = this.getSetting('devicepwd') || '1111';
       // Store IP address for future fallback
       await this.setStoreValue('lastKnownIP', this.deviceObject.ip);
       await this.setSettings({ last_known_ip: this.deviceObject.ip });
@@ -109,6 +116,8 @@ class VentoDevice extends Device {
       return;
     }
     await this.setCapabilityValue('alarm_connectivity', false);
+    // Track successful connection time
+    await this.setStoreValue('lastSuccessfulConnection', Date.now());
 
     // Update stored IP if it changed (device might have gotten new DHCP address)
     const currentStoredIP = this.getStoreValue('lastKnownIP');
@@ -228,6 +237,15 @@ class VentoDevice extends Device {
     // this.setCapabilityValue('operationMode', Number(value));
   }
 
+  async onCapabilityResetFilter(value, opts) {
+    this.log('Resetting filter timer');
+    await this.driver.resetFilterTimer(this.deviceObject, this.devicepwd);
+    // Clear the alarm and refresh state after reset
+    await this.setCapabilityValue('alarm_filter', false);
+    // Refresh device state to get updated timer
+    await this.updateDeviceState();
+  }
+
   async setupFlowOperationMode() {
     this.log('Create the flow for the operation mode capability');
     // Now setup the flow cards
@@ -288,6 +306,18 @@ class VentoDevice extends Device {
         this.log(`attempt to change timer mode: ${args.timerMode}`);
         await this.setCapabilityValue('timerMode', args.timerMode);
         await this.driver.setTimerMode(args.device.deviceObject, args.device.devicepwd, args.timerMode);
+      });
+  }
+
+  async setupFlowResetFilter() {
+    this.log('Create the flow for the reset filter action');
+    this._flowResetFilter = await this.homey.flow.getActionCard('reset_filter');
+    this._flowResetFilter
+      .registerRunListener(async (args, state) => {
+        this.log('Flow action: resetting filter timer');
+        await args.device.driver.resetFilterTimer(args.device.deviceObject, args.device.devicepwd);
+        await args.device.setCapabilityValue('alarm_filter', false);
+        await args.device.updateDeviceState();
       });
   }
 

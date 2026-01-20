@@ -196,7 +196,7 @@
         },
         "titleFormatted": {
           "en": "Sets the operation mode of the device to [[operationMode]] "
-        },      
+        },
         "hint": {
           "en": "Sets the device to the desired operation mode"
         },
@@ -212,6 +212,21 @@
                 ]
             }
         ]
+      },
+      {
+        "id":"reset_filter",
+        "title": {
+          "en": "Reset the filter timer",
+          "nl": "Reset de filtertimer"
+        },
+        "titleFormatted": {
+          "en": "Reset the filter timer and clear the filter alarm",
+          "nl": "Reset de filtertimer en wis het filteralarm"
+        },
+        "hint": {
+          "en": "Resets the filter replacement countdown timer and clears the filter alarm. Use this after replacing or cleaning the filter.",
+          "nl": "Reset de afteltimer voor filtervervanging en wist het filteralarm. Gebruik dit na het vervangen of reinigen van het filter."
+        }
       }
     ]
 }
