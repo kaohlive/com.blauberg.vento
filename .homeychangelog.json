@@ -31,5 +31,8 @@
   },
   "1.3.2": {
     "en": "Update device icons and power estimates"
+  },
+  "1.3.3": {
+    "en": "Improved error handling"
   }
 }
