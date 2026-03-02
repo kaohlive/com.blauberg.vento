@@ -171,25 +171,32 @@ class SmartWiFiDevice extends Device {
   }
 
   async onCapabilityOnoff(value, opts) {
-    if (value) {
-      await this.driver.setOnoffStatus(this.deviceObject, this.devicepwd, 1);
-    } else {
-      await this.driver.setOnoffStatus(this.deviceObject, this.devicepwd, 0);
+    try {
+      await this.driver.setOnoffStatus(this.deviceObject, this.devicepwd, value ? 1 : 0);
+    } catch (error) {
+      this.log(`Error setting onoff: ${error.message}`);
+      throw error;
     }
   }
 
   async onCapabilityBoost(value, opts) {
-    if (value) {
-      await this.driver.setBoostMode(this.deviceObject, this.devicepwd, 1);
-    } else {
-      await this.driver.setBoostMode(this.deviceObject, this.devicepwd, 0);
+    try {
+      await this.driver.setBoostMode(this.deviceObject, this.devicepwd, value ? 1 : 0);
+    } catch (error) {
+      this.log(`Error setting boost mode: ${error.message}`);
+      throw error;
     }
   }
 
   async onCapabilityDim(value, opts) {
-    // Convert 0-1 to 30-100% (device min is 30%)
-    const speedPercent = Math.round(30 + (value * 70));
-    await this.driver.setMaxSpeed(this.deviceObject, this.devicepwd, speedPercent);
+    try {
+      // Convert 0-1 to 30-100% (device min is 30%)
+      const speedPercent = Math.round(30 + (value * 70));
+      await this.driver.setMaxSpeed(this.deviceObject, this.devicepwd, speedPercent);
+    } catch (error) {
+      this.log(`Error setting speed: ${error.message}`);
+      throw error;
+    }
   }
 
   async setupFlowBoost() {

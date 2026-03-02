@@ -19,6 +19,12 @@
     "timerMode",
     "timerMode_timer"
   ],
+  "energy": {
+    "approximation": {
+      "usageOn": 20,
+      "usageOff": 0.5
+    }
+  },
   "platforms": [
     "local"
   ],

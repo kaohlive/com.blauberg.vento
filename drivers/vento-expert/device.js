@@ -110,6 +110,7 @@ class VentoDevice extends Device {
   async updateDeviceState() {
     this.log('Requesting the current device state');
     const state = await this.driver.getDeviceState(this.deviceObject, this.devicepwd).catch(async (error) => {
+      this.log(`Error getting device state: ${error.message}`);
       await this.setCapabilityValue('alarm_connectivity', true);
     });
     if (state === undefined) {
@@ -205,45 +206,69 @@ class VentoDevice extends Device {
   }
 
   async onCapabilityOnoff(value, opts) {
-    if (value) {
-      await this.driver.setOnoffStatus(this.deviceObject, this.devicepwd, 1);
-    } else {
-      await this.driver.setOnoffStatus(this.deviceObject, this.devicepwd, 0);
+    try {
+      await this.driver.setOnoffStatus(this.deviceObject, this.devicepwd, value ? 1 : 0);
+    } catch (error) {
+      this.log(`Error setting onoff: ${error.message}`);
+      throw error;
     }
-    // this.setCapabilityValue('onoff', value);
   }
 
   async onCapabilitySpeedmode(value, opts) {
-    await this.driver.setSpeedMode(this.deviceObject, this.devicepwd, value);
-    // this.setCapabilityValue('speedMode', Number(value));
+    try {
+      await this.driver.setSpeedMode(this.deviceObject, this.devicepwd, value);
+    } catch (error) {
+      this.log(`Error setting speed mode: ${error.message}`);
+      throw error;
+    }
   }
 
   async onCapabilityManualSpeed(value, opts) {
-    await this.driver.setManualSpeed(this.deviceObject, this.devicepwd, (255 * (value / 100)));
-    // this.setCapabilityValue('operationMode', Number(value));
+    try {
+      await this.driver.setManualSpeed(this.deviceObject, this.devicepwd, (255 * (value / 100)));
+    } catch (error) {
+      this.log(`Error setting manual speed: ${error.message}`);
+      throw error;
+    }
   }
 
   async onCapabilityFanSpeed(value, opts) {
-    await this.driver.setManualSpeed(this.deviceObject, this.devicepwd, (255 * value));
+    try {
+      await this.driver.setManualSpeed(this.deviceObject, this.devicepwd, (255 * value));
+    } catch (error) {
+      this.log(`Error setting fan speed: ${error.message}`);
+      throw error;
+    }
   }
 
   async onCapabilityOperationMode(value, opts) {
-    await this.driver.setOperationMode(this.deviceObject, this.devicepwd, value);
-    // this.setCapabilityValue('operationMode', Number(value));
+    try {
+      await this.driver.setOperationMode(this.deviceObject, this.devicepwd, value);
+    } catch (error) {
+      this.log(`Error setting operation mode: ${error.message}`);
+      throw error;
+    }
   }
 
   async onCapabilityTimerMode(value, opts) {
-    await this.driver.setTimerMode(this.deviceObject, this.devicepwd, value);
-    // this.setCapabilityValue('operationMode', Number(value));
+    try {
+      await this.driver.setTimerMode(this.deviceObject, this.devicepwd, value);
+    } catch (error) {
+      this.log(`Error setting timer mode: ${error.message}`);
+      throw error;
+    }
   }
 
   async onCapabilityResetFilter(value, opts) {
-    this.log('Resetting filter timer');
-    await this.driver.resetFilterTimer(this.deviceObject, this.devicepwd);
-    // Clear the alarm and refresh state after reset
-    await this.setCapabilityValue('alarm_filter', false);
-    // Refresh device state to get updated timer
-    await this.updateDeviceState();
+    try {
+      this.log('Resetting filter timer');
+      await this.driver.resetFilterTimer(this.deviceObject, this.devicepwd);
+      await this.setCapabilityValue('alarm_filter', false);
+      await this.updateDeviceState();
+    } catch (error) {
+      this.log(`Error resetting filter: ${error.message}`);
+      throw error;
+    }
   }
 
   async setupFlowOperationMode() {

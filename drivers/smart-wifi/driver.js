@@ -4,7 +4,7 @@ const { Driver } = require('homey');
 const {
   BlaubergVentoClient, Packet, FunctionType, DataEntry,
 } = require('blaubergventojs');
-const { SmartWiFiParameter } = require('../../lib/smart-wifi-parameters');
+const { SmartWiFiParameter, SmartWiFiParameterSizes } = require('../../lib/smart-wifi-parameters');
 
 class SmartWiFiDriver extends Driver {
 
@@ -15,6 +15,10 @@ class SmartWiFiDriver extends Driver {
     this.deviceList = [];
     this.modbusClient = new BlaubergVentoClient();
     this.modbusClient.timeout = 1500;
+    this.modbusClient.parameterSizeResolver = (param) => {
+      const size = SmartWiFiParameterSizes[param];
+      return size !== undefined ? size : -1;
+    };
     this.log('Smart Wi-Fi driver has been initialized');
     setTimeout(() => {
       this.locateDevices();
@@ -34,7 +38,11 @@ class SmartWiFiDriver extends Driver {
       DataEntry.of(param, value),
     ]);
     return this.modbusClient.send(packet, device.ip).then((result) => {
-      this.log(JSON.stringify(result));
+      if (result == null) {
+        this.log(`Warning: no response for write param=${param} value=${value}`);
+      }
+    }).catch((error) => {
+      this.log(`Error writing param=${param}: ${error.message}`);
     });
   }
 
@@ -91,44 +99,49 @@ class SmartWiFiDriver extends Driver {
     // Send package and wait for response
     return this.modbusClient.send(packet, device.ip).then((result) => {
       if (result != null) {
+        const entries = result.packet._dataEntries;
+        if (entries.length < 21) {
+          this.log(`Warning: expected 21 data entries, got ${entries.length}`);
+          throw new Error(`Incomplete response: expected 21 parameters, got ${entries.length}`);
+        }
         return {
-          onoff: result.packet._dataEntries[0].value['0'],
-          battery: result.packet._dataEntries[1].value['0'],
+          onoff: entries[0].value['0'],
+          battery: entries[1].value['0'],
           fan: {
-            rpm: (result.packet._dataEntries[2].value['1'] << 8) | result.packet._dataEntries[2].value['0'],
+            rpm: (entries[2].value['1'] << 8) | entries[2].value['0'],
           },
           boost: {
-            mode: result.packet._dataEntries[3].value['0'],
+            mode: entries[3].value['0'],
             countdown: {
-              sec: result.packet._dataEntries[4].value['0'],
-              min: result.packet._dataEntries[4].value['1'],
-              hour: result.packet._dataEntries[4].value['2'],
+              sec: entries[4].value['0'],
+              min: entries[4].value['1'],
+              hour: entries[4].value['2'],
             },
           },
           status: {
-            timer: result.packet._dataEntries[5].value['0'],
-            humidity: result.packet._dataEntries[6].value['0'],
-            temperature: result.packet._dataEntries[7].value['0'],
-            motion: result.packet._dataEntries[8].value['0'],
-            externalSwitch: result.packet._dataEntries[9].value['0'],
-            intervalMode: result.packet._dataEntries[10].value['0'],
-            silentMode: result.packet._dataEntries[11].value['0'],
+            timer: entries[5].value['0'],
+            humidity: entries[6].value['0'],
+            temperature: entries[7].value['0'],
+            motion: entries[8].value['0'],
+            externalSwitch: entries[9].value['0'],
+            intervalMode: entries[10].value['0'],
+            silentMode: entries[11].value['0'],
           },
           speed: {
-            max: result.packet._dataEntries[12].value['0'],
-            silent: result.packet._dataEntries[13].value['0'],
-            interval: result.packet._dataEntries[14].value['0'],
+            max: entries[12].value['0'],
+            silent: entries[13].value['0'],
+            interval: entries[14].value['0'],
           },
           modes: {
-            silent: result.packet._dataEntries[15].value['0'],
-            interval: result.packet._dataEntries[16].value['0'],
+            silent: entries[15].value['0'],
+            interval: entries[16].value['0'],
           },
           sensors: {
-            humidity: result.packet._dataEntries[17].value['0'],
-            temperature: result.packet._dataEntries[18].value['0'],
-            motion: result.packet._dataEntries[19].value['0'],
+            humidity: entries[17].value['0'],
+            temperature: entries[18].value['0'],
+            motion: entries[19].value['0'],
           },
-          unittype: (result.packet._dataEntries[20].value['1'] << 8) | result.packet._dataEntries[20].value['0'],
+          unittype: (entries[20].value['1'] << 8) | entries[20].value['0'],
         };
       }
       throw new Error('device not responding, is your device password correct?');

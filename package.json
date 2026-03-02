@@ -15,7 +15,7 @@
     "typescript": "5.9.x"
   },
   "dependencies": {
-    "blaubergventojs": "^1.0.0-alpha.3"
+    "blaubergventojs": "file:clone_modules/blaubergventojs"
   },
   "engines": {
     "node": ">=16.0.0"

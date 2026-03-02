@@ -14,7 +14,11 @@
   "energy": {
     "batteries": [
       "INTERNAL"
-    ]
+    ],
+    "approximation": {
+      "usageOn": 4,
+      "usageOff": 0.5
+    }
   },
   "platforms": [
     "local"
