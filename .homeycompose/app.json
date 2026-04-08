@@ -1,6 +1,6 @@
 {
   "id": "com.blauberg.vento",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "compatibility": ">=12.2.0",
   "sdk": 3,
   "brandColor": "#105DAD",
@@ -11,7 +11,7 @@
     "en": "Blauberg Vento"
   },
   "description": {
-    "en": "Control your Vento Fans"
+    "en": "Control your Vento Expert, Vento Style, and Vento inHOME Fans"
   },
   "category": [
     "appliances"

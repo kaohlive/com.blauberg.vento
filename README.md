@@ -12,6 +12,9 @@ This app supports two types of Blauberg devices with automatic detection during 
 - Vento Expert A85-1 W V.2
 - Vento Expert A100-1 W V.2
 - Vento Expert Duo A30-1 W V.2
+- VENTO Style
+- VENTO inHOME 100
+- VENTO inHOME 160
 
 ### Smart Wi-Fi Series
 - Smart Wi-Fi fans with battery-powered operation
