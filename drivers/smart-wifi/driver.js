@@ -201,9 +201,9 @@ class SmartWiFiDriver extends Driver {
   }
 
   isSmartWiFiDevice(unitType) {
-    // Smart Wi-Fi devices return values other than 3, 4, or 5
-    // Vento Expert uses 3, 4, 5, so anything else is Smart Wi-Fi
-    return unitType !== null && unitType !== 3 && unitType !== 4 && unitType !== 5;
+    // Smart Wi-Fi devices return values not used by Vento Expert-compatible devices
+    // Vento Expert-compatible types: 3, 4, 5, 14, 26, 27, 28
+    return unitType !== null && ![3, 4, 5, 14, 26, 27, 28].includes(unitType);
   }
 
   async onPair(session) {

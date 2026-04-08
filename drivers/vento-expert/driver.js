@@ -219,11 +219,15 @@ class VentoDriver extends Driver {
   }
 
   isVentoExpertDevice(unitType) {
-    // Vento Expert devices return 3, 4, or 5
+    // Vento Expert-compatible devices (same parameter mappings)
     // 3: Vento Expert A50-1/A85-1/A100-1 W V.2
     // 4: Vento Expert Duo A30-1 W V.2
     // 5: Vento Expert A30 W V.2
-    return unitType === 3 || unitType === 4 || unitType === 5;
+    // 14: VENTO Style
+    // 26: VENTO inHOME (old)
+    // 27: VENTO inHOME 100
+    // 28: VENTO inHOME 160
+    return [3, 4, 5, 14, 26, 27, 28].includes(unitType);
   }
 
   async onPair(session) {
