@@ -30,7 +30,7 @@ This app supports three types of Blauberg devices with automatic detection durin
 ## Compatible Brands
 
 This app might also work with other brands that use the same OEM platform/white label source, including:
-- **Flexit** ventilation devices
+- **Flexit**, **Breezy** ventilation devices
 - **EcoVent**, **Oxxify**, **TwinFresh**, **Duka**
 - Other rebranded Blauberg devices using the same MODBUS protocol
 
