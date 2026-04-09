@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.blauberg.vento",
-  "version": "1.3.6",
+  "version": "1.4.0",
   "compatibility": ">=12.2.0",
   "sdk": 3,
   "brandColor": "#105DAD",
@@ -12,7 +12,7 @@
     "en": "Blauberg Vento"
   },
   "description": {
-    "en": "Control your Vento Expert, Vento Style, and Vento inHOME Fans"
+    "en": "Control your Vento Expert, Vento Style, Vento inHOME, and HRV Wi-Fi Fans"
   },
   "category": [
     "appliances"
@@ -31,6 +31,159 @@
   "source": "https://github.com/kaohlive/com.blauberg.vento",
   "flow": {
     "triggers": [
+      {
+        "id": "hrv_alarm_boost_true",
+        "title": {
+          "en": "Boost mode turned on"
+        },
+        "titleFormatted": {
+          "en": "Boost mode turned on for [[device]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          }
+        ]
+      },
+      {
+        "id": "hrv_alarm_boost_false",
+        "title": {
+          "en": "Boost mode turned off"
+        },
+        "titleFormatted": {
+          "en": "Boost mode turned off for [[device]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          }
+        ]
+      },
+      {
+        "id": "hrv_alarm_filter_true",
+        "title": {
+          "en": "Filter alarm turned on"
+        },
+        "titleFormatted": {
+          "en": "Filter alarm turned on for [[device]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          }
+        ]
+      },
+      {
+        "id": "hrv_alarm_filter_false",
+        "title": {
+          "en": "Filter alarm turned off"
+        },
+        "titleFormatted": {
+          "en": "Filter alarm turned off for [[device]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          }
+        ]
+      },
+      {
+        "id": "hrv_alarm_generic_true",
+        "title": {
+          "en": "Alarm turned on"
+        },
+        "titleFormatted": {
+          "en": "Alarm turned on for [[device]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          }
+        ]
+      },
+      {
+        "id": "hrv_alarm_generic_false",
+        "title": {
+          "en": "Alarm turned off"
+        },
+        "titleFormatted": {
+          "en": "Alarm turned off for [[device]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          }
+        ]
+      },
+      {
+        "id": "hrv_measure_RPM_changed",
+        "title": {
+          "en": "Fan RPM changed"
+        },
+        "tokens": [
+          {
+            "name": "rpm",
+            "type": "number",
+            "title": {
+              "en": "RPM"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          }
+        ]
+      },
       {
         "id": "smartwifi_alarm_boost_true",
         "title": {
@@ -269,6 +422,69 @@
     ],
     "conditions": [
       {
+        "id": "hrv_alarm_boost",
+        "title": {
+          "en": "Boost mode is !{{on|off}}"
+        },
+        "titleFormatted": {
+          "en": "Boost mode is !{{on|off}} for [[device]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          }
+        ]
+      },
+      {
+        "id": "hrv_alarm_filter",
+        "title": {
+          "en": "Filter alarm is !{{on|off}}"
+        },
+        "titleFormatted": {
+          "en": "Filter alarm is !{{on|off}} for [[device]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          }
+        ]
+      },
+      {
+        "id": "hrv_alarm_generic",
+        "title": {
+          "en": "Alarm is !{{on|off}}"
+        },
+        "titleFormatted": {
+          "en": "Alarm is !{{on|off}} for [[device]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          }
+        ]
+      },
+      {
         "id": "smartwifi_alarm_boost",
         "title": {
           "en": "Boost mode is !{{on|off}}"
@@ -341,6 +557,234 @@
       }
     ],
     "actions": [
+      {
+        "id": "hrv_speed_mode",
+        "title": {
+          "en": "Set speed mode"
+        },
+        "titleFormatted": {
+          "en": "Set [[device]] speed to [[speedMode]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "dropdown",
+            "name": "speedMode",
+            "title": {
+              "en": "Speed mode"
+            },
+            "values": [
+              {
+                "id": "0",
+                "title": {
+                  "en": "Off"
+                }
+              },
+              {
+                "id": "1",
+                "title": {
+                  "en": "Speed 1"
+                }
+              },
+              {
+                "id": "2",
+                "title": {
+                  "en": "Speed 2"
+                }
+              },
+              {
+                "id": "3",
+                "title": {
+                  "en": "Speed 3"
+                }
+              },
+              {
+                "id": "4",
+                "title": {
+                  "en": "Speed 4"
+                }
+              },
+              {
+                "id": "5",
+                "title": {
+                  "en": "Speed 5"
+                }
+              },
+              {
+                "id": "255",
+                "title": {
+                  "en": "Manual"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "hrv_operation_mode",
+        "title": {
+          "en": "Set operation mode"
+        },
+        "titleFormatted": {
+          "en": "Set [[device]] operation mode to [[operationMode]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "dropdown",
+            "name": "operationMode",
+            "title": {
+              "en": "Operation mode"
+            },
+            "values": [
+              {
+                "id": "0",
+                "title": {
+                  "en": "Ventilation"
+                }
+              },
+              {
+                "id": "1",
+                "title": {
+                  "en": "Regeneration"
+                }
+              },
+              {
+                "id": "2",
+                "title": {
+                  "en": "Supply"
+                }
+              },
+              {
+                "id": "3",
+                "title": {
+                  "en": "Extract"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "hrv_timer_mode",
+        "title": {
+          "en": "Set timer mode"
+        },
+        "titleFormatted": {
+          "en": "Set [[device]] timer to [[timerMode]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "dropdown",
+            "name": "timerMode",
+            "title": {
+              "en": "Timer mode"
+            },
+            "values": [
+              {
+                "id": "0",
+                "title": {
+                  "en": "Off"
+                }
+              },
+              {
+                "id": "1",
+                "title": {
+                  "en": "Night mode"
+                }
+              },
+              {
+                "id": "2",
+                "title": {
+                  "en": "Turbo mode"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "hrv_manual_speed",
+        "title": {
+          "en": "Set manual speed"
+        },
+        "titleFormatted": {
+          "en": "Set [[device]] manual speed to [[speed]]%"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "range",
+            "name": "speed",
+            "title": {
+              "en": "Speed"
+            },
+            "min": 10,
+            "max": 100,
+            "step": 1,
+            "label": "%",
+            "labelDecimals": 0
+          }
+        ]
+      },
+      {
+        "id": "hrv_reset_filter",
+        "title": {
+          "en": "Reset filter timer"
+        },
+        "titleFormatted": {
+          "en": "Reset filter timer for [[device]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          },
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=hrv-wifi"
+          }
+        ]
+      },
       {
         "id": "smartwifi_set_boost",
         "title": {
@@ -608,6 +1052,148 @@
     ]
   },
   "drivers": [
+    {
+      "name": {
+        "en": "HRV Wi-Fi"
+      },
+      "class": "fan",
+      "capabilities": [
+        "onoff",
+        "breezy_speed_mode",
+        "breezy_operation_mode",
+        "breezy_timer_mode",
+        "manualSpeed",
+        "fan_speed",
+        "alarm_boost",
+        "alarm_filter",
+        "alarm_generic",
+        "filter_timer",
+        "button_reset_filter",
+        "measure_humidity",
+        "measure_RPM",
+        "timerMode_timer",
+        "alarm_connectivity"
+      ],
+      "energy": {
+        "approximation": {
+          "usageOn": 20,
+          "usageOff": 0.5
+        }
+      },
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "images": {
+        "small": "/drivers/hrv-wifi/assets/images/small.png",
+        "large": "/drivers/hrv-wifi/assets/images/large.png",
+        "xlarge": "/drivers/hrv-wifi/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "device_settings"
+          }
+        },
+        {
+          "id": "device_settings"
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "hrv-wifi",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device info"
+          },
+          "children": [
+            {
+              "id": "devicepwd",
+              "type": "password",
+              "label": {
+                "en": "Device password"
+              },
+              "value": "1111",
+              "hint": {
+                "en": "The device password setup in the Blauberg Home app."
+              }
+            },
+            {
+              "id": "devicemodel",
+              "type": "label",
+              "label": {
+                "en": "Device model"
+              },
+              "value": "Unknown"
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Sensors"
+          },
+          "children": [
+            {
+              "id": "humidity_sensor",
+              "type": "checkbox",
+              "label": {
+                "en": "Humidity sensor"
+              },
+              "value": false
+            },
+            {
+              "id": "humidity_threshold",
+              "type": "number",
+              "label": {
+                "en": "Humidity threshold"
+              },
+              "value": 60,
+              "min": 40,
+              "max": 80,
+              "units": {
+                "en": "RH%"
+              }
+            },
+            {
+              "id": "co2_sensor",
+              "type": "checkbox",
+              "label": {
+                "en": "CO2 sensor"
+              },
+              "value": false
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Network"
+          },
+          "children": [
+            {
+              "id": "last_known_ip",
+              "type": "text",
+              "label": {
+                "en": "IP address"
+              },
+              "value": "0.0.0.0"
+            }
+          ]
+        }
+      ]
+    },
     {
       "name": {
         "en": "Smart Wi-Fi"
@@ -988,6 +1574,123 @@
       "getable": true,
       "setable": false,
       "icon": "/assets/alarm_generic.svg"
+    },
+    "breezy_operation_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Operation mode"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "0",
+          "title": {
+            "en": "Ventilation"
+          }
+        },
+        {
+          "id": "1",
+          "title": {
+            "en": "Regeneration"
+          }
+        },
+        {
+          "id": "2",
+          "title": {
+            "en": "Supply"
+          }
+        },
+        {
+          "id": "3",
+          "title": {
+            "en": "Extract"
+          }
+        }
+      ]
+    },
+    "breezy_speed_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Speed mode"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "0",
+          "title": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "1",
+          "title": {
+            "en": "Speed 1"
+          }
+        },
+        {
+          "id": "2",
+          "title": {
+            "en": "Speed 2"
+          }
+        },
+        {
+          "id": "3",
+          "title": {
+            "en": "Speed 3"
+          }
+        },
+        {
+          "id": "4",
+          "title": {
+            "en": "Speed 4"
+          }
+        },
+        {
+          "id": "5",
+          "title": {
+            "en": "Speed 5"
+          }
+        },
+        {
+          "id": "255",
+          "title": {
+            "en": "Manual"
+          }
+        }
+      ]
+    },
+    "breezy_timer_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Timer mode"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "0",
+          "title": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "1",
+          "title": {
+            "en": "Night mode"
+          }
+        },
+        {
+          "id": "2",
+          "title": {
+            "en": "Turbo mode"
+          }
+        }
+      ]
     },
     "button_reset_filter": {
       "type": "boolean",
