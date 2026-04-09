@@ -201,9 +201,11 @@ class SmartWiFiDriver extends Driver {
   }
 
   isSmartWiFiDevice(unitType) {
-    // Smart Wi-Fi devices return values not used by Vento Expert-compatible devices
-    // Vento Expert-compatible types: 3, 4, 5, 14, 26, 27, 28
-    return unitType !== null && ![3, 4, 5, 14, 26, 27, 28].includes(unitType);
+    // Smart Wi-Fi devices return values not used by other drivers
+    // Vento Expert-compatible: 3, 4, 5, 14, 26, 27, 28
+    // HRV Wi-Fi (Breezy): 17, 20, 22, 24
+    // Unsupported: 13 (Arc Smart)
+    return unitType !== null && ![3, 4, 5, 13, 14, 17, 20, 22, 24, 26, 27, 28].includes(unitType);
   }
 
   async onPair(session) {

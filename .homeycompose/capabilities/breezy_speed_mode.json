@@ -1,0 +1,18 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Speed mode"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "picker",
+  "values": [
+    { "id": "0", "title": { "en": "Off" }},
+    { "id": "1", "title": { "en": "Speed 1" }},
+    { "id": "2", "title": { "en": "Speed 2" }},
+    { "id": "3", "title": { "en": "Speed 3" }},
+    { "id": "4", "title": { "en": "Speed 4" }},
+    { "id": "5", "title": { "en": "Speed 5" }},
+    { "id": "255", "title": { "en": "Manual" }}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Timer mode"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "picker",
+  "values": [
+    { "id": "0", "title": { "en": "Off" }},
+    { "id": "1", "title": { "en": "Night mode" }},
+    { "id": "2", "title": { "en": "Turbo mode" }}
+  ]
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "Device info"
+    },
+    "children": [
+      {
+        "id": "devicepwd",
+        "type": "password",
+        "label": {
+          "en": "Device password"
+        },
+        "value": "1111",
+        "hint": {
+          "en": "The device password setup in the Blauberg Home app."
+        }
+      },
+      {
+        "id": "devicemodel",
+        "type": "label",
+        "label": {
+          "en": "Device model"
+        },
+        "value": "Unknown"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Sensors"
+    },
+    "children": [
+      {
+        "id": "humidity_sensor",
+        "type": "checkbox",
+        "label": {
+          "en": "Humidity sensor"
+        },
+        "value": false
+      },
+      {
+        "id": "humidity_threshold",
+        "type": "number",
+        "label": {
+          "en": "Humidity threshold"
+        },
+        "value": 60,
+        "min": 40,
+        "max": 80,
+        "units": {
+          "en": "RH%"
+        }
+      },
+      {
+        "id": "co2_sensor",
+        "type": "checkbox",
+        "label": {
+          "en": "CO2 sensor"
+        },
+        "value": false
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Network"
+    },
+    "children": [
+      {
+        "id": "last_known_ip",
+        "type": "text",
+        "label": {
+          "en": "IP address"
+        },
+        "value": "0.0.0.0"
+      }
+    ]
+  }
+]

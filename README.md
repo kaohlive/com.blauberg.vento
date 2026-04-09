@@ -4,7 +4,7 @@ Unofficial app for Blauberg ventilation devices. This app uses local LAN communi
 
 ## Supported Devices
 
-This app supports two types of Blauberg devices with automatic detection during pairing:
+This app supports three types of Blauberg devices with automatic detection during pairing:
 
 ### Vento Expert Series
 - Vento Expert A30 W V.2
@@ -15,6 +15,12 @@ This app supports two types of Blauberg devices with automatic detection during 
 - VENTO Style
 - VENTO inHOME 100
 - VENTO inHOME 160
+
+### HRV Wi-Fi Series
+- Heat recovery ventilators with 5 speed modes
+- CO2, VOC, humidity, and temperature sensors
+- Heater control and frost protection
+- Compatible with Breezy 160/200 and Breezy Eco 160/200
 
 ### Smart Wi-Fi Series
 - Smart Wi-Fi fans with battery-powered operation

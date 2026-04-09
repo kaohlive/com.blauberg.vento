@@ -1,0 +1,51 @@
+
+    <h1>Device password</h1>
+    <p>In the Blauberg Home app you can set a device password to protect the device from local tampering.
+    Make sure you have done that (settings on your HRV device) and provide the device password here.
+    </p>
+
+    <fieldset>
+        <legend>Device password</legend>
+
+        <div class="field row">
+            <label for="devicepwd">Password</label>
+            <input id="devicepwd" value="" type="password" />
+        </div>
+    </fieldset>
+
+    <button id="saveconfig" class="right">Save and continue</button>
+
+    <script type="text/javascript">
+        var pwdElement = document.getElementById('devicepwd');
+        var saveElement = document.getElementById('saveconfig');
+        var hrvdevice;
+        saveElement.addEventListener('click', function(e) {
+            let device_settings = {
+                devicepwd: pwdElement.value
+            };
+            hrvdevice.settings = device_settings;
+            var devices = new Array(hrvdevice);
+            Homey.setViewStoreValue( 'add_devices', 'devices', devices, function( err, result ){
+                if(result)
+                {
+                    console.log('update devices ok, go to next screen');
+                    Homey.emit( 'add_devices', devices, function( err, result ){
+                        if(result)
+                            console.log(result);
+                    });
+                }
+                else
+                {
+                    Homey.alert(err);
+                }
+            });
+        });
+
+        Homey.getViewStoreValue( 'add_devices', 'devices', function( err, result ){
+            console.log(result);
+            hrvdevice = result[0];
+        });
+
+    </script>
+
+</body>
