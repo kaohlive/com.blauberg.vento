@@ -3,7 +3,9 @@
     "allow": [
       "Bash(npm run build:*)",
       "Bash(node -e:*)",
-      "Bash(npx eslint:*)"
+      "Bash(npx eslint:*)",
+      "PowerShell(npm run build 2>&1)",
+      "PowerShell(homey app build 2>&1)"
     ]
   }
 }

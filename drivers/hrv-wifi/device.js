@@ -105,6 +105,22 @@ class HrvWifiDevice extends Device {
   }
 
   async updateDeviceState() {
+    // Re-entrancy guard: prevent overlapping state updates from racing on the
+    // alarm change-detection (read old value -> await -> write new value -> trigger).
+    // Overlapping calls would both read the same old value and fire the same flow twice.
+    if (this._updatingState) {
+      this.log('Skipping state update, a previous update is still in progress');
+      return;
+    }
+    this._updatingState = true;
+    try {
+      await this._updateDeviceStateInner();
+    } finally {
+      this._updatingState = false;
+    }
+  }
+
+  async _updateDeviceStateInner() {
     this.log('Requesting current device state');
     const state = await this.driver.getDeviceState(this.deviceObject, this.devicepwd).catch(async (error) => {
       this.log(`Error getting device state: ${error.message}`);
