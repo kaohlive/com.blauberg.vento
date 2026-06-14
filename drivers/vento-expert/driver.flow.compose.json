@@ -6,7 +6,7 @@
         },
         {
             "id":"alarm_filter_true",
-            "title": { "en": "The Filter alarm truned on" }
+            "title": { "en": "The Filter alarm turned on" }
         },
         {
             "id":"alarm_boost_false",
@@ -14,7 +14,7 @@
         },
         {
             "id":"alarm_boost_true",
-            "title": { "en": "The boost mode truned on" }
+            "title": { "en": "The boost mode turned on" }
         },
         {
             "id": "alarm_generic_true",

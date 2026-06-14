@@ -101,6 +101,9 @@
       "title": {
         "en": "Fan RPM changed"
       },
+      "titleFormatted": {
+        "en": "Fan RPM changed for [[device]]"
+      },
       "tokens": [
         {
           "name": "rpm",

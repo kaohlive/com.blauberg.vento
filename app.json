@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.blauberg.vento",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "compatibility": ">=12.2.0",
   "sdk": 3,
   "brandColor": "#105DAD",
@@ -162,6 +162,9 @@
         "title": {
           "en": "Fan RPM changed"
         },
+        "titleFormatted": {
+          "en": "Fan RPM changed for [[device]]"
+        },
         "tokens": [
           {
             "name": "rpm",
@@ -284,7 +287,7 @@
       {
         "id": "alarm_filter_true",
         "title": {
-          "en": "The Filter alarm truned on"
+          "en": "The Filter alarm turned on"
         },
         "args": [
           {
@@ -310,7 +313,7 @@
       {
         "id": "alarm_boost_true",
         "title": {
-          "en": "The boost mode truned on"
+          "en": "The boost mode turned on"
         },
         "args": [
           {
