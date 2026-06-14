@@ -49,5 +49,11 @@
   },
   "1.4.1": {
     "en": "Fixed double notifications"
+  },
+  "1.4.2": {
+    "en": "Improved device discovery across all network interfaces and added the option to add a device manually by IP address"
+  },
+  "1.4.3": {
+    "en": "More stable online/offline detection: retries and debouncing prevent devices from flapping on brief network hiccups"
   }
 }
