@@ -6,6 +6,7 @@ const {
 } = require('blaubergventojs');
 const { SmartWiFiParameter, SmartWiFiParameterSizes } = require('../../lib/smart-wifi-parameters');
 const { discoverDevices, scanByIP } = require('../../lib/device-discovery');
+const { sendWithRetry } = require('../../lib/modbus-retry');
 
 class SmartWiFiDriver extends Driver {
 
@@ -97,8 +98,8 @@ class SmartWiFiDriver extends Driver {
       DataEntry.of(SmartWiFiParameter.UNIT_TYPE),
     ]);
 
-    // Send package and wait for response
-    return this.modbusClient.send(packet, device.ip).then((result) => {
+    // Send package and wait for response (retry to absorb transient UDP loss).
+    return sendWithRetry(this.modbusClient, packet, device.ip, { attempts: 3, log: (m) => this.log(m) }).then((result) => {
       if (result != null) {
         const entries = result.packet._dataEntries;
         if (entries.length < 21) {
@@ -207,7 +208,7 @@ class SmartWiFiDriver extends Driver {
       DataEntry.of(SmartWiFiParameter.UNIT_TYPE),
     ]);
 
-    return this.modbusClient.send(packet, device.ip).then((result) => {
+    return sendWithRetry(this.modbusClient, packet, device.ip, { attempts: 3, log: (m) => this.log(m) }).then((result) => {
       if (result != null) {
         const unitType = (result.packet._dataEntries[0].value['1'] << 8) | result.packet._dataEntries[0].value['0'];
         this.log(`Device ${device.id} reports unit type: ${unitType}`);

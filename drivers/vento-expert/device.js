@@ -2,6 +2,12 @@
 
 const { Device } = require('homey');
 
+// Number of consecutive failed polls before the connectivity alarm is raised.
+// At a 10s poll interval (each poll itself retried a few times) this means a
+// device must be genuinely unreachable for ~30s before being flagged offline,
+// which prevents flapping on transient UDP packet loss.
+const CONNECTIVITY_FAIL_THRESHOLD = 3;
+
 class VentoDevice extends Device {
 
   /**
@@ -125,14 +131,30 @@ class VentoDevice extends Device {
 
   async _updateDeviceStateInner() {
     this.log('Requesting the current device state');
-    const state = await this.driver.getDeviceState(this.deviceObject, this.devicepwd).catch(async (error) => {
+    let state;
+    try {
+      state = await this.driver.getDeviceState(this.deviceObject, this.devicepwd);
+    } catch (error) {
       this.log(`Error getting device state: ${error.message}`);
-      await this.setCapabilityValue('alarm_connectivity', true);
-    });
-    if (state === undefined) {
+    }
+    if (state === undefined || state === null) {
+      // Debounce: a single missed poll (lossy UDP) must not flip connectivity.
+      // Only raise the alarm after CONNECTIVITY_FAIL_THRESHOLD consecutive misses.
+      this._connectivityFailures = (this._connectivityFailures || 0) + 1;
+      this.log(`Device poll failed (${this._connectivityFailures}/${CONNECTIVITY_FAIL_THRESHOLD} consecutive)`);
+      if (this._connectivityFailures >= CONNECTIVITY_FAIL_THRESHOLD
+        && this.getCapabilityValue('alarm_connectivity') !== true) {
+        await this.setCapabilityValue('alarm_connectivity', true);
+      }
       return;
     }
-    await this.setCapabilityValue('alarm_connectivity', false);
+    if (this._connectivityFailures) {
+      this.log(`Device reachable again after ${this._connectivityFailures} failed poll(s)`);
+    }
+    this._connectivityFailures = 0;
+    if (this.getCapabilityValue('alarm_connectivity') !== false) {
+      await this.setCapabilityValue('alarm_connectivity', false);
+    }
     // Track successful connection time
     await this.setStoreValue('lastSuccessfulConnection', Date.now());
 
@@ -205,10 +227,9 @@ class VentoDevice extends Device {
       this.devicepwd = newSettings.devicepwd;
       await this.updateDeviceState();
     }
-    if(changedKeys.includes('last_known_ip'))
-      {
-        this.setStoreValue('lastKnowIP', newSettings.last_known_ip);
-      }
+    if (changedKeys.includes('last_known_ip')) {
+      await this.setStoreValue('lastKnownIP', newSettings.last_known_ip);
+    }
     // For the other settings we probably need to push the new value to the device
     if (changedKeys.includes('humidity_sensor')) {
       await this.driver.setHumiditySensor(this.deviceObject, this.devicepwd, newSettings.humidity_sensor);

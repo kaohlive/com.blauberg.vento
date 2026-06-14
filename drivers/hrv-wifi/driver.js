@@ -6,6 +6,7 @@ const {
 } = require('blaubergventojs');
 const { BreezyParameter, BreezyParameterSizes, BreezyDeviceTypes } = require('../../lib/breezy-parameters');
 const { discoverDevices, scanByIP } = require('../../lib/device-discovery');
+const { sendWithRetry } = require('../../lib/modbus-retry');
 
 class HrvWifiDriver extends Driver {
 
@@ -103,7 +104,8 @@ class HrvWifiDriver extends Driver {
       DataEntry.of(BreezyParameter.CO2_SENSOR_ENABLE),
     ]);
 
-    return this.modbusClient.send(packet, device.ip).then((result) => {
+    // Retry to absorb transient UDP packet loss before declaring failure.
+    return sendWithRetry(this.modbusClient, packet, device.ip, { attempts: 3, log: (m) => this.log(m) }).then((result) => {
       if (result != null) {
         const entries = result.packet._dataEntries;
         if (entries.length < 16) {
@@ -218,7 +220,7 @@ class HrvWifiDriver extends Driver {
       DataEntry.of(BreezyParameter.UNIT_TYPE),
     ]);
 
-    return this.modbusClient.send(packet, device.ip).then((result) => {
+    return sendWithRetry(this.modbusClient, packet, device.ip, { attempts: 3, log: (m) => this.log(m) }).then((result) => {
       if (result != null) {
         const unitType = (result.packet._dataEntries[0].value['1'] << 8) | result.packet._dataEntries[0].value['0'];
         this.log(`Device ${device.id} reports unit type: ${unitType}`);

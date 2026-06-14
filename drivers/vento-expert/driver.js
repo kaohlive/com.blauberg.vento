@@ -5,6 +5,7 @@ const {
   BlaubergVentoClient, Packet, FunctionType, Parameter, DataEntry,
 } = require('blaubergventojs');
 const { discoverDevices, scanByIP } = require('../../lib/device-discovery');
+const { sendWithRetry } = require('../../lib/modbus-retry');
 
 class VentoDriver extends Driver {
 
@@ -105,8 +106,8 @@ class VentoDriver extends Driver {
       DataEntry.of(Parameter.READ_ALARM),
       DataEntry.of(11), // Active timer countdown
     ]);
-    // Send package and wait for response.
-    return this.modbusClient.send(packet, device.ip).then((result) => {
+    // Send package and wait for response (retry to absorb transient UDP loss).
+    return sendWithRetry(this.modbusClient, packet, device.ip, { attempts: 3, log: (m) => this.log(m) }).then((result) => {
       if (result != null) {
         const entries = result.packet._dataEntries;
         if (entries.length < 16) {
@@ -225,7 +226,7 @@ class VentoDriver extends Driver {
       DataEntry.of(0x00B9), // UNIT_TYPE parameter
     ]);
 
-    return this.modbusClient.send(packet, device.ip).then((result) => {
+    return sendWithRetry(this.modbusClient, packet, device.ip, { attempts: 3, log: (m) => this.log(m) }).then((result) => {
       if (result != null) {
         const unitType = (result.packet._dataEntries[0].value['1'] << 8) | result.packet._dataEntries[0].value['0'];
         this.log(`Device ${device.id} reports unit type: ${unitType}`);
