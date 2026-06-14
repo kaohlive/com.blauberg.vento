@@ -4,6 +4,7 @@ const { Driver } = require('homey');
 const {
   BlaubergVentoClient, Packet, FunctionType, Parameter, DataEntry,
 } = require('blaubergventojs');
+const { discoverDevices, scanByIP } = require('../../lib/device-discovery');
 
 class VentoDriver extends Driver {
 
@@ -163,8 +164,27 @@ class VentoDriver extends Driver {
     });
   }
 
+  // Multi-interface discovery (directed broadcast per NIC + global broadcast),
+  // falling back to the library's single-broadcast implementation if it yields
+  // nothing - so existing setups can never regress.
+  async discoverAll() {
+    let locatedDevices = await discoverDevices({
+      timeout: this.modbusClient.timeout,
+      sizeResolver: this.modbusClient.parameterSizeResolver,
+      log: (msg) => this.log(msg),
+    });
+    if (!locatedDevices || locatedDevices.length === 0) {
+      const fallback = await this.modbusClient.findDevices();
+      if (fallback && fallback.length > 0) {
+        this.log(`Discovery: library fallback located ${fallback.length} device(s)`);
+        locatedDevices = fallback;
+      }
+    }
+    return locatedDevices || [];
+  }
+
   async locateDevices() {
-    const locatedDevices = await this.modbusClient.findDevices();
+    const locatedDevices = await this.discoverAll();
     const oldamount = this.deviceList.length;
     this.log(`Current we located ${oldamount} devices, lets see if we found more: amount located ${locatedDevices.length}`);
     const homeydevices = this.getDevices(); // We want to be able to tell any non initialized devices they are ready for use
@@ -230,8 +250,63 @@ class VentoDriver extends Driver {
     return [3, 4, 5, 14, 26, 27, 28].includes(unitType);
   }
 
+  // Targeted unicast scan of a single IP for manual pairing. Returns the
+  // device id from a SEARCH reply (password not required) and best-effort unit
+  // type. Allows adding even unrecognised types so new/OEM units can be paired
+  // and reported on.
+  async scanIp(ip, devicePassword) {
+    const result = await scanByIP(ip, {
+      timeout: 2500,
+      sizeResolver: this.modbusClient.parameterSizeResolver,
+      log: (msg) => this.log(msg),
+    });
+    if (result == null) {
+      return { success: false, message: `No device responded at ${ip} on UDP port 4000. The unit may use a different local protocol, or be on another subnet/VLAN than Homey.` };
+    }
+    if (!result.id) {
+      return { success: false, message: `A device at ${ip} replied but not in the expected b133 format. The raw reply has been logged for analysis.` };
+    }
+    const device = { id: result.id, ip: result.ip };
+    let unitType = null;
+    try {
+      unitType = await this.getDeviceType(device, devicePassword);
+    } catch (error) {
+      this.log(`Manual scan: could not read unit type (password may differ): ${error.message}`);
+    }
+    const recognised = unitType !== null && this.isVentoExpertDevice(unitType);
+    this.log(`Manual scan: ${ip} -> id ${result.id}, unitType ${unitType}, recognised Vento Expert: ${recognised}`);
+    return {
+      success: true,
+      deviceId: result.id,
+      ip: result.ip,
+      unitType,
+      recognised,
+      name: recognised ? `Vento Expert ${result.id}` : `Blauberg unit ${result.id}`,
+    };
+  }
+
   async onPair(session) {
     const devicePassword = '1111'; // Default password
+
+    session.setHandler('set_discovery_mode', async (data) => {
+      this.log(`Pairing discovery mode: ${data && data.mode}`);
+      if (data && data.mode === 'auto') {
+        await this.locateDevices();
+      }
+      return true;
+    });
+
+    session.setHandler('scan_ip', async (data) => {
+      const ip = (data && data.ip ? data.ip : '').trim();
+      this.log(`Manual IP scan requested for: ${ip}`);
+      if (!ip) return { success: false, message: 'No IP address provided' };
+      try {
+        return await this.scanIp(ip, devicePassword);
+      } catch (error) {
+        this.log(`Manual IP scan error: ${error.message}`);
+        return { success: false, message: `Scan failed: ${error.message}` };
+      }
+    });
 
     session.setHandler('list_devices', async (data) => {
       this.log('Provide user list of discovered Vento fans to choose from.');

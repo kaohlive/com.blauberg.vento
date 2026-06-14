@@ -1,0 +1,98 @@
+<header class="homey-header">
+  <h1 class="homey-title">Find your device</h1>
+  <p class="homey-subtitle">
+    Automatic search uses broadcasts across all network interfaces. If your unit is not found
+    (e.g. it is on another subnet/VLAN, or a newer model that does not answer broadcasts),
+    enter its IP address manually.
+  </p>
+</header>
+
+<div id="choice-view">
+  <button class="homey-button-primary-full" id="btn-auto">Search automatically</button>
+  <br/>
+  <button class="homey-button-primary-full" id="btn-manual">Enter IP address manually</button>
+</div>
+
+<div id="manual-view" style="display:none;">
+  <fieldset class="homey-form-fieldset">
+    <legend class="homey-form-legend">Manual pairing</legend>
+    <div class="homey-form-group">
+      <label class="homey-form-label" for="ip">Device IP address</label>
+      <input class="homey-form-input" id="ip" type="text" value="" placeholder="192.168.1.100" />
+    </div>
+  </fieldset>
+  <div id="scan-result" style="display:none; padding: 8px 0; font-size: 14px;"></div>
+  <button class="homey-button-primary-full" id="btn-scan">Scan IP</button>
+  <br/>
+  <button class="homey-button-primary-full" id="btn-back" style="opacity:0.6;">Back</button>
+</div>
+
+<script type="text/javascript">
+  Homey.ready();
+
+  var choiceView = document.getElementById('choice-view');
+  var manualView = document.getElementById('manual-view');
+  var ipElement = document.getElementById('ip');
+  var scanResult = document.getElementById('scan-result');
+
+  document.getElementById('btn-auto').addEventListener('click', function() {
+    Homey.emit('set_discovery_mode', { mode: 'auto' });
+    Homey.showView('list_devices');
+  });
+
+  document.getElementById('btn-manual').addEventListener('click', function() {
+    choiceView.style.display = 'none';
+    manualView.style.display = 'block';
+  });
+
+  document.getElementById('btn-back').addEventListener('click', function() {
+    manualView.style.display = 'none';
+    choiceView.style.display = 'block';
+    scanResult.style.display = 'none';
+  });
+
+  document.getElementById('btn-scan').addEventListener('click', function() {
+    var ip = ipElement.value.trim();
+    var ipRegex = /^(\d{1,3}\.){3}\d{1,3}$/;
+    if (!ipRegex.test(ip)) {
+      Homey.alert('Please enter a valid IP address (e.g. 192.168.1.100).');
+      return;
+    }
+
+    scanResult.style.display = 'block';
+    scanResult.style.color = '';
+    scanResult.innerText = 'Scanning ' + ip + '...';
+    Homey.showLoadingOverlay();
+
+    Homey.emit('scan_ip', { ip: ip })
+      .then(function(result) {
+        Homey.hideLoadingOverlay();
+        if (!result || !result.success) {
+          scanResult.style.color = '#f44336';
+          scanResult.innerText = (result && result.message) || 'No device found at this IP address.';
+          return;
+        }
+
+        scanResult.style.color = '#4CAF50';
+        var typeNote = result.recognised ? '' : ' (unrecognised type ' + result.unitType + ' - you can still add it)';
+        scanResult.innerText = 'Device found: ' + result.deviceId + typeNote + '. Continue to set the password...';
+
+        var device = {
+          name: result.name,
+          data: { id: result.deviceId },
+          store: { lastKnownIP: result.ip },
+          settings: { last_known_ip: result.ip }
+        };
+
+        Homey.setViewStoreValue('add_devices', 'devices', [device], function(err) {
+          if (err) { Homey.alert(err); return; }
+          Homey.showView('device_settings');
+        });
+      })
+      .catch(function(err) {
+        Homey.hideLoadingOverlay();
+        scanResult.style.color = '#f44336';
+        scanResult.innerText = 'Scan failed: ' + (err.message || err);
+      });
+  });
+</script>

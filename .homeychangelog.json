@@ -46,5 +46,8 @@
   },
   "1.4.0": {
     "en": "Added support for other brand HRV's using the same modbus protocol"
+  },
+  "1.4.1": {
+    "en": "Fixed double notifications"
   }
 }

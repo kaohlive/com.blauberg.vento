@@ -5,7 +5,11 @@
       "Bash(node -e:*)",
       "Bash(npx eslint:*)",
       "PowerShell(npm run build 2>&1)",
-      "PowerShell(homey app build 2>&1)"
+      "PowerShell(homey app build 2>&1)",
+      "Bash(git commit -m ' *)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\kaoh\\.claude\\projects\\c--source-repos-com-blauberg-vento\\memory"
     ]
   }
 }

@@ -33,6 +33,9 @@
   },
   "pair": [
     {
+      "id": "discovery_method"
+    },
+    {
       "id": "list_devices",
       "template": "list_devices",
       "options": {
