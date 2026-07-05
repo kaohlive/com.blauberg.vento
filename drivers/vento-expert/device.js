@@ -1,6 +1,7 @@
 'use strict';
 
 const { Device } = require('homey');
+const { safeSetSettings } = require('../../lib/safe-settings');
 
 // Number of consecutive failed polls before the connectivity alarm is raised.
 // At a 10s poll interval (each poll itself retried a few times) this means a
@@ -205,14 +206,16 @@ class VentoDevice extends Device {
     await this.setCapabilityValue('timerMode', state.timers.mode.toString());
     await this.setCapabilityValue('timerMode_timer', `${state.timers.countdown.hour}:${state.timers.countdown.min}:${state.timers.countdown.sec}`);
 
-    // Update our settings based on current values in the device
-    await this.setSettings({
-      // only provide keys for the settings you want to change
+    // Update our settings based on current values in the device. Device
+    // readings can fall outside the declared setting ranges (e.g. boost_delay
+    // 0 = disabled, below the 1-60 UI range); safeSetSettings drops those so
+    // one reading cannot throw "Out Of Bounds" and flood the log every poll.
+    await safeSetSettings(this, {
       devicemodel: state.unittype,
       humidity_sensor: (state.humidity.sensoractivation === 1),
       humidity_threshold: state.humidity.threshold,
       boost_delay: state.boost.deactivationtimer,
-    });
+    }, { humidity_threshold: [40, 80], boost_delay: [1, 60] }, (m) => this.log(m));
   }
 
   /**

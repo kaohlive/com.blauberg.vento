@@ -1,6 +1,7 @@
 'use strict';
 
 const { Device } = require('homey');
+const { safeSetSettings } = require('../../lib/safe-settings');
 
 // Number of consecutive failed polls before the connectivity alarm is raised.
 // At a 10s poll interval (each poll itself retried a few times) this means a
@@ -166,8 +167,9 @@ class SmartWiFiDevice extends Device {
     // Update speed as percentage (0-100%)
     await this.setCapabilityValue('dim', state.speed.max / 100);
 
-    // Update settings
-    await this.setSettings({
+    // Update settings. Guard device readings against the declared setting
+    // ranges so an out-of-range value cannot throw "Out Of Bounds" every poll.
+    await safeSetSettings(this, {
       max_speed: state.speed.max,
       silent_speed: state.speed.silent,
       interval_speed: state.speed.interval,
@@ -176,7 +178,9 @@ class SmartWiFiDevice extends Device {
       humidity_sensor: (state.sensors.humidity === 1),
       temp_sensor: (state.sensors.temperature === 1),
       motion_sensor: (state.sensors.motion === 1),
-    });
+    }, {
+      max_speed: [30, 100], silent_speed: [30, 100], interval_speed: [30, 100],
+    }, (m) => this.log(m));
   }
 
   /**

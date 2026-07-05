@@ -58,5 +58,8 @@
   },
   "1.4.4": {
     "en": "Minor flow card title fixes"
+  },
+  "1.4.5": {
+    "en": "Fixed a flood of 'Out Of Bounds' errors when a device reports a setting value outside the expected range"
   }
 }

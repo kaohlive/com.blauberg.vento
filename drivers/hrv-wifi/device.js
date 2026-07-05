@@ -1,6 +1,7 @@
 'use strict';
 
 const { Device } = require('homey');
+const { safeSetSettings } = require('../../lib/safe-settings');
 
 // Number of consecutive failed polls before the connectivity alarm is raised.
 // At a 10s poll interval (each poll itself retried a few times) this means a
@@ -207,13 +208,14 @@ class HrvWifiDevice extends Device {
     await this.setCapabilityValue('breezy_timer_mode', state.timers.mode.toString());
     await this.setCapabilityValue('timerMode_timer', `${state.timers.countdown.hour}:${state.timers.countdown.min}:${state.timers.countdown.sec}`);
 
-    // Update settings
-    await this.setSettings({
+    // Update settings. Guard device readings against the declared setting
+    // ranges so an out-of-range value cannot throw "Out Of Bounds" every poll.
+    await safeSetSettings(this, {
       devicemodel: state.unittype,
       humidity_sensor: (state.humidity.sensoractivation === 1),
       humidity_threshold: state.humidity.threshold,
       co2_sensor: (state.co2sensor === 1),
-    });
+    }, { humidity_threshold: [40, 80] }, (m) => this.log(m));
   }
 
   /**
