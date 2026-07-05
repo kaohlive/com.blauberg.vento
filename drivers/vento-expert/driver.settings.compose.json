@@ -48,9 +48,10 @@
         "type": "number",
         "label": { "en": "Boost turn off delay" },
         "value": 30,
-        "min": 1,
+        "min": 0,
         "max": 60,
-        "units": { "en": "minutes" }
+        "units": { "en": "minutes" },
+        "hint": { "en": "Delay before Boost mode turns off. 0 disables the delay. Range per protocol spec: 0-60 minutes." }
       }
     ]
   },

@@ -215,7 +215,7 @@ class VentoDevice extends Device {
       humidity_sensor: (state.humidity.sensoractivation === 1),
       humidity_threshold: state.humidity.threshold,
       boost_delay: state.boost.deactivationtimer,
-    }, { humidity_threshold: [40, 80], boost_delay: [1, 60] }, (m) => this.log(m));
+    }, { humidity_threshold: [40, 80], boost_delay: [0, 60] }, (m) => this.log(m));
   }
 
   /**

@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.blauberg.vento",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "compatibility": ">=12.2.0",
   "sdk": 3,
   "brandColor": "#105DAD",
@@ -1528,10 +1528,13 @@
                 "en": "Boost turn off delay"
               },
               "value": 30,
-              "min": 1,
+              "min": 0,
               "max": 60,
               "units": {
                 "en": "minutes"
+              },
+              "hint": {
+                "en": "Delay before Boost mode turns off. 0 disables the delay. Range per protocol spec: 0-60 minutes."
               }
             }
           ]
