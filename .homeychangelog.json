@@ -64,5 +64,8 @@
   },
   "1.4.6": {
     "en": "Corrected the Boost turn-off delay range to 0-60 minutes to match the device (0 = no delay)"
+  },
+  "1.4.7": {
+    "en": "Smart Wi-Fi/iFan: read device state even when the device supports only some parameters, so speed, RPM and sensors now work; unsupported capabilities are hidden automatically"
   }
 }

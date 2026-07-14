@@ -18,6 +18,15 @@ class SmartWiFiDriver extends Driver {
     this.modbusClient = new BlaubergVentoClient();
     this.modbusClient.timeout = 1500;
     this.modbusClient.parameterSizeResolver = (param) => {
+      // Special-command bytes that can appear in a controller response are each
+      // followed by exactly one byte: 0xFC (change function), 0xFD (parameter
+      // not supported -> low byte of the param), 0xFF (change page -> new high
+      // byte). Report size 1 so the library's parser consumes the marker and
+      // its trailing byte and CONTINUES, instead of aborting the whole response
+      // at the first not-supported parameter. (0xFE size-command is handled by
+      // the library itself.) A device that supports only a subset of the
+      // requested parameters (e.g. iFan) is then parsed correctly.
+      if (param === 0xFC || param === 0xFD || param === 0xFF) return 1;
       const size = SmartWiFiParameterSizes[param];
       return size !== undefined ? size : -1;
     };
@@ -100,53 +109,84 @@ class SmartWiFiDriver extends Driver {
 
     // Send package and wait for response (retry to absorb transient UDP loss).
     return sendWithRetry(this.modbusClient, packet, device.ip, { attempts: 3, log: (m) => this.log(m) }).then((result) => {
-      if (result != null) {
-        const entries = result.packet._dataEntries;
-        if (entries.length < 21) {
-          this.log(`Warning: expected 21 data entries, got ${entries.length}`);
-          throw new Error(`Incomplete response: expected 21 parameters, got ${entries.length}`);
-        }
-        return {
-          onoff: entries[0].value['0'],
-          battery: entries[1].value['0'],
-          fan: {
-            rpm: (entries[2].value['1'] << 8) | entries[2].value['0'],
-          },
-          boost: {
-            mode: entries[3].value['0'],
-            countdown: {
-              sec: entries[4].value['0'],
-              min: entries[4].value['1'],
-              hour: entries[4].value['2'],
-            },
-          },
-          status: {
-            timer: entries[5].value['0'],
-            humidity: entries[6].value['0'],
-            temperature: entries[7].value['0'],
-            motion: entries[8].value['0'],
-            externalSwitch: entries[9].value['0'],
-            intervalMode: entries[10].value['0'],
-            silentMode: entries[11].value['0'],
-          },
-          speed: {
-            max: entries[12].value['0'],
-            silent: entries[13].value['0'],
-            interval: entries[14].value['0'],
-          },
-          modes: {
-            silent: entries[15].value['0'],
-            interval: entries[16].value['0'],
-          },
-          sensors: {
-            humidity: entries[17].value['0'],
-            temperature: entries[18].value['0'],
-            motion: entries[19].value['0'],
-          },
-          unittype: (entries[20].value['1'] << 8) | entries[20].value['0'],
-        };
+      if (result == null) {
+        throw new Error('device not responding, is your device password correct?');
       }
-      throw new Error('device not responding, is your device password correct?');
+
+      // Parse the response by parameter id rather than by position: a device may
+      // support only a subset of the requested parameters and reports the rest
+      // with a 0xFD "not supported" marker (value byte = the unsupported param).
+      // Building a map keeps us correct regardless of which params come back and
+      // in what order.
+      const P = SmartWiFiParameter;
+      const values = new Map();
+      const unsupported = [];
+      for (const entry of result.packet._dataEntries) {
+        if (entry.parameter === 0xFD) {
+          if (entry.value && entry.value.length) unsupported.push(entry.value[0]);
+        } else if (entry.parameter !== 0xFC && entry.parameter !== 0xFF) {
+          values.set(entry.parameter, entry.value);
+        }
+      }
+      if (unsupported.length) {
+        this.log(`Device does not support parameter(s): ${unsupported
+          .map((p) => `0x${p.toString(16).padStart(2, '0')}`).join(', ')}`);
+      }
+      if (values.size === 0) {
+        throw new Error('device returned no readable parameters');
+      }
+
+      // Readers that return undefined when the parameter is absent.
+      const b = (param) => {
+        const v = values.get(param);
+        return v ? v[0] : undefined;
+      };
+      const w = (param) => {
+        const v = values.get(param);
+        return v ? ((v[1] << 8) | v[0]) : undefined;
+      };
+      const countdown = values.get(P.BOOST_TIMER_COUNTDOWN);
+
+      return {
+        onoff: b(P.FAN_ONOFF),
+        battery: b(P.BATTERY_STATUS),
+        fan: {
+          rpm: w(P.CURRENT_RPM),
+        },
+        boost: {
+          mode: b(P.BOOST_MODE),
+          countdown: countdown
+            ? { sec: countdown[0], min: countdown[1], hour: countdown[2] }
+            : undefined,
+        },
+        status: {
+          timer: b(P.STATUS_BUILTIN_TIMER),
+          humidity: b(P.STATUS_HUMIDITY_SENSOR),
+          temperature: b(P.STATUS_TEMP_SENSOR),
+          motion: b(P.STATUS_MOTION_SENSOR),
+          externalSwitch: b(P.STATUS_EXTERNAL_SWITCH),
+          intervalMode: b(P.STATUS_INTERVAL_MODE),
+          silentMode: b(P.STATUS_SILENT_MODE),
+        },
+        speed: {
+          max: b(P.MAX_SPEED_SETPOINT),
+          silent: b(P.SILENT_SPEED_SETPOINT),
+          interval: b(P.INTERVAL_SPEED_SETPOINT),
+        },
+        modes: {
+          silent: b(P.SILENT_MODE_ACTIVATION),
+          interval: b(P.INTERVAL_MODE_ACTIVATION),
+        },
+        sensors: {
+          humidity: b(P.HUMIDITY_SENSOR_PERMISSION),
+          temperature: b(P.TEMP_SENSOR_PERMISSION),
+          motion: b(P.MOTION_SENSOR_PERMISSION),
+        },
+        unittype: w(P.UNIT_TYPE),
+        // Diagnostics for the device layer (capability pruning).
+        present: Array.from(values.keys()),
+        unsupported,
+      };
     });
   }
 

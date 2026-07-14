@@ -2,12 +2,23 @@
 
 const { Device } = require('homey');
 const { safeSetSettings } = require('../../lib/safe-settings');
+const { SmartWiFiParameter } = require('../../lib/smart-wifi-parameters');
 
 // Number of consecutive failed polls before the connectivity alarm is raised.
 // At a 10s poll interval (each poll itself retried a few times) this means a
 // device must be genuinely unreachable for ~30s before being flagged offline,
 // which prevents flapping on transient UDP packet loss.
 const CONNECTIVITY_FAIL_THRESHOLD = 3;
+
+// Capabilities that depend on a specific device parameter. If the device
+// reports that parameter as not supported (e.g. an iFan without a battery),
+// the capability is removed so the UI reflects the real feature set.
+const CAPABILITY_BY_PARAM = {
+  [SmartWiFiParameter.BATTERY_STATUS]: 'alarm_battery',
+  [SmartWiFiParameter.BOOST_MODE]: 'alarm_boost',
+  [SmartWiFiParameter.CURRENT_RPM]: 'measure_RPM',
+  [SmartWiFiParameter.MAX_SPEED_SETPOINT]: 'dim',
+};
 
 class SmartWiFiDevice extends Device {
 
@@ -27,9 +38,33 @@ class SmartWiFiDevice extends Device {
     if (!this.hasCapability('alarm_connectivity')) {
       await this.addCapability('alarm_connectivity');
     }
-    if (!this.hasCapability('alarm_battery')) {
+    // Do not re-add a capability we have learned this device does not support.
+    const unsupported = new Set(this.getStoreValue('unsupportedParams') || []);
+    if (!this.hasCapability('alarm_battery') && !unsupported.has(SmartWiFiParameter.BATTERY_STATUS)) {
       await this.addCapability('alarm_battery');
     }
+  }
+
+  // Persist the parameters this device reports as not supported and remove the
+  // capabilities that depend on them. Persisting means updateCapabilities() will
+  // not re-add them on the next app start.
+  async pruneUnsupportedCapabilities(unsupported) {
+    if (!unsupported || unsupported.length === 0) return;
+    const stored = new Set(this.getStoreValue('unsupportedParams') || []);
+    let changed = false;
+    for (const param of unsupported) {
+      if (!stored.has(param)) {
+        stored.add(param);
+        changed = true;
+      }
+      const capability = CAPABILITY_BY_PARAM[param];
+      if (capability && this.hasCapability(capability)) {
+        this.log(`Removing capability '${capability}': device reports parameter 0x${param.toString(16).padStart(2, '0')} as not supported`);
+        // eslint-disable-next-line no-await-in-loop
+        await this.removeCapability(capability).catch((e) => this.log(`Could not remove ${capability}: ${e.message}`));
+      }
+    }
+    if (changed) await this.setStoreValue('unsupportedParams', Array.from(stored));
   }
 
   async setupCapabilities() {
@@ -147,38 +182,53 @@ class SmartWiFiDevice extends Device {
     const oldBattery = this.getCapabilityValue('alarm_battery');
     const oldBoost = this.getCapabilityValue('alarm_boost');
 
-    // Update capabilities
-    await this.setCapabilityValue('onoff', (state.onoff === 1));
+    // Remove capabilities the device reports as unsupported before updating.
+    await this.pruneUnsupportedCapabilities(state.unsupported);
 
-    const newBattery = (state.battery === 0);
-    await this.setCapabilityValue('alarm_battery', newBattery);
-    if (oldBattery !== null && oldBattery !== newBattery) {
-      await this.triggerBatteryAlarm(newBattery);
+    // Update capabilities only for values the device actually returned; a
+    // device that supports a subset of parameters leaves the rest undefined.
+    if (state.onoff !== undefined && this.hasCapability('onoff')) {
+      await this.setCapabilityValue('onoff', (state.onoff === 1));
     }
 
-    const newBoost = (state.boost.mode === 1);
-    await this.setCapabilityValue('alarm_boost', newBoost);
-    if (oldBoost !== null && oldBoost !== newBoost) {
-      await this.triggerBoostAlarm(newBoost);
+    if (state.battery !== undefined && this.hasCapability('alarm_battery')) {
+      const newBattery = (state.battery === 0);
+      await this.setCapabilityValue('alarm_battery', newBattery);
+      if (oldBattery !== null && oldBattery !== newBattery) {
+        await this.triggerBatteryAlarm(newBattery);
+      }
     }
 
-    await this.setCapabilityValue('measure_RPM', state.fan.rpm);
+    if (state.boost.mode !== undefined && this.hasCapability('alarm_boost')) {
+      const newBoost = (state.boost.mode === 1);
+      await this.setCapabilityValue('alarm_boost', newBoost);
+      if (oldBoost !== null && oldBoost !== newBoost) {
+        await this.triggerBoostAlarm(newBoost);
+      }
+    }
+
+    if (state.fan.rpm !== undefined && this.hasCapability('measure_RPM')) {
+      await this.setCapabilityValue('measure_RPM', state.fan.rpm);
+    }
 
     // Update speed as percentage (0-100%)
-    await this.setCapabilityValue('dim', state.speed.max / 100);
+    if (state.speed.max !== undefined && this.hasCapability('dim')) {
+      await this.setCapabilityValue('dim', state.speed.max / 100);
+    }
 
-    // Update settings. Guard device readings against the declared setting
-    // ranges so an out-of-range value cannot throw "Out Of Bounds" every poll.
-    await safeSetSettings(this, {
-      max_speed: state.speed.max,
-      silent_speed: state.speed.silent,
-      interval_speed: state.speed.interval,
-      silent_mode: (state.modes.silent === 1),
-      interval_mode: (state.modes.interval === 1),
-      humidity_sensor: (state.sensors.humidity === 1),
-      temp_sensor: (state.sensors.temperature === 1),
-      motion_sensor: (state.sensors.motion === 1),
-    }, {
+    // Update settings from the values the device actually returned (skip
+    // undefined so we never write a misleading default), guarded against the
+    // declared ranges so an out-of-range reading cannot throw "Out Of Bounds".
+    const settings = {};
+    if (state.speed.max !== undefined) settings.max_speed = state.speed.max;
+    if (state.speed.silent !== undefined) settings.silent_speed = state.speed.silent;
+    if (state.speed.interval !== undefined) settings.interval_speed = state.speed.interval;
+    if (state.modes.silent !== undefined) settings.silent_mode = (state.modes.silent === 1);
+    if (state.modes.interval !== undefined) settings.interval_mode = (state.modes.interval === 1);
+    if (state.sensors.humidity !== undefined) settings.humidity_sensor = (state.sensors.humidity === 1);
+    if (state.sensors.temperature !== undefined) settings.temp_sensor = (state.sensors.temperature === 1);
+    if (state.sensors.motion !== undefined) settings.motion_sensor = (state.sensors.motion === 1);
+    await safeSetSettings(this, settings, {
       max_speed: [30, 100], silent_speed: [30, 100], interval_speed: [30, 100],
     }, (m) => this.log(m));
   }

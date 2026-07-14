@@ -1,6 +1,6 @@
 {
   "id": "com.blauberg.vento",
-  "version": "1.4.6",
+  "version": "1.4.7",
   "compatibility": ">=12.2.0",
   "sdk": 3,
   "brandColor": "#105DAD",
