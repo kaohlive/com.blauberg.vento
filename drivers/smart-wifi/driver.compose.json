@@ -9,6 +9,9 @@
     "alarm_boost",
     "alarm_battery",
     "alarm_connectivity",
+    "alarm_moisture",
+    "alarm_heat",
+    "alarm_motion",
     "measure_RPM"
   ],
   "energy": {

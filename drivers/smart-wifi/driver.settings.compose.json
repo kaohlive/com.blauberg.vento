@@ -96,12 +96,20 @@
     },
     "children": [
       {
-        "id": "humidity_sensor",
-        "type": "checkbox",
+        "id": "humidity_sensor_mode",
+        "type": "dropdown",
         "label": {
           "en": "Humidity sensor"
         },
-        "value": false
+        "value": "0",
+        "hint": {
+          "en": "Lets the humidity sensor control the fan. Not available on every model."
+        },
+        "values": [
+          { "id": "0", "label": { "en": "Off" } },
+          { "id": "1", "label": { "en": "Automatic" } },
+          { "id": "2", "label": { "en": "Manual" } }
+        ]
       },
       {
         "id": "temp_sensor",
@@ -109,7 +117,10 @@
         "label": {
           "en": "Temperature sensor"
         },
-        "value": false
+        "value": false,
+        "hint": {
+          "en": "Lets the temperature sensor control the fan. Not available on every model."
+        }
       },
       {
         "id": "motion_sensor",
@@ -117,7 +128,10 @@
         "label": {
           "en": "Motion sensor"
         },
-        "value": false
+        "value": false,
+        "hint": {
+          "en": "Lets the motion sensor control the fan. Not available on every model; ignored if your fan has no motion sensor."
+        }
       }
     ]
   },

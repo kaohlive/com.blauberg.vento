@@ -18,6 +18,19 @@ const CAPABILITY_BY_PARAM = {
   [SmartWiFiParameter.BOOST_MODE]: 'alarm_boost',
   [SmartWiFiParameter.CURRENT_RPM]: 'measure_RPM',
   [SmartWiFiParameter.MAX_SPEED_SETPOINT]: 'dim',
+  // Live sensor status: is the sensor currently driving the fan? These are
+  // official Homey system capabilities, so they get Homey's built-in flow
+  // trigger/condition cards automatically.
+  [SmartWiFiParameter.STATUS_HUMIDITY_SENSOR]: 'alarm_moisture',
+  [SmartWiFiParameter.STATUS_TEMP_SENSOR]: 'alarm_heat',
+  [SmartWiFiParameter.STATUS_MOTION_SENSOR]: 'alarm_motion',
+};
+
+// Device parameter behind each writable sensor permission setting.
+const PERMISSION_PARAM_BY_SETTING = {
+  humidity_sensor_mode: SmartWiFiParameter.HUMIDITY_SENSOR_PERMISSION,
+  temp_sensor: SmartWiFiParameter.TEMP_SENSOR_PERMISSION,
+  motion_sensor: SmartWiFiParameter.MOTION_SENSOR_PERMISSION,
 };
 
 class SmartWiFiDevice extends Device {
@@ -34,14 +47,17 @@ class SmartWiFiDevice extends Device {
   }
 
   async updateCapabilities() {
-    // Add any missing capabilities dynamically
+    // alarm_connectivity is app-internal and has no backing device parameter.
     if (!this.hasCapability('alarm_connectivity')) {
       await this.addCapability('alarm_connectivity');
     }
-    // Do not re-add a capability we have learned this device does not support.
+    // Migrate existing devices to any parameter-backed capability they are
+    // missing, but never (re-)add one we have learned this device lacks.
     const unsupported = new Set(this.getStoreValue('unsupportedParams') || []);
-    if (!this.hasCapability('alarm_battery') && !unsupported.has(SmartWiFiParameter.BATTERY_STATUS)) {
-      await this.addCapability('alarm_battery');
+    for (const [param, capability] of Object.entries(CAPABILITY_BY_PARAM)) {
+      if (unsupported.has(Number(param)) || this.hasCapability(capability)) continue;
+      // eslint-disable-next-line no-await-in-loop
+      await this.addCapability(capability).catch((e) => this.log(`Could not add ${capability}: ${e.message}`));
     }
   }
 
@@ -211,6 +227,17 @@ class SmartWiFiDevice extends Device {
       await this.setCapabilityValue('measure_RPM', state.fan.rpm);
     }
 
+    // Live sensor status: is this sensor currently driving the fan?
+    if (state.status.humidity !== undefined && this.hasCapability('alarm_moisture')) {
+      await this.setCapabilityValue('alarm_moisture', state.status.humidity === 1);
+    }
+    if (state.status.temperature !== undefined && this.hasCapability('alarm_heat')) {
+      await this.setCapabilityValue('alarm_heat', state.status.temperature === 1);
+    }
+    if (state.status.motion !== undefined && this.hasCapability('alarm_motion')) {
+      await this.setCapabilityValue('alarm_motion', state.status.motion === 1);
+    }
+
     // Update speed as percentage (0-100%)
     if (state.speed.max !== undefined && this.hasCapability('dim')) {
       await this.setCapabilityValue('dim', state.speed.max / 100);
@@ -225,7 +252,10 @@ class SmartWiFiDevice extends Device {
     if (state.speed.interval !== undefined) settings.interval_speed = state.speed.interval;
     if (state.modes.silent !== undefined) settings.silent_mode = (state.modes.silent === 1);
     if (state.modes.interval !== undefined) settings.interval_mode = (state.modes.interval === 1);
-    if (state.sensors.humidity !== undefined) settings.humidity_sensor = (state.sensors.humidity === 1);
+    // Humidity permission is three-state (0=Off, 1=Automatic, 2=Manual), so it
+    // is a dropdown and must keep its raw value instead of being flattened to a
+    // boolean. Dropdown settings hold strings.
+    if (state.sensors.humidity !== undefined) settings.humidity_sensor_mode = String(state.sensors.humidity);
     if (state.sensors.temperature !== undefined) settings.temp_sensor = (state.sensors.temperature === 1);
     if (state.sensors.motion !== undefined) settings.motion_sensor = (state.sensors.motion === 1);
     await safeSetSettings(this, settings, {
@@ -248,6 +278,29 @@ class SmartWiFiDevice extends Device {
     if (changedKeys.includes('last_known_ip')) {
       this.setStoreValue('lastKnownIP', newSettings.last_known_ip);
     }
+
+    // Sensor permissions are writable on the device. Without this the settings
+    // looked editable but did nothing - the next poll simply overwrote them.
+    // Parameters this device reports as unsupported are ignored, since Homey
+    // cannot hide an individual setting per device.
+    const unsupported = new Set(this.getStoreValue('unsupportedParams') || []);
+    for (const [key, param] of Object.entries(PERMISSION_PARAM_BY_SETTING)) {
+      if (!changedKeys.includes(key)) continue;
+      if (unsupported.has(param)) {
+        this.log(`Ignoring '${key}': this device does not support parameter 0x${param.toString(16).padStart(2, '0')}`);
+        continue;
+      }
+      // Humidity is a dropdown holding '0'|'1'|'2'; the others are checkboxes.
+      let value;
+      if (key === 'humidity_sensor_mode') {
+        value = Number(newSettings[key]);
+      } else {
+        value = newSettings[key] ? 1 : 0;
+      }
+      // eslint-disable-next-line no-await-in-loop
+      await this.driver.setSensorPermission(this.deviceObject, this.devicepwd, param, value);
+    }
+
     if (changedKeys.includes('max_speed')) {
       await this.driver.setMaxSpeed(this.deviceObject, this.devicepwd, newSettings.max_speed);
     }

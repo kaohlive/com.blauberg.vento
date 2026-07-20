@@ -81,6 +81,12 @@ class SmartWiFiDriver extends Driver {
     return this.setDeviceValue(device, devicepass, SmartWiFiParameter.INTERVAL_MODE_ACTIVATION, value);
   }
 
+  // Sensor permissions (R/W/RW). Humidity is three-state (0=Off, 1=Automatic,
+  // 2=Manual); temperature and motion are 0=Off / 1=On.
+  async setSensorPermission(device, devicepass, param, value) {
+    return this.setDeviceValue(device, devicepass, param, value);
+  }
+
   async getDeviceState(device, devicepass) {
     // Assemble package for reading device state
     const packet = new Packet(device.id, devicepass, FunctionType.READ, [
