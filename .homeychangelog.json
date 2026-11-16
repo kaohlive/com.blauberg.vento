@@ -79,5 +79,8 @@
   },
   "1.4.11": {
     "en": "Devices that get a new IP address from the router are now picked up automatically, instead of staying unreachable until the app restarts."
+  },
+  "1.4.12": {
+    "en": "Unreachable devices are now retried on their last known IP address, so they come back on their own when the network search does not find them."
   }
 }

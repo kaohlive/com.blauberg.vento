@@ -8,6 +8,7 @@ const { BreezyParameter, BreezyParameterSizes, BreezyDeviceTypes } = require('..
 const { discoverDevices, scanByIP } = require('../../lib/device-discovery');
 const { sendWithRetry } = require('../../lib/modbus-retry');
 const { SafeVentoClient } = require('../../lib/safe-vento-client');
+const { probeUnavailableDevice } = require('../../lib/unavailable-probe');
 
 class HrvWifiDriver extends Driver {
 
@@ -217,6 +218,11 @@ class HrvWifiDriver extends Driver {
         homeydevice.updateDeviceState();
       } else {
         this.log('Not getting the state since device is not available yet');
+        // Broadcast alone cannot bring it back if replies are filtered while
+        // unicast still works; skip devices this round's broadcast just found.
+        if (!locatedDevices.some((located) => located.id === homeydevice.getData().id)) {
+          probeUnavailableDevice(this, homeydevice).catch((error) => this.log(`Unicast probe error: ${error.message}`));
+        }
       }
     });
   }
