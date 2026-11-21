@@ -1,0 +1,27 @@
+<button id="search" class="homey-button-primary-full" type="button">Search automatically</button>
+<form id="vento-v1-pair">
+  <fieldset class="homey-form-fieldset">
+    <label class="homey-form-label" for="ip">Fan IP address</label>
+    <input class="homey-form-input" id="ip" type="text" required>
+  </fieldset>
+  <button class="homey-button-primary-full" type="submit">Add fan</button>
+</form>
+<script>
+  Homey.setTitle('Add Vento Expert V1');
+  document.getElementById('search').addEventListener('click', () => Homey.showView('list_devices'));
+  const form = document.getElementById('vento-v1-pair');
+  const button = form.querySelector('button');
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    button.disabled = true;
+    try {
+      const device = await Homey.emit('validate_ip', document.getElementById('ip').value);
+      await Homey.createDevice(device);
+      Homey.done();
+    } catch (error) {
+      Homey.alert(error.message);
+    } finally {
+      button.disabled = false;
+    }
+  });
+</script>

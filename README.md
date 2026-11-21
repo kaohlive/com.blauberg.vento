@@ -8,9 +8,11 @@ This app supports three types of Blauberg devices with automatic detection durin
 
 ### Vento Expert Series
 - Vento Expert A30 W V.2
+- Vento Expert A50-1 W
 - Vento Expert A50-1 W V.2
 - Vento Expert A85-1 W V.2
 - Vento Expert A100-1 W V.2
+- Vento Expert Duo A30-1 W
 - Vento Expert Duo A30-1 W V.2
 - VENTO Style
 - VENTO inHOME 100
