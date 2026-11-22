@@ -6,6 +6,7 @@ const { VentoV1Client } = require('../../lib/vento-v1-client');
 const MANUAL_SPEED_MIN = 22;
 const MANUAL_SPEED_MAX = 255;
 const DEFAULT_MANUAL_SPEED = 128;
+const CONNECTIVITY_FAIL_THRESHOLD = 3;
 const PRESET_SPEEDS = ['Low', 'Medium', 'High'];
 const OPERATION_MODES = ['Ventilation', 'Regeneration', 'Supply'];
 
@@ -20,6 +21,7 @@ class VentoV1Device extends Device {
     this.registerCapabilityListener('manualSpeed', (percent) => this.setManualSpeedFraction(percent / 100));
     this.registerCapabilityListener('fan_speed', (fraction) => this.setManualSpeedFraction(fraction));
     this.registerCapabilityListener('operationMode', (mode) => this.update((client) => client.setOperationMode(Number(mode))));
+    if (!this.getAvailable()) await this.setAvailable();
     await this.poll();
     this.pollTimer = this.homey.setInterval(() => this.poll(), 10_000);
   }
@@ -59,8 +61,13 @@ class VentoV1Device extends Device {
   update(request) {
     const operation = this.pending.then(async () => {
       if (this.deleted) return;
-      const { status } = await request(this.client);
-      if (this.deleted) return;
+      const result = await request(this.client);
+      if (this.deleted || !result) return;
+      const { status } = result;
+      this.missedPolls = 0;
+      if (this.hasCapability('alarm_connectivity') && this.getCapabilityValue('alarm_connectivity') !== false) {
+        await this.setCapabilityValue('alarm_connectivity', false);
+      }
       this.logStatusChanges(status);
       await this.setCapabilityValue('onoff', status.on);
       const selectedSpeed = status.speed === 4 ? 255 : status.speed;
@@ -106,8 +113,6 @@ class VentoV1Device extends Device {
           }
         }
       }
-      this.missedPolls = 0;
-      await this.setAvailable();
     });
     this.pending = operation.catch(() => {});
     return operation;
@@ -143,15 +148,20 @@ class VentoV1Device extends Device {
   }
 
   async poll() {
-    try {
-      await this.update((client) => client.readStatus());
-    } catch (error) {
-      this.error(error);
-      this.missedPolls += 1;
-      if (!this.deleted && this.missedPolls >= 2) {
-        await this.setUnavailable(error.message).catch((availabilityError) => this.error(availabilityError));
+    await this.update(async (client) => {
+      try {
+        return await client.readStatus();
+      } catch (error) {
+        if (this.deleted) return null;
+        this.error(error);
+        this.missedPolls += 1;
+        if (this.missedPolls >= CONNECTIVITY_FAIL_THRESHOLD && this.hasCapability('alarm_connectivity')
+          && this.getCapabilityValue('alarm_connectivity') !== true) {
+          await this.setCapabilityValue('alarm_connectivity', true);
+        }
+        return null;
       }
-    }
+    }).catch((error) => this.error(error));
   }
 
 }
