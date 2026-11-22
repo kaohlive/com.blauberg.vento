@@ -6,6 +6,8 @@ const { VentoV1Client } = require('../../lib/vento-v1-client');
 const MANUAL_SPEED_MIN = 22;
 const MANUAL_SPEED_MAX = 255;
 const DEFAULT_MANUAL_SPEED = 128;
+const PRESET_SPEEDS = ['Low', 'Medium', 'High'];
+const OPERATION_MODES = ['Ventilation', 'Regeneration', 'Supply'];
 
 class VentoV1Device extends Device {
 
@@ -59,6 +61,7 @@ class VentoV1Device extends Device {
       if (this.deleted) return;
       const { status } = await request(this.client);
       if (this.deleted) return;
+      this.logStatusChanges(status);
       await this.setCapabilityValue('onoff', status.on);
       const selectedSpeed = status.speed === 4 ? 255 : status.speed;
       const speedMode = status.on ? selectedSpeed : 0;
@@ -72,6 +75,10 @@ class VentoV1Device extends Device {
         await this.setCapabilityValue('operationMode', String(status.operationMode));
       }
       if (status.humidity !== undefined) await this.setCapabilityValue('measure_humidity', status.humidity);
+      if (this.hasCapability('measure_power')) {
+        const watts = this.estimatePower(status);
+        if (Number.isFinite(watts)) await this.setCapabilityValue('measure_power', watts);
+      }
       if (status.alarm !== undefined) await this.setCapabilityValue('alarm_generic', status.alarm);
       if (status.boost !== undefined && this.hasCapability('vento_v1_boost')) {
         await this.setCapabilityValue('vento_v1_boost', status.boost);
@@ -98,6 +105,35 @@ class VentoV1Device extends Device {
     });
     this.pending = operation.catch(() => {});
     return operation;
+  }
+
+  estimatePower({ on, speed, manualSpeed }) {
+    const {
+      power_off: off, power_low: low, power_medium: medium, power_high: high,
+    } = this.getSettings();
+    if (!on) return off;
+    if (speed === 4 && manualSpeed !== undefined) {
+      // The protocol gives a speed setting but no power curve for manual operation.
+      const fraction = (manualSpeed - MANUAL_SPEED_MIN) / (MANUAL_SPEED_MAX - MANUAL_SPEED_MIN);
+      return low + fraction * (high - low);
+    }
+    return [low, medium, high][speed - 1];
+  }
+
+  logStatusChanges({ speed, operationMode }) {
+    if (speed !== undefined) {
+      const preset = PRESET_SPEEDS[speed - 1];
+      if (preset && this.lastSpeed !== undefined && this.lastSpeed !== speed) {
+        this.log(`Fan speed changed to ${preset}`);
+      }
+      this.lastSpeed = speed;
+    }
+    if (operationMode !== undefined) {
+      if (this.lastOperationMode !== undefined && this.lastOperationMode !== operationMode) {
+        this.log(`Operation mode changed to ${OPERATION_MODES[operationMode]}`);
+      }
+      this.lastOperationMode = operationMode;
+    }
   }
 
   async poll() {

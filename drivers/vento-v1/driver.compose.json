@@ -9,10 +9,14 @@
     "manualSpeed",
     "fan_speed",
     "measure_humidity",
+    "measure_power",
     "operationMode",
     "speedMode",
     "timerMode_timer"
   ],
+  "capabilitiesOptions": {
+    "measure_power": { "approximated": true }
+  },
   "platforms": ["local"],
   "connectivity": ["lan"],
   "images": {

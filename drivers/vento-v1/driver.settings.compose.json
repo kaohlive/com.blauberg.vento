@@ -4,5 +4,15 @@
     "type": "text",
     "label": { "en": "IP address" },
     "value": ""
+  },
+  {
+    "type": "group",
+    "label": { "en": "Estimated power usage" },
+    "children": [
+      { "id": "power_off", "type": "number", "label": { "en": "Off" }, "units": { "en": "W" }, "value": 0.5, "min": 0, "decimals": 1 },
+      { "id": "power_low", "type": "number", "label": { "en": "Low" }, "units": { "en": "W" }, "value": 5.1, "min": 0, "decimals": 1 },
+      { "id": "power_medium", "type": "number", "label": { "en": "Medium" }, "units": { "en": "W" }, "value": 5.6, "min": 0, "decimals": 1 },
+      { "id": "power_high", "type": "number", "label": { "en": "High" }, "units": { "en": "W" }, "value": 7.5, "min": 0, "decimals": 1 }
+    ]
   }
 ]
