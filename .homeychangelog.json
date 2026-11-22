@@ -82,5 +82,8 @@
   },
   "1.4.12": {
     "en": "Unreachable devices are now retried on their last known IP address, so they come back on their own when the network search does not find them."
+  },
+  "1.5.0": {
+    "en": "Commands to your fan are now confirmed by the device, so Homey shows an error when a command did not arrive instead of silently doing nothing. More reliable network communication."
   }
 }

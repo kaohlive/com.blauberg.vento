@@ -6,7 +6,7 @@ const {
 } = require('blaubergventojs');
 const { discoverDevices, scanByIP } = require('../../lib/device-discovery');
 const { sendWithRetry } = require('../../lib/modbus-retry');
-const { SafeVentoClient } = require('../../lib/safe-vento-client');
+const { B133Client, checkWriteResponse } = require('../../lib/b133-transport');
 const { probeUnavailableDevice } = require('../../lib/unavailable-probe');
 
 class VentoDriver extends Driver {
@@ -16,8 +16,7 @@ class VentoDriver extends Driver {
    */
   async onInit() {
     this.deviceList = [];
-    this.modbusClient = new SafeVentoClient();
-    this.modbusClient.timeout = 1500;
+    this.modbusClient = new B133Client({ timeout: 1500, log: (m) => this.log(m) });
     // Extend library's default parameter sizes with extra params not in the enum
     const EXTRA_PARAMS = { 11: 3 }; // Active timer countdown: 3 bytes (sec, min, hour)
     this.modbusClient.parameterSizeResolver = (param) => {
@@ -38,17 +37,15 @@ class VentoDriver extends Driver {
     }, 10000);
   }
 
-  async setDeviceValue(device, devicepass, param, value) {
-    const packet = new Packet(device.id, devicepass, FunctionType.WRITE, [
+  // Writes use WRITEREAD so the device confirms the change. Write-only (W)
+  // parameters, such as the reset commands, pass confirm: false. A missing
+  // confirmation throws, so the user sees that a command did not arrive.
+  async setDeviceValue(device, devicepass, param, value, { confirm = true } = {}) {
+    const packet = new Packet(device.id, devicepass, confirm ? FunctionType.WRITEREAD : FunctionType.WRITE, [
       DataEntry.of(param, value),
     ]);
-    return this.modbusClient.send(packet, device.ip).then((result) => {
-      if (result == null) {
-        this.log(`Warning: no response for write param=${param} value=${value}`);
-      }
-    }).catch((error) => {
-      this.log(`Error writing param=${param}: ${error.message}`);
-    });
+    const result = await this.modbusClient.write(packet, device.ip);
+    if (confirm) checkWriteResponse(result, param, value, (m) => this.log(m));
   }
 
   async setOnoffStatus(device, devicepass, value) {
@@ -85,7 +82,7 @@ class VentoDriver extends Driver {
 
   async resetFilterTimer(device, devicepass) {
     // Parameter 0x0065 (101) - RESET_FILTER_TIMER - Write any byte to reset
-    return this.setDeviceValue(device, devicepass, Parameter.RESET_FILTER_TIMER, 1);
+    return this.setDeviceValue(device, devicepass, Parameter.RESET_FILTER_TIMER, 1, { confirm: false });
   }
 
   async getDeviceState(device, devicepass) {
@@ -168,21 +165,14 @@ class VentoDriver extends Driver {
   }
 
   // Multi-interface discovery (directed broadcast per NIC + global broadcast),
-  // falling back to the library's single-broadcast implementation if it yields
-  // nothing - so existing setups can never regress.
+  // The library's findDevices() fallback was dropped: it sent the same global
+  // broadcast, but its socket had no 'error' listener and could crash the app.
   async discoverAll() {
-    let locatedDevices = await discoverDevices({
+    const locatedDevices = await discoverDevices({
       timeout: this.modbusClient.timeout,
       sizeResolver: this.modbusClient.parameterSizeResolver,
       log: (msg) => this.log(msg),
     });
-    if (!locatedDevices || locatedDevices.length === 0) {
-      const fallback = await this.modbusClient.findDevices();
-      if (fallback && fallback.length > 0) {
-        this.log(`Discovery: library fallback located ${fallback.length} device(s)`);
-        locatedDevices = fallback;
-      }
-    }
     return locatedDevices || [];
   }
 

@@ -25,6 +25,7 @@ The app automatically detects device type during pairing and assigns the correct
 
 - **Build**: `npm run build` - Compiles TypeScript to JavaScript (output: `.homeybuild/`)
 - **Lint**: `npm run lint` - Runs ESLint on `.js` and `.ts` files
+- **Test**: `npm test` - Runs the `node:test` suite in `test/` (fake UDP device on 127.0.0.1; needs Node 18+). `test/`, `tools/` and `resources/` are kept out of the app package (`.homeyignore`, `tsconfig.json` exclude)
 
 ## Architecture
 
@@ -49,7 +50,7 @@ Configuration is split across:
 - Runs discovery loop every 10 seconds (starts after 5-second delay)
 - Maintains `deviceList` array of discovered devices
 - All device communication goes through driver methods (`setSpeedMode`, `setOperationMode`, etc.)
-- Uses `BlaubergVentoClient` with 1500ms timeout
+- Uses `B133Client` ([lib/b133-transport.js](lib/b133-transport.js)) with 1500ms timeout
 
 **Device** ([drivers/vento-expert/device.js](drivers/vento-expert/device.js))
 - `VentoDevice` represents individual fan instances
@@ -90,9 +91,10 @@ This ensures users cannot accidentally pair a device with the wrong driver, prev
 
 ### MODBUS Communication Pattern
 
-All communication flows: Device → Driver → `BlaubergVentoClient` → MODBUS packet
-- READ operations fetch multiple parameters in single packet (see `getDeviceState()`)
-- WRITE operations send single parameter updates via `setDeviceValue()`
+All communication flows: Device → Driver → `B133Client` → MODBUS packet
+- READ operations fetch multiple parameters in single packet (see `getDeviceState()`), retried via `sendWithRetry`
+- WRITE operations send single parameter updates via `setDeviceValue()` as WRITEREAD (0x03), so the device confirms; a missing confirmation throws. Write-only (W) parameters such as the filter reset pass `{ confirm: false }` and use WRITE. Writes to one device are queued in order
+- `B133Client` never throws from a socket callback: invalid IP, device id or password and socket errors reject the promise. Never call the library's `BlaubergVentoClient` (its socket has no error handler)
 - Device password required for all communications (set during pairing)
 
 **Protocol Details** (see `b133_4_1en_01preview.pdf`):
@@ -140,8 +142,8 @@ Flow triggers, conditions, and actions are registered:
 
 The `blaubergventojs` library has hardcoded parameter enums for Vento Expert devices. To support Smart Wi-Fi devices with different register mappings, we use a layered approach:
 
-**Layer 1: Shared Protocol Handling** (from `blaubergventojs`)
-- `BlaubergVentoClient` - UDP communication
+**Layer 1: Shared Protocol Handling** (from `blaubergventojs`, transport in `lib/b133-transport.js`)
+- `B133Client` (own) - UDP communication
 - `Packet` - Packet serialization/deserialization
 - `FunctionType` - Function codes (READ, WRITE, etc.)
 - `DataEntry` - Data entry construction

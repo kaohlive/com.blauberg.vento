@@ -4,6 +4,14 @@
     "allowJs": true,
     "outDir": ".homeybuild/",
     "strict": true,
-    "typeRoots": ["./node_modules/@types"]
-  }
+    "typeRoots": [
+      "./node_modules/@types"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    ".homeybuild",
+    "test",
+    "tools"
+  ]
 }

@@ -4,7 +4,8 @@
   "main": "app.js",
   "scripts": {
     "build": "tsc",
-    "lint": "eslint --ext .js,.ts --ignore-path .gitignore ."
+    "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",
+    "test": "node --test \"test/**/*.test.js\""
   },
   "devDependencies": {
     "@tsconfig/node16": "16.1.x",
