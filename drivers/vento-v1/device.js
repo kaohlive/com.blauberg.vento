@@ -1,6 +1,7 @@
 'use strict';
 
 const { Device } = require('homey');
+const { normalizeIp } = require('../../lib/ip-address');
 const { VentoV1Client } = require('../../lib/vento-v1-client');
 
 const MANUAL_SPEED_MIN = 22;
@@ -13,17 +14,30 @@ const OPERATION_MODES = ['Ventilation', 'Regeneration', 'Supply'];
 class VentoV1Device extends Device {
 
   async onInit() {
-    this.client = new VentoV1Client(this.getSetting('ip'));
     this.pending = Promise.resolve();
     this.missedPolls = 0;
-    this.registerCapabilityListener('onoff', (on) => this.update((client) => client.setPower(on)));
-    this.registerCapabilityListener('speedMode', (mode) => this.update((client) => this.setSpeedMode(client, Number(mode))));
+    const ip = this.getConfiguredIp();
+    this.client = ip ? new VentoV1Client(ip) : null;
+    if (ip && this.getSetting('last_known_ip') !== ip) {
+      await this.setSettings({ last_known_ip: ip }).catch((error) => this.error(error));
+    }
+    this.registerCapabilityListener('onoff', (on) => this.update(() => this.getClient().setPower(on)));
+    this.registerCapabilityListener('speedMode', (mode) => this.update(() => this.setSpeedMode(this.getClient(), Number(mode))));
     this.registerCapabilityListener('manualSpeed', (percent) => this.setManualSpeedFraction(percent / 100));
     this.registerCapabilityListener('fan_speed', (fraction) => this.setManualSpeedFraction(fraction));
-    this.registerCapabilityListener('operationMode', (mode) => this.update((client) => client.setOperationMode(Number(mode))));
+    this.registerCapabilityListener('operationMode', (mode) => this.update(() => this.getClient().setOperationMode(Number(mode))));
     if (!this.getAvailable()) await this.setAvailable();
     await this.poll();
     this.pollTimer = this.homey.setInterval(() => this.poll(), 10_000);
+  }
+
+  getConfiguredIp() {
+    return normalizeIp(this.getSetting('last_known_ip') || this.getSetting('ip'));
+  }
+
+  getClient() {
+    if (!this.client) throw new Error('Set a valid IP address in the device settings');
+    return this.client;
   }
 
   async setSpeedMode(client, mode) {
@@ -37,7 +51,7 @@ class VentoV1Device extends Device {
 
   setManualSpeedFraction(fraction) {
     const speed = Math.max(MANUAL_SPEED_MIN, Math.round(fraction * MANUAL_SPEED_MAX));
-    return this.update((client) => client.setManualSpeed(speed));
+    return this.update(() => this.getClient().setManualSpeed(speed));
   }
 
   onDeleted() {
@@ -46,11 +60,13 @@ class VentoV1Device extends Device {
   }
 
   async onSettings({ newSettings, changedKeys }) {
-    if (!changedKeys.includes('ip')) return;
-    const client = new VentoV1Client(newSettings.ip);
-    if (this.driver.getDevices().some((device) => device !== this && device.getSetting('ip') === newSettings.ip)) {
+    if (!changedKeys.includes('last_known_ip')) return;
+    const ip = normalizeIp(newSettings.last_known_ip);
+    if (!ip) throw new Error('Enter a valid IPv4 address');
+    if (this.driver.getDevices().some((device) => device !== this && device.getConfiguredIp() === ip)) {
       throw new Error('A Vento Expert V1 is already paired at this address');
     }
+    const client = new VentoV1Client(ip);
     await this.update(async () => {
       const result = await client.readStatus();
       this.client = client;
@@ -61,7 +77,7 @@ class VentoV1Device extends Device {
   update(request) {
     const operation = this.pending.then(async () => {
       if (this.deleted) return;
-      const result = await request(this.client);
+      const result = await request();
       if (this.deleted || !result) return;
       const { status } = result;
       this.missedPolls = 0;
@@ -148,9 +164,9 @@ class VentoV1Device extends Device {
   }
 
   async poll() {
-    await this.update(async (client) => {
+    await this.update(async () => {
       try {
-        return await client.readStatus();
+        return await this.getClient().readStatus();
       } catch (error) {
         if (this.deleted) return null;
         this.error(error);

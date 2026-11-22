@@ -2,6 +2,7 @@
 
 const { randomUUID } = require('crypto');
 const { Driver } = require('homey');
+const { normalizeIp } = require('../../lib/ip-address');
 const { VentoV1Client, discoverVentoV1 } = require('../../lib/vento-v1-client');
 
 class VentoV1Driver extends Driver {
@@ -19,18 +20,19 @@ class VentoV1Driver extends Driver {
   }
 
   async onPair(session) {
-    const isPaired = (ip) => this.getDevices().some((device) => device.getSetting('ip') === ip);
+    const isPaired = (ip) => this.getDevices().some((device) => device.getConfiguredIp() === ip);
     const createDevice = (ip) => ({
       name: `Vento Expert V1 (${ip})`,
       data: { id: randomUUID() },
-      settings: { ip },
+      settings: { last_known_ip: ip },
     });
     session.setHandler('list_devices', async () => {
       const addresses = await discoverVentoV1((error) => this.error(error));
       return addresses.filter((ip) => !isPaired(ip)).map(createDevice);
     });
     session.setHandler('validate_ip', async (address) => {
-      const ip = address.trim();
+      const ip = normalizeIp(address);
+      if (!ip) throw new Error('Enter a valid IPv4 address');
       if (isPaired(ip)) {
         throw new Error('A Vento Expert V1 is already paired at this address');
       }

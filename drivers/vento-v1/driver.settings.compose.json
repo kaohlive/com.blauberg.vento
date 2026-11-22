@@ -1,6 +1,6 @@
 [
   {
-    "id": "ip",
+    "id": "last_known_ip",
     "type": "text",
     "label": { "en": "IP address" },
     "value": ""
