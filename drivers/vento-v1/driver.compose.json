@@ -8,6 +8,7 @@
     "alarm_generic",
     "manualSpeed",
     "fan_speed",
+    "vento_v1_manual_speed",
     "measure_humidity",
     "measure_power",
     "operationMode",
@@ -15,6 +16,7 @@
     "timerMode_timer"
   ],
   "capabilitiesOptions": {
+    "fan_speed": { "preventInsights": true },
     "measure_power": { "approximated": true }
   },
   "platforms": ["local"],

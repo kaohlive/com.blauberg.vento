@@ -71,6 +71,12 @@ class VentoV1Device extends Device {
         await this.setCapabilityValue('manualSpeed', Math.round(fraction * 100));
         await this.setCapabilityValue('fan_speed', fraction);
       }
+      if (this.hasCapability('vento_v1_manual_speed')) {
+        const percent = status.on && status.speed === 4 && status.manualSpeed !== undefined
+          ? Math.round((status.manualSpeed / MANUAL_SPEED_MAX) * 100)
+          : null;
+        await this.setCapabilityValue('vento_v1_manual_speed', percent);
+      }
       if (status.operationMode !== undefined) {
         await this.setCapabilityValue('operationMode', String(status.operationMode));
       }
