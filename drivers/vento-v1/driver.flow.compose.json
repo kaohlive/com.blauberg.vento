@@ -1,0 +1,120 @@
+{
+  "triggers": [
+    {
+      "id": "vento_v1_alarm_filter_false",
+      "title": {
+        "en": "The Filter alarm turned off"
+      }
+    },
+    {
+      "id": "vento_v1_alarm_filter_true",
+      "title": {
+        "en": "The Filter alarm turned on"
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "id": "vento_v1_alarm_filter",
+      "title": {
+        "en": "The filter alarm is !{{on|off}}"
+      }
+    }
+  ],
+  "actions": [
+    {
+      "id": "vento_v1_speed_mode",
+      "title": {
+        "en": "Set the speed mode"
+      },
+      "titleFormatted": {
+        "en": "Sets the speed mode of the device to [[speedMode]] "
+      },
+      "hint": {
+        "en": "Sets the device to the desired speed mode"
+      },
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "speedMode",
+          "title": {
+            "en": "The desired speed mode"
+          },
+          "values": [
+            {
+              "id": "0",
+              "title": {
+                "en": "Off"
+              }
+            },
+            {
+              "id": "1",
+              "title": {
+                "en": "Low"
+              }
+            },
+            {
+              "id": "2",
+              "title": {
+                "en": "Medium"
+              }
+            },
+            {
+              "id": "3",
+              "title": {
+                "en": "High"
+              }
+            },
+            {
+              "id": "255",
+              "title": {
+                "en": "Manual"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vento_v1_operation_mode",
+      "title": {
+        "en": "Set the operation mode"
+      },
+      "titleFormatted": {
+        "en": "Sets the operation mode of the device to [[operationMode]] "
+      },
+      "hint": {
+        "en": "Sets the device to the desired operation mode"
+      },
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "operationMode",
+          "title": {
+            "en": "The desired operation mode"
+          },
+          "values": [
+            {
+              "id": "0",
+              "title": {
+                "en": "Ventilation"
+              }
+            },
+            {
+              "id": "1",
+              "title": {
+                "en": "Regeneration"
+              }
+            },
+            {
+              "id": "2",
+              "title": {
+                "en": "Supply"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

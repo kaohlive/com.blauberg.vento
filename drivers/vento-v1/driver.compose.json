@@ -1,0 +1,40 @@
+{
+  "name": { "en": "Vento Expert V1" },
+  "class": "fan",
+  "capabilities": [
+    "onoff",
+    "alarm_connectivity",
+    "alarm_boost",
+    "alarm_filter",
+    "alarm_generic",
+    "manualSpeed",
+    "fan_speed",
+    "vento_v1_manual_speed",
+    "measure_humidity",
+    "measure_power",
+    "operationMode",
+    "speedMode",
+    "timerMode_timer"
+  ],
+  "capabilitiesOptions": {
+    "fan_speed": { "preventInsights": true },
+    "measure_power": { "approximated": true }
+  },
+  "platforms": ["local"],
+  "connectivity": ["lan"],
+  "images": {
+    "small": "{{driverAssetsPath}}/images/small.png",
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
+  },
+  "pair": [
+    { "id": "enter_ip" },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "options": { "singular": true },
+      "navigation": { "next": "add_devices" }
+    },
+    { "id": "add_devices", "template": "add_devices" }
+  ]
+}

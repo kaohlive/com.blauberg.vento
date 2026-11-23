@@ -11,6 +11,11 @@ Vento Expert Series:
 - Vento Expert A100-1 W V.2
 - Vento Expert Duo A30-1 W V.2
 
+Vento Expert V.1 Series (separate "Vento Expert V1" driver, no device password; the unit has a fixed IP address, so if you change it, update it in the device settings):
+- Vento Expert A50-1 W
+- Vento Expert Duo A30-1 W
+- Flexit Roomie One WiFi V1
+
 Smart Wi-Fi Series:
 - Smart Wi-Fi fans with battery-powered operation
 - Features humidity, temperature, and motion sensors

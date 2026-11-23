@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.blauberg.vento",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "compatibility": ">=12.2.0",
   "sdk": 3,
   "brandColor": "#105DAD",
@@ -421,6 +421,32 @@
             "filter": "driver_id=vento-expert"
           }
         ]
+      },
+      {
+        "id": "vento_v1_alarm_filter_false",
+        "title": {
+          "en": "The Filter alarm turned off"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vento-v1"
+          }
+        ]
+      },
+      {
+        "id": "vento_v1_alarm_filter_true",
+        "title": {
+          "en": "The Filter alarm turned on"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vento-v1"
+          }
+        ]
       }
     ],
     "conditions": [
@@ -555,6 +581,19 @@
             "type": "device",
             "name": "device",
             "filter": "driver_id=vento-expert"
+          }
+        ]
+      },
+      {
+        "id": "vento_v1_alarm_filter",
+        "title": {
+          "en": "The filter alarm is !{{on|off}}"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vento-v1"
           }
         ]
       }
@@ -1049,6 +1088,110 @@
             "type": "device",
             "name": "device",
             "filter": "driver_id=vento-expert"
+          }
+        ]
+      },
+      {
+        "id": "vento_v1_speed_mode",
+        "title": {
+          "en": "Set the speed mode"
+        },
+        "titleFormatted": {
+          "en": "Sets the speed mode of the device to [[speedMode]] "
+        },
+        "hint": {
+          "en": "Sets the device to the desired speed mode"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vento-v1"
+          },
+          {
+            "type": "dropdown",
+            "name": "speedMode",
+            "title": {
+              "en": "The desired speed mode"
+            },
+            "values": [
+              {
+                "id": "0",
+                "title": {
+                  "en": "Off"
+                }
+              },
+              {
+                "id": "1",
+                "title": {
+                  "en": "Low"
+                }
+              },
+              {
+                "id": "2",
+                "title": {
+                  "en": "Medium"
+                }
+              },
+              {
+                "id": "3",
+                "title": {
+                  "en": "High"
+                }
+              },
+              {
+                "id": "255",
+                "title": {
+                  "en": "Manual"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "vento_v1_operation_mode",
+        "title": {
+          "en": "Set the operation mode"
+        },
+        "titleFormatted": {
+          "en": "Sets the operation mode of the device to [[operationMode]] "
+        },
+        "hint": {
+          "en": "Sets the device to the desired operation mode"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vento-v1"
+          },
+          {
+            "type": "dropdown",
+            "name": "operationMode",
+            "title": {
+              "en": "The desired operation mode"
+            },
+            "values": [
+              {
+                "id": "0",
+                "title": {
+                  "en": "Ventilation"
+                }
+              },
+              {
+                "id": "1",
+                "title": {
+                  "en": "Regeneration"
+                }
+              },
+              {
+                "id": "2",
+                "title": {
+                  "en": "Supply"
+                }
+              }
+            ]
           }
         ]
       }
@@ -1588,6 +1731,136 @@
           ]
         }
       ]
+    },
+    {
+      "name": {
+        "en": "Vento Expert V1"
+      },
+      "class": "fan",
+      "capabilities": [
+        "onoff",
+        "alarm_connectivity",
+        "alarm_boost",
+        "alarm_filter",
+        "alarm_generic",
+        "manualSpeed",
+        "fan_speed",
+        "vento_v1_manual_speed",
+        "measure_humidity",
+        "measure_power",
+        "operationMode",
+        "speedMode",
+        "timerMode_timer"
+      ],
+      "capabilitiesOptions": {
+        "fan_speed": {
+          "preventInsights": true
+        },
+        "measure_power": {
+          "approximated": true
+        }
+      },
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "images": {
+        "small": "/drivers/vento-v1/assets/images/small.png",
+        "large": "/drivers/vento-v1/assets/images/large.png",
+        "xlarge": "/drivers/vento-v1/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "enter_ip"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "vento-v1",
+      "settings": [
+        {
+          "id": "last_known_ip",
+          "type": "text",
+          "label": {
+            "en": "IP address"
+          },
+          "value": ""
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Estimated power usage"
+          },
+          "children": [
+            {
+              "id": "power_off",
+              "type": "number",
+              "label": {
+                "en": "Off"
+              },
+              "units": {
+                "en": "W"
+              },
+              "value": 0.5,
+              "min": 0,
+              "decimals": 1
+            },
+            {
+              "id": "power_low",
+              "type": "number",
+              "label": {
+                "en": "Low"
+              },
+              "units": {
+                "en": "W"
+              },
+              "value": 5.1,
+              "min": 0,
+              "decimals": 1
+            },
+            {
+              "id": "power_medium",
+              "type": "number",
+              "label": {
+                "en": "Medium"
+              },
+              "units": {
+                "en": "W"
+              },
+              "value": 5.6,
+              "min": 0,
+              "decimals": 1
+            },
+            {
+              "id": "power_high",
+              "type": "number",
+              "label": {
+                "en": "High"
+              },
+              "units": {
+                "en": "W"
+              },
+              "value": 7.5,
+              "min": 0,
+              "decimals": 1
+            }
+          ]
+        }
+      ]
     }
   ],
   "capabilities": {
@@ -1903,6 +2176,22 @@
       "getable": true,
       "setable": false,
       "icon": "/assets/timer.svg"
+    },
+    "vento_v1_manual_speed": {
+      "type": "number",
+      "title": {
+        "en": "Speed"
+      },
+      "units": {
+        "en": "%"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "decimals": 0,
+      "min": 0,
+      "max": 100
     }
   }
 }

@@ -16,6 +16,12 @@ This app supports three types of Blauberg devices with automatic detection durin
 - VENTO inHOME 100
 - VENTO inHOME 160
 
+### Vento Expert V.1 Series
+Older units with the first-generation protocol, added through the separate "Vento Expert V1" driver (no device password; the unit has a fixed IP address, so if you change it, update the IP address in the device settings):
+- Vento Expert A50-1 W
+- Vento Expert Duo A30-1 W
+- Flexit Roomie One WiFi V1
+
 ### HRV Wi-Fi Series
 - Heat recovery ventilators with 5 speed modes
 - CO2, VOC, humidity, and temperature sensors

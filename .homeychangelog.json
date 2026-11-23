@@ -88,5 +88,8 @@
   },
   "1.5.1": {
     "en": "Internal development improvements, no changes to how the app works."
+  },
+  "1.6.0": {
+    "en": "Added support for Vento Expert V.1 and compatible units such as the Flexit Roomie One WiFi. Thanks to Hein Gustavsen for the contribution."
   }
 }
