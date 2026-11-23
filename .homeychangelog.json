@@ -85,5 +85,8 @@
   },
   "1.5.0": {
     "en": "Commands to your fan are now confirmed by the device, so Homey shows an error when a command did not arrive instead of silently doing nothing. More reliable network communication."
+  },
+  "1.5.1": {
+    "en": "Internal development improvements, no changes to how the app works."
   }
 }
