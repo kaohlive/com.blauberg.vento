@@ -109,8 +109,8 @@ class VentoV1Device extends Device {
         if (Number.isFinite(watts)) await this.setCapabilityValue('measure_power', watts);
       }
       if (status.alarm !== undefined) await this.setCapabilityValue('alarm_generic', status.alarm);
-      if (status.boost !== undefined && this.hasCapability('vento_v1_boost')) {
-        await this.setCapabilityValue('vento_v1_boost', status.boost);
+      if (status.boost !== undefined && this.hasCapability('alarm_boost')) {
+        await this.setCapabilityValue('alarm_boost', status.boost);
       }
       if (status.timerRemaining !== undefined) {
         const seconds = status.timerRemaining;

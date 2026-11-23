@@ -4,7 +4,7 @@
   "capabilities": [
     "onoff",
     "alarm_connectivity",
-    "vento_v1_boost",
+    "alarm_boost",
     "alarm_filter",
     "alarm_generic",
     "manualSpeed",
